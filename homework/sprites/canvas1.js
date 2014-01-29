@@ -1,22 +1,19 @@
 /*
  * This template file is meant to be a template for canvas-based
- * web page code.  Nothing here is set in stone; it is mainly
- * intended to save you some typing.
+ * web page code.  
+ *
  */
-// Yes, we can use jQuery here, but avoid it just in case you
-// really don't want to use it.  We do still keep things away
-// from the global namespace.
+
 (function () {
     // Ditto on using jQuery here.
     var canvas = document.getElementById("canvas"),
         renderingContext = canvas.getContext("2d");
         circles = {
-            x1: 25,               // The x-coordinate.
-            y1: 100,              // The y-coordinate.
-            x2: 25,               
-            y2: 100,           
-            radius: 20,           // The arc radius.
-            startAngle: 0,        // The starting point on the circle.
+            xPoints: {x: 25},   // The x-coordinate. I made an object inside of an object to make it easier to add more x values in the future.
+            yPoints: {y: 100},  // The y-coordinate. Also, same as above.
+            radius: 20, // The arc radius.
+            startAngle: 0,  // The starting point on the circle.
+            endAngle: Math.PI + Math.PI / 2, // The end point on the circle.
             circleStyle:"yellow",
             circleStroke: "blue",
         };
@@ -27,9 +24,10 @@
             renderingContext.fillStyle = circles.circleStyle;
             renderingContext.strokeStyle = circles.circleStroke;
             renderingContext.beginPath();
-             var endAngle = Math.PI + (Math.PI * j) / 2; // The end point on the circle.
-             var anticlockwise = i % 2 == 0 ? false : true; // The direction of drawing.
-            renderingContext.arc(circles.x1 + j * circles.y1, circles.x2 + i * circles.y2, circles.radius, circles.startAngle, endAngle, anticlockwise); // Create the arc path.
+            var anticlockwise = i % 2 == 0 ? false : true; // The direction of drawing.
+            renderingContext.arc(circles.xPoints.x + j * circles.yPoints.y, circles.xPoints.x + i * circles.yPoints.y,
+                                 circles.radius, circles.startAngle+j, circles.endAngle+j,
+                                 anticlockwise); // Create the arc path.
             renderingContext.fill();      //Display the work.
             renderingContext.stroke();      //Display the work.
                 }
