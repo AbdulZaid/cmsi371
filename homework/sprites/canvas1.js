@@ -17,14 +17,15 @@
             y2: 100,           
             radius: 20,           // The arc radius.
             startAngle: 0,        // The starting point on the circle.
+            circleStyle:"yellow",
+            circleStroke: "blue",
         };
- 
-    renderingContext.fillStyle = "yellow";                               // Display the work.
-    renderingContext.strokeStyle = "blue";                               // Display the work.
-    for (var i = 0; i < 6; i++)                            // Step through two rows.
-        {
-        for (var j = 0; j < 3; j++)                        // Step through three versions.
-            {
+    // Step through two rows.
+    for (var i = 0; i < 6; i++) {
+        // Step through three versions.
+        for (var j = 0; j < 3; j++) {
+            renderingContext.fillStyle = circles.circleStyle;
+            renderingContext.strokeStyle = circles.circleStroke;
             renderingContext.beginPath();
              var endAngle = Math.PI + (Math.PI * j) / 2; // The end point on the circle.
              var anticlockwise = i % 2 == 0 ? false : true; // The direction of drawing.
