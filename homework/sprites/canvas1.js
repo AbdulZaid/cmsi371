@@ -9,17 +9,28 @@
 (function () {
     // Ditto on using jQuery here.
     var canvas = document.getElementById("canvas"),
-        renderingContext = canvas.getContext("2d"),
-
-        // Declare other variables here.
-        radialGradient = renderingContext.createRadialGradient(160, 160, 1, 180, 180, 320);
-
-    // Put your canvas drawing code (and any other code) here.
-    radialGradient.addColorStop(0, "white");
-    radialGradient.addColorStop(1, "red");
-
-    renderingContext.fillStyle = radialGradient;
-    renderingContext.beginPath();
-    renderingContext.arc(256, 256, 200, 0, Math.PI * 2, true);
-    renderingContext.fill();
+        renderingContext = canvas.getContext("2d");
+        circles = {
+            x1: 25,               // The x-coordinate.
+            y1: 100,              // The y-coordinate.
+            x2: 25,               
+            y2: 100,           
+            radius: 20,           // The arc radius.
+            startAngle: 0,        // The starting point on the circle.
+        };
+ 
+    renderingContext.fillStyle = "yellow";                               // Display the work.
+    renderingContext.strokeStyle = "blue";                               // Display the work.
+    for (var i = 0; i < 6; i++)                            // Step through two rows.
+        {
+        for (var j = 0; j < 3; j++)                        // Step through three versions.
+            {
+            renderingContext.beginPath();
+             var endAngle = Math.PI + (Math.PI * j) / 2; // The end point on the circle.
+             var anticlockwise = i % 2 == 0 ? false : true; // The direction of drawing.
+            renderingContext.arc(circles.x1 + j * circles.y1, circles.x2 + i * circles.y2, circles.radius, circles.startAngle, endAngle, anticlockwise); // Create the arc path.
+            renderingContext.fill();      //Display the work.
+            renderingContext.stroke();      //Display the work.
+                }
+        }
 }());
