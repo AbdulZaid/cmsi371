@@ -10,21 +10,29 @@
     // Ditto on using jQuery here.
     var canvas = document.getElementById("canvas"),
         renderingContext = canvas.getContext("2d");
-
+ 
+        rectsProperties = {
+            widthOfLine: { x:3, y:20, z:10},
+            color: {green:"green", red:"red", blue:"blue", yellow:"yellow"},
+            xCord: {x1:300, x2:400, x3:450},
+            yCord: {y1:100, y2:200, y3:340},
+            recWidth: {width1: 200, width2: 350, width3:450, width4: 500},
+            recHeight: {height1: 200, height2: 350, height3:450, height4: 500},
+            lineJoin: {round: "round", bevel:"bevel", miter: "miter"}
+        };
         renderingContext.beginPath();
-        renderingContext.lineWidth = "3";
-        renderingContext.strokeStyle = "blue";
-        renderingContext.rect(5, 5, 300, 250);
+        renderingContext.lineJoin = rectsProperties.lineJoin.round;
+        renderingContext.lineWidth = rectsProperties.widthOfLine.x;
+        renderingContext.strokeStyle = rectsProperties.color.blue;
+        renderingContext.rect(rectsProperties.xCord.x1, rectsProperties.yCord.y3,  rectsProperties.recWidth.width2,rectsProperties.recHeight.height1);
         renderingContext.stroke();
         renderingContext.beginPath();
-        renderingContext.lineWidth = "5";
-        renderingContext.strokeStyle = "red";
-        renderingContext.rect(150, 200, 300, 150);
-        renderingContext.stroke();
+        renderingContext.lineWidth = rectsProperties.widthOfLine.y;
+        renderingContext.strokeStyle = rectsProperties.color.yellow;
+        renderingContext.rect(rectsProperties.xCord.x3, rectsProperties.yCord.y1,  rectsProperties.recWidth.width2,rectsProperties.recHeight.height2);  renderingContext.stroke();
         renderingContext.beginPath();
-        renderingContext.lineJoin = "round";
-        renderingContext.lineWidth = "10";
-        renderingContext.strokeStyle = "green";
-        renderingContext.rect(250, 50, 150, 250);
-        renderingContext.stroke();
+        renderingContext.lineJoin = rectsProperties.lineJoin.miter;
+        renderingContext.lineWidth = rectsProperties.widthOfLine.x;
+        renderingContext.strokeStyle = rectsProperties.color.green;
+        renderingContext.rect(rectsProperties.xCord.x2, rectsProperties.yCord.y2,  rectsProperties.recWidth.width2,rectsProperties.recHeight.height3);       renderingContext.stroke();
 }());
