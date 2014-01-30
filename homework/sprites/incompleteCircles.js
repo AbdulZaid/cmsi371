@@ -9,16 +9,17 @@
 
     var canvas = document.getElementById("canvas"),
         renderingContext = canvas.getContext("2d");
-        circles = {
-            xPoints: {x: 25},   // The x-coordinate. I made an object inside of an object
-                                // to make it easier to add more x values in the future.
-            yPoints: {y: 100},  // The y-coordinate.
-            radius: 20, // The arc radius.
-            startAngle: 0,  // The starting point on the circle.
-            endAngle: Math.PI + Math.PI / 2, // The end point on the circle.
-            circleStyle:"yellow",
-            circleStroke: "blue",
-        };
+ 
+    circles = {
+        xPoints: {x: 25},   // The x-coordinate. I made an object inside of an object
+                            // to make it easier to add more x values in the future.
+        yPoints: {y: 100},  // The y-coordinate.
+        radius: 20, // The arc radius.
+        startAngle: 0,  // The starting point on the circle.
+        endAngle: Math.PI + Math.PI / 2, // The end point on the circle.
+        circleStyle:"yellow",
+        circleStroke: "blue",
+    };
  
     drawArcs = function(){
     // Step through two rows.
@@ -42,4 +43,5 @@
         circles.xPoints.x = miniCircles;
         drawArcs();
     }
+ 
 }());
