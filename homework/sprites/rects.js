@@ -1,38 +1,49 @@
 /*
- * This template file is meant to be a template for canvas-based
- * web page code.  Nothing here is set in stone; it is mainly
- * intended to save you some typing.
- */
-// Yes, we can use jQuery here, but avoid it just in case you
-// really don't want to use it.  We do still keep things away
-// from the global namespace.
+*   Function to draw rectangles.
+*/
+
 (function () {
-    // Ditto on using jQuery here.
+    //building up the canvas.
     var canvas = document.getElementById("canvas"),
         renderingContext = canvas.getContext("2d");
  
+        //seeting up the properties of the rectangles as objects.
         rectsProperties = {
-            widthOfLine: { x:3, y:20, z:10},
+            widthOfLine: 3,
             color: {green:"green", red:"red", blue:"blue", yellow:"yellow"},
-            xCord: {x1:300, x2:400, x3:450},
-            yCord: {y1:100, y2:200, y3:340},
-            recWidth: {width1: 200, width2: 350, width3:450, width4: 500},
-            recHeight: {height1: 200, height2: 350, height3:450, height4: 500},
+            Cords: {x:300, y:400},
+            recWidth: 150,
+            recHeight: 100,
             lineJoin: {round: "round", bevel:"bevel", miter: "miter"}
         };
-        renderingContext.beginPath();
-        renderingContext.lineJoin = rectsProperties.lineJoin.round;
-        renderingContext.lineWidth = rectsProperties.widthOfLine.x;
-        renderingContext.strokeStyle = rectsProperties.color.blue;
-        renderingContext.rect(rectsProperties.xCord.x1, rectsProperties.yCord.y3,  rectsProperties.recWidth.width2,rectsProperties.recHeight.height1);
-        renderingContext.stroke();
-        renderingContext.beginPath();
-        renderingContext.lineWidth = rectsProperties.widthOfLine.y;
-        renderingContext.strokeStyle = rectsProperties.color.yellow;
-        renderingContext.rect(rectsProperties.xCord.x3, rectsProperties.yCord.y1,  rectsProperties.recWidth.width2,rectsProperties.recHeight.height2);  renderingContext.stroke();
-        renderingContext.beginPath();
-        renderingContext.lineJoin = rectsProperties.lineJoin.miter;
-        renderingContext.lineWidth = rectsProperties.widthOfLine.x;
-        renderingContext.strokeStyle = rectsProperties.color.green;
-        renderingContext.rect(rectsProperties.xCord.x2, rectsProperties.yCord.y2,  rectsProperties.recWidth.width2,rectsProperties.recHeight.height3);       renderingContext.stroke();
+ 
+        //wrapping up the drawing methods and properties into one function.
+        var drawRects = function() {
+            renderingContext.beginPath();
+            renderingContext.lineWidth = rectsProperties.widthOfLine;
+            renderingContext.strokeStyle = rectsProperties.color.blue;
+            renderingContext.rect(rectsProperties.Cords.x, rectsProperties.Cords.y, rectsProperties.recWidth,rectsProperties.recHeight);
+            renderingContext.stroke();
+        };
+ 
+        //calling the function and chaning its scale and translate.
+        for(var x =100; x <= 300; x += 10) {
+            renderingContext.lineJoin = rectsProperties.lineJoin.round;
+            rectsProperties.Cords.x = x;
+            renderingContext.scale(1, 0.9);
+            renderingContext.translate(10,10);
+            drawRects();
+        };
+ 
+        //calling the function above with chaning its properties.
+        for(var y=50; y <= 300; y +=10) {
+            rectsProperties.Cords.y = y;
+            rectsProperties.recHeight += 10;
+            renderingContext.scale(1, 1.1);
+            renderingContext.lineJoin = rectsProperties.lineJoin.miter;
+            rectsProperties.color.blue= "brown";
+            renderingContext.translate(12,5);
+            drawRects();
+        };
+ 
 }());
