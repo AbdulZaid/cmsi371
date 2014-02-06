@@ -22,5 +22,11 @@
         <!-- This is where most of your action really will be:
              rename and edit this file. -->
         <script src="quadCurves.js"></script>
+        <script>
+            var canvas = document.getElementById("canvas"),
+                renderingContext = canvas.getContext("2d");
+
+            spriteLibrary.drawQuadCurves(renderingContext);
+        </script>
     </body>
 </html>
