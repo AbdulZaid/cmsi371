@@ -13,27 +13,37 @@
         sprites = [
             {
                 draw: spriteLibrary.drawQuadCurves,
+                callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
+                    var closenessStart = startKeyframe.closeness || 6,
+                        closenessDistance = (endKeyframe.closeness || 6) - closenessStart;
+
+                    spriteLibrary.curves.closeness = ease(currentTweenFrame,
+                        closenessStart, closenessDistance, duration);
+                },
+
                 keyframes: [
                     {
                         frame: 0,
                         tx: 20,
                         ty: 20,
+                        closeness: 10,
                         ease: KeyframeTweener.linear
                     },
 
                     {
-                        frame: 30,
+                        frame: 60,
                         tx: 100,
                         ty: 50,
+                        closeness: 0,
                         ease: KeyframeTweener.quadEaseInOut
                     },
 
                     // The last keyframe does not need an easing function.
                     {
-                        frame: 80,
+                        frame: 200,
                         tx: 80,
                         ty: 500,
-                        rotate: 60 // Keyframe.rotate uses degrees.
+                        closeness: 40
                     }
                 ]
             },

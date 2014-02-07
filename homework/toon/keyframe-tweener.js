@@ -66,6 +66,20 @@ var KeyframeTweener = {
             height = settings.height,
             sprites = settings.sprites;
 
+        // We need to determine the last frame.
+        var lastFrame = (function () {
+                var maxFrame = 0;
+                for (i = 0, maxI = sprites.length; i < maxI; i += 1) {
+                    for (j = 0, maxJ = sprites[i].keyframes.length - 1; j < maxJ; j += 1) {
+                        if (sprites[i].keyframes[j].frame > maxFrame) {
+                            maxFrame = sprites[i].keyframes[j].frame;
+                        }
+                    }
+                }
+
+                return maxFrame;
+            })();
+
         setInterval(function () {
             // Some reusable loop variables.
             var i,
@@ -135,6 +149,11 @@ var KeyframeTweener = {
                             ease(currentTweenFrame, rotateStart, rotateDistance, duration)
                         );
 
+                        // Check for callback.
+                        if (sprites[i].callback) {
+                            sprites[i].callback(ease, startKeyframe, endKeyframe, currentTweenFrame, duration);
+                        }
+
                         // Draw the sprite.
                         sprites[i].draw(renderingContext);
 
@@ -146,6 +165,9 @@ var KeyframeTweener = {
 
             // Move to the next frame.
             currentFrame += 1;
+            if (currentFrame > lastFrame) {
+                currentFrame = 0;
+            }
         }, 1000 / (settings.frameRate || 24));
     }
 };
