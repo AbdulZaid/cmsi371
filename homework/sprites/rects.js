@@ -6,12 +6,15 @@
     //building up the canvas.
     var canvas = document.getElementById("canvas"),
         renderingContext = canvas.getContext("2d");
- 
+
+    // JD: rectsProperties is a global variable.  Please read my comments in
+    //     incompleteCircles.js for more details.
+
     //seeting up the properties of the rectangles as objects.
     rectsProperties = {
         widthOfLine: 3,
         color: {green:"green", red:"red", blue:"blue", yellow:"yellow"},
-        Cords: {x:300, y:400},
+        Cords: {x:300, y:400}, // JD: Watch your capitalization!
         recWidth: 150,
         recHeight: 100,
         lineJoin: {round: "round", bevel:"bevel", miter: "miter"}
@@ -25,6 +28,9 @@
         renderingContext.rect(rectsProperties.Cords.x, rectsProperties.Cords.y, rectsProperties.recWidth,rectsProperties.recHeight);
         renderingContext.stroke();
     };
+
+    // JD: Same note here about how to structure this code for
+    //     reusability with the keyframe animation library.
 
     //calling the function and chaning its scale and translate.
     for(var x =100; x <= 300; x += 10) {
