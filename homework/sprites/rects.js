@@ -11,23 +11,23 @@
     //     incompleteCircles.js for more details.
 
         //seeting up the properties of the rectangles as objects.
-        rectsProperties = {
+         rectsProperties = {
             widthOfLine: 3,
             color: {green:"green", red:"red", blue:"blue", yellow:"yellow"},
             Cords: {x:300, y:400}, // JD: Watch your capitalization!
             recWidth: 150,
             recHeight: 100,
             lineJoin: {round: "round", bevel:"bevel", miter: "miter"}
-        },
+        }
 
         //wrapping up the drawing methods and properties into one function.
-        drawRects = function() {
+         drawRects = function() {
             renderingContext.beginPath();
             renderingContext.lineWidth = rectsProperties.widthOfLine;
             renderingContext.strokeStyle = rectsProperties.color.blue;
             renderingContext.rect(rectsProperties.Cords.x, rectsProperties.Cords.y, rectsProperties.recWidth,rectsProperties.recHeight);
             renderingContext.stroke();
-        };
+        }
 
     // JD: Same note here about how to structure this code for
     //     reusability with the keyframe animation library.
