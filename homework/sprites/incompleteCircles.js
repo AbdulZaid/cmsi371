@@ -13,7 +13,7 @@
     // JD: Watch out---circles and drawArcs are global variables here.  Not good practice
     //     if intentional, and if unintentional, note that this is caused by the lack of
     //     "var" keyword.
-          circles = {
+        circles = {
             xPoints: {x: 25},   // The x-coordinate. I made an object inside of an object
                                 // to make it easier to add more x values in the future.
             yPoints: {y: 100},  // The y-coordinate.
@@ -24,7 +24,7 @@
             circleStroke: "blue",
         },
  
-          drawArcs = function() {
+        drawArcs = function() {
         // Step through two rows.
             for (var i = 0; i < 6; i++) {
                 // Step through three versions.
