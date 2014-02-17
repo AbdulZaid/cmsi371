@@ -3,12 +3,8 @@
 */
 
 (function () {
-    //building up the canvas.
-    var     // JD: rectsProperties is a global variable.  Please read my comments in
-    //     incompleteCircles.js for more details.
-
-        //seeting up the properties of the rectangles as objects.
-        rectsProperties = {
+    //seeting up the properties of the rectangles as objects.
+    var rectsProperties = {
             widthOfLine: 3,
             color: {green:"green", red:"red", blue:"blue", yellow:"yellow"},
             Cords: {x:300, y:400}, // JD: Watch your capitalization!

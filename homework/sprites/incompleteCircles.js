@@ -7,11 +7,7 @@
 
 (function () {
 
-    var
-        // JD: Watch out---circles and drawArcs are global variables here.  Not good practice
-        //     if intentional, and if unintentional, note that this is caused by the lack of
-        //     "var" keyword.
-        circles = {
+    var circles = {
             xPoints: {x: 25},   // The x-coordinate. I made an object inside of an object
                                 // to make it easier to add more x values in the future.
             yPoints: {y: 100},  // The y-coordinate.
