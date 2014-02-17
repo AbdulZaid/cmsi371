@@ -18,7 +18,7 @@
             recWidth: 150,
             recHeight: 100,
             lineJoin: {round: "round", bevel:"bevel", miter: "miter"}
-        }
+        },
 
         //wrapping up the drawing methods and properties into one function.
          drawRects = function() {
@@ -27,7 +27,7 @@
             renderingContext.strokeStyle = rectsProperties.color.blue;
             renderingContext.rect(rectsProperties.Cords.x, rectsProperties.Cords.y, rectsProperties.recWidth,rectsProperties.recHeight);
             renderingContext.stroke();
-        }
+        };
 
     // JD: Same note here about how to structure this code for
     //     reusability with the keyframe animation library.
@@ -39,7 +39,7 @@
         renderingContext.scale(1, 0.9);
         renderingContext.translate(10,10);
         drawRects();
-    };
+    }
 
     //calling the function above with chaning its properties.
     for(var y=50; y <= 300; y +=10) {
@@ -50,6 +50,6 @@
         rectsProperties.color.blue= "brown";
         renderingContext.translate(12,5);
         drawRects();
-    };
+    }
 
 }());
