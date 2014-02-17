@@ -12,12 +12,12 @@
         // has a drawing function and an array of keyframes.
         sprites = [
             {
-                draw: spriteLibrary.drawQuadCurves,
+                draw: spriteLibrary.drawMiniCircles,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
-                    var closenessStart = startKeyframe.closeness || 6,
-                        closenessDistance = (endKeyframe.closeness || 6) - closenessStart;
+                    var closenessStart = startKeyframe.radius || 20,
+                        closenessDistance = (endKeyframe.radius || 20) - closenessStart;
                     
-                    spriteLibrary.curves.closeness = ease(currentTweenFrame,
+                    spriteLibrary.circles.radius = ease(currentTweenFrame,
                         closenessStart, closenessDistance, duration);
                 },
                 
@@ -26,30 +26,31 @@
                         frame: 0,
                         tx: 20,
                         ty: 20,
-                        closeness: 10,
+                        radius: 0,
                         ease: KeyframeTweener.linear
                     },
                     
                     {
-                        frame: 60,
+                        frame: 20,
                         tx: 100,
                         ty: 50,
-                        closeness: 0,
+                        radius: 10,
                         ease: KeyframeTweener.quadEaseInOut
                     },
                     
                     // The last keyframe does not need an easing function.
                     {
-                        frame: 200,
+                        frame: 300,
                         tx: 80,
                         ty: 500,
-                        closeness: 40
+                        radius: 300,
+
                     }
                 ]
             },
                 
             {
-                draw: spriteLibrary.drawQuadCurves,
+                draw: spriteLibrary.drawMiniCircles,
                 keyframes: [
                     {
                         frame: 50,

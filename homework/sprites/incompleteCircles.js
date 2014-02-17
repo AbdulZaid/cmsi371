@@ -8,7 +8,7 @@
 (function () {
 
     var circles = {
-            xPoints: {x: 25},   // The x-coordinate. I made an object inside of an object
+            xPoints: 25,   // The x-coordinate. I made an object inside of an object
                                 // to make it easier to add more x values in the future.
             yPoints: {y: 100},  // The y-coordinate.
             radius: 20, // The arc radius.
@@ -17,7 +17,7 @@
             circleStyle:"yellow",
             circleStroke: "blue",
         },
-     
+ 
         drawArcs = function (renderingContext) {
         // Step through two rows.
             for (var i = 0; i < 6; i++) {
@@ -39,7 +39,7 @@
                     //     what the expression "i % 2 === 0" means.  Take a second look at
                     //     this, and if you remain unsure about the issue, please ask me
                     //     about this sometime.
-                    renderingContext.arc(circles.xPoints.x + j * circles.yPoints.y, circles.xPoints.x + i * circles.yPoints.y,
+                    renderingContext.arc(circles.xPoints + j * circles.yPoints.y, circles.xPoints + i * circles.yPoints.y,
                                          circles.radius, circles.startAngle+j, circles.endAngle+j,
                                          anticlockwise); // Create the arc path.
                     renderingContext.fill();      //Display the work.
@@ -52,8 +52,8 @@
         //     reusability, you have to restructure this a little bit.  Follow what
         //     was done with quadCurves.
         drawMiniCircles = function (renderingContext) {
-            for(var miniCircles =26; miniCircles <= 100; miniCircles += 5) { //calling the function above more than once to test how cool it is to put everything seperate.
-                circles.xPoints.x = miniCircles;
+            for(var miniCircles =2; miniCircles <= 20; miniCircles += 5) { //calling the function above more than once to test how cool it is to put everything seperate.
+                circles.xPoints = miniCircles;
                 drawArcs(renderingContext);
             }
         };
