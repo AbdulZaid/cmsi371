@@ -39,7 +39,7 @@
                     //     what the expression "i % 2 === 0" means.  Take a second look at
                     //     this, and if you remain unsure about the issue, please ask me
                     //     about this sometime.
-                    renderingContext.arc(circles.xPoints + j * circles.yPoints.y, circles.xPoints + i * circles.yPoints.y,
+                    renderingContext.arc(circles.xPoints + j  * circles.yPoints.y + 20, circles.xPoints + i * circles.yPoints.y + 20,
                                          circles.radius, circles.startAngle+j, circles.endAngle+j,
                                          anticlockwise); // Create the arc path.
                     renderingContext.fill();      //Display the work.
