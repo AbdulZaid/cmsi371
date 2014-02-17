@@ -7,9 +7,7 @@
 
 (function () {
 
-    var canvas = document.getElementById("canvas"),
-        renderingContext = canvas.getContext("2d"),
-
+    var
         // JD: Watch out---circles and drawArcs are global variables here.  Not good practice
         //     if intentional, and if unintentional, note that this is caused by the lack of
         //     "var" keyword.
@@ -24,7 +22,7 @@
             circleStroke: "blue",
         },
      
-        drawArcs = function() {
+        drawArcs = function (renderingContext) {
         // Step through two rows.
             for (var i = 0; i < 6; i++) {
                 // Step through three versions.
@@ -52,14 +50,20 @@
                     renderingContext.stroke();      //Display the work.
                 }
             }
-        };
+        },
 
-    // JD: As you saw in class, this works for standalone drawing, but for
-    //     reusability, you have to restructure this a little bit.  Follow what
-    //     was done with quadCurves.
-    for(var miniCircles =26; miniCircles <= 100; miniCircles += 5) { //calling the function above more than once to test how cool it is to put everything seperate. 
-        circles.xPoints.x = miniCircles;
-        drawArcs();
-    }
+        // JD: As you saw in class, this works for standalone drawing, but for
+        //     reusability, you have to restructure this a little bit.  Follow what
+        //     was done with quadCurves.
+        drawMiniCircles = function (renderingContext) {
+            for(var miniCircles =26; miniCircles <= 100; miniCircles += 5) { //calling the function above more than once to test how cool it is to put everything seperate.
+                circles.xPoints.x = miniCircles;
+                drawArcs(renderingContext);
+            }
+        };
+ 
+    window['spriteLibrary'] = window['spriteLibrary'] || {};
+    window['spriteLibrary'].circles = circles;
+    window['spriteLibrary'].drawMiniCircles = drawMiniCircles;
  
 }());
