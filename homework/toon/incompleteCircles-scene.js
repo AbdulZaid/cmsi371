@@ -14,38 +14,45 @@
             {
                 draw: spriteLibrary.drawMiniCircles,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
-                    var closenessStart = startKeyframe.radius || 20,
-                        closenessDistance = (endKeyframe.radius || 20) - closenessStart;
-                    
+                    var radiusStart = startKeyframe.radius || 20,
+                   radiusDistance = (endKeyframe.radius || 20) - radiusStart;
+                   
                     spriteLibrary.circles.radius = ease(currentTweenFrame,
-                        closenessStart, closenessDistance, duration);
+                        radiusStart, radiusDistance, duration);
                 },
                 
                 keyframes: [
                     {
                         frame: 0,
-                        tx: 20,
-                        ty: 20,
-                        radius: 0,
+                        tx: 300,
+                        ty: 400,
+                        radius: 30,
                         ease: KeyframeTweener.inElasticBig
                     },
-                    
+                            
                     {
-                        frame: 20,
-                        tx: 200,
-                        ty: 20,
-                        radius: 10,
-                        ease: KeyframeTweener.quadEaseInOut
+                        frame: 100,
+                        tx: 850,
+                        ty: 400,
+                        radius: 50,
+                        ease: KeyframeTweener.outElasticBig
                     },
                     
-                    // The last keyframe does not need an easing function.
                     {
-                        frame: 300,
-                        tx: 0,
-                        ty: 20,
+                        frame: 400,
+                        tx: 200,
+                        ty: 400,
                         radius: 300,
-
-                    }
+                        ease: KeyframeTweener.outInCubic
+                    },
+                    {
+                        frame: 600,
+                        tx: 300,
+                        ty: 0,
+                        sx: 3,
+                        sy: 0.8,
+                    },
+                    
                 ]
             },
         ];
@@ -60,7 +67,7 @@
         sprites: sprites,
         background: function (renderingContext) {
             renderingContext.save();
-            renderingContext.fillStyle = "white";
+            renderingContext.fillStyle = "black";
             renderingContext.fillRect(0,0, canvas.width, canvas.height);
             renderingContext.restore();
         }

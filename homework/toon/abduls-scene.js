@@ -17,11 +17,11 @@
                     var closenessStart = startKeyframe.closeness || 6,
                         closenessDistance = (endKeyframe.closeness || 6) - closenessStart,
                    
-                        lineWidthStart = startKeyframe.widthOfLine || 2,
-                        lineWidthEnd = (endKeyframe.widthOfLine || 2) - lineWidthStart;
+                        stringsStart = startKeyframe.numberOfStrings || 2,
+                        stringsEnd = (endKeyframe.numberOfStrings || 2) - stringsStart;
 
                    spriteLibrary.curves.widthOfLine = ease(currentTweenFrame,
-                        lineWidthStart, lineWidthEnd, duration);
+                        stringsStart, stringsEnd, duration);
                    
                     spriteLibrary.curves.closeness = ease(currentTweenFrame,
                         closenessStart, closenessDistance, duration);
@@ -33,7 +33,7 @@
                         tx: 200,
                         ty: 200,
                         closeness: -50,
-                        widthOfLine: 2,
+                        numberOfStrings: 2,
                         ease: KeyframeTweener.quadEaseInAndOut
                     },
 
@@ -41,8 +41,8 @@
                         frame: 200,
                         tx: 200,
                         ty: 200,
+                        numberOfStrings: -8,
                         closeness: 0,
-                        widthOfLine: 1,
                         ease: KeyframeTweener.inElasticBig
                     },
 
@@ -50,7 +50,7 @@
                         frame: 400,
                         tx: 200,
                         ty: 200,
-                        widthOfLine: 2,
+                        numberOfStrings: 5,
                         closeness: -40,
                         ease: KeyframeTweener.outInCubic
                     },
@@ -59,7 +59,7 @@
                         frame: 600,
                         tx: 200,
                         ty: 200,
-                        widthOfLine: 1,
+                        numberOfStrings: -8,
                         closeness: 30,
                     },
                             
@@ -67,6 +67,7 @@
                         frame: 800,
                         tx: 200,
                         ty: 200,
+                        numberOfStrings: 0,
                         closeness: -10,
                     },
                 ]

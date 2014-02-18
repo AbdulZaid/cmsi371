@@ -27,9 +27,15 @@ var KeyframeTweener = {
     },
     
     inElasticBig: function (t, b, c, d) {
-        var ts = (t /= d ) * t;
+        var ts = (t /= d) * t;
         var tc = ts * t;
         return b + c * (56 * tc * ts + -105 * ts * ts + 60 * tc + -10 * ts);
+    },
+    
+    outElasticBig: function (t, b, c, d) {
+        var ts = (t /= d) * t;
+        var tc = ts * t;
+        return b + c * (56 * tc * ts + -175 * ts * ts + 200 * tc + -100 * ts + 20 * t);
     },
     
     outInCubic: function (t, b, c, d) {

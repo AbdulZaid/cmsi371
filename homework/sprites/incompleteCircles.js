@@ -20,9 +20,9 @@
  
         drawArcs = function (renderingContext) {
         // Step through two rows.
-            for (var i = 0; i < 6; i++) {
+            for (var i = 0; i < 4; i++) {
                 // Step through three versions.
-                for (var j = 0; j < 3; j++) {
+                for (var j = 0; j < 2; j++) {
                     renderingContext.fillStyle = circles.circleStyle;
                     renderingContext.strokeStyle = circles.circleStroke;
                     renderingContext.beginPath();
@@ -39,7 +39,7 @@
                     //     what the expression "i % 2 === 0" means.  Take a second look at
                     //     this, and if you remain unsure about the issue, please ask me
                     //     about this sometime.
-                    renderingContext.arc(circles.xPoints + j  * circles.yPoints.y + 20, circles.xPoints + i * circles.yPoints.y + 20,
+                    renderingContext.arc(circles.xPoints + j  * circles.yPoints.y + 20, circles.xPoints + i-j * circles.yPoints.y + 20,
                                          circles.radius, circles.startAngle+j, circles.endAngle+j,
                                          anticlockwise); // Create the arc path.
                     renderingContext.fill();      //Display the work.

@@ -11,7 +11,8 @@
             controlPoint2: {cp1x:200, cp1y:200, x:300, y:100},
             widthOfLine:2,
             colors: {black:"black", blue:"blue", red:"red"},
-            closeness: 6
+            closeness: 6,
+            numberOfStrings: 15
         },
 
         //setting up everything inside of a function.
@@ -33,14 +34,14 @@
 
         drawQuadCurves = function (renderingContext) {
             //calling the function
-            for(var x =-200; x <= 350; x += 15) {
+            for(var x =-200; x <= 350; x += curves.numberOfStrings) {
                 renderingContext.translate(curves.closeness, 0.5);
                 renderingContext.scale(1.01, 1.01);
                 curves.controlPoint2.cp1y = x;
                 drawCurves(renderingContext);
             }
 
-            for(var x =-200; x <= 300; x += 15) {
+            for(var x =-200; x <= 300; x += curves.numberOfStrings) {
                 renderingContext.translate(curves.closeness, 0.5);
                 renderingContext.scale(1.01, 1.01);
                 curves.controlPoint2.cp1y = x;
