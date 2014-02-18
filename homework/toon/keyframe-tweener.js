@@ -25,6 +25,12 @@ var KeyframeTweener = {
                 (distance / 2) * percentComplete * percentComplete + start :
                 (-distance / 2) * ((percentComplete - 1) * (percentComplete - 3) - 1) + start;
     },
+    
+    inElasticBig: function (t, b, c, d) {
+        var ts = (t /= d ) * t;
+        var tc = ts * t;
+        return b + c * (56 * tc * ts + -105 * ts * ts + 60 * tc + -10 * ts);
+    },
 
     // The big one: animation initialization.  The settings parameter
     // is expected to be a JavaScript object with the following
@@ -107,7 +113,6 @@ var KeyframeTweener = {
 
             // Clear the canvas.
             background(renderingContext);
-                    
             // For every sprite, go to the current pair of keyframes.
             // Then, draw the sprite based on the current frame.
             for (i = 0, maxI = sprites.length; i < maxI; i += 1) {

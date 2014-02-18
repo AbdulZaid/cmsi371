@@ -27,7 +27,7 @@
                         tx: 20,
                         ty: 20,
                         closeness: 10,
-                        ease: KeyframeTweener.linear
+                        ease: KeyframeTweener.inElasticBig
                     },
 
                     {
@@ -35,7 +35,7 @@
                         tx: 100,
                         ty: 50,
                         closeness: 0,
-                        ease: KeyframeTweener.quadEaseInOut
+                        ease: KeyframeTweener.inElasticBig
                     },
 
                     // The last keyframe does not need an easing function.
@@ -57,7 +57,7 @@
                         ty: 600,
                         sx: 0.5,
                         sy: 0.5,
-                        ease: KeyframeTweener.quadEaseOut
+                        ease: KeyframeTweener.inElasticBig
                     },
 
                     {
@@ -66,7 +66,7 @@
                         ty: 0,
                         sx: 3,
                         sy: 0.25,
-                        ease: KeyframeTweener.quadEaseOut
+                        ease: KeyframeTweener.inElasticBig
                     },
 
                     {
@@ -87,6 +87,12 @@
         renderingContext: canvas.getContext("2d"),
         width: canvas.width,
         height: canvas.height,
-        sprites: sprites
+        sprites: sprites,
+        background: function (renderingContext) {
+            renderingContext.save();
+            renderingContext.fillStyle = "white";
+            renderingContext.fillRect(0,0, canvas.width, canvas.height);
+            renderingContext.restore();
+        }
     });
 }());

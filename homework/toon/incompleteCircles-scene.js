@@ -27,7 +27,7 @@
                         tx: 20,
                         ty: 20,
                         radius: 0,
-                        ease: KeyframeTweener.linear
+                        ease: KeyframeTweener.inElasticBig
                     },
                     
                     {
@@ -48,37 +48,6 @@
                     }
                 ]
             },
-                
-            {
-                draw: spriteLibrary.drawMiniCircles,
-                keyframes: [
-                    {
-                        frame: 50,
-                        tx: 300,
-                        ty: 600,
-                        sx: 0.5,
-                        sy: 0.5,
-                        ease: KeyframeTweener.quadEaseOut
-                    },
-                            
-                    {
-                        frame: 100,
-                        tx: 300,
-                        ty: 0,
-                        sx: 3,
-                        sy: 0.25,
-                        ease: KeyframeTweener.quadEaseOut
-                    },
-                            
-                    {
-                        frame: 150,
-                        tx: 300,
-                        ty: 600,
-                        sx: 0.5,
-                        sy: 0.5
-                    }
-                ]
-            }
         ];
      
     // Finally, we initialize the engine.  Mainly, it needs
@@ -88,6 +57,12 @@
         renderingContext: canvas.getContext("2d"),
         width: canvas.width,
         height: canvas.height,
-        sprites: sprites
+        sprites: sprites,
+        background: function (renderingContext) {
+            renderingContext.save();
+            renderingContext.fillStyle = "white";
+            renderingContext.fillRect(0,0, canvas.width, canvas.height);
+            renderingContext.restore();
+        }
     });
  }());

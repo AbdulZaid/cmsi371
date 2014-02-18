@@ -91,7 +91,7 @@
         sprites: sprites,
         background: function (renderingContext) {
             renderingContext.save();
-            renderingContext.fillStyle = "black";
+            renderingContext.fillStyle = "white";
             renderingContext.fillRect(0,0, canvas.width, canvas.height);
             renderingContext.restore();
         }
