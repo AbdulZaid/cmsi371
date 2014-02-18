@@ -64,6 +64,9 @@ var KeyframeTweener = {
             renderingContext = settings.renderingContext,
             width = settings.width,
             height = settings.height,
+            background = settings.background || function (renderingContext) {
+                renderingContext.clearRect(0, 0, width, height);
+            }
             sprites = settings.sprites;
 
         // We need to determine the last frame.
@@ -103,8 +106,8 @@ var KeyframeTweener = {
                 duration;
 
             // Clear the canvas.
-            renderingContext.clearRect(0, 0, width, height);
-
+            background(renderingContext);
+                    
             // For every sprite, go to the current pair of keyframes.
             // Then, draw the sprite based on the current frame.
             for (i = 0, maxI = sprites.length; i < maxI; i += 1) {

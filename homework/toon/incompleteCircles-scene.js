@@ -32,8 +32,8 @@
                     
                     {
                         frame: 20,
-                        tx: 100,
-                        ty: 50,
+                        tx: 200,
+                        ty: 20,
                         radius: 10,
                         ease: KeyframeTweener.quadEaseInOut
                     },
@@ -41,8 +41,8 @@
                     // The last keyframe does not need an easing function.
                     {
                         frame: 300,
-                        tx: 80,
-                        ty: 500,
+                        tx: 0,
+                        ty: 20,
                         radius: 300,
 
                     }

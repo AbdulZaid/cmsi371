@@ -46,6 +46,7 @@
             }
         };
     window['spriteLibrary'] = window['spriteLibrary'] || {};
+ 
     window['spriteLibrary'].rectsProperties = rectsProperties;
     window['spriteLibrary'].drawingRecs = drawingRecs;
  

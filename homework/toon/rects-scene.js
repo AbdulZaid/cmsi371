@@ -12,12 +12,12 @@
         // has a drawing function and an array of keyframes.
         sprites = [
             {
-                draw: spriteLibrary.drawMiniCircles,
+                draw: spriteLibrary.drawingRecs,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
-                    var closenessStart = startKeyframe.radius || 20,
-                        closenessDistance = (endKeyframe.radius || 20) - closenessStart;
+                    var closenessStart = startKeyframe.recWidth || 20,
+                        closenessDistance = (endKeyframe.recWidth || 20) - closenessStart;
                     
-                    spriteLibrary.circles.radius = ease(currentTweenFrame,
+                    spriteLibrary.rectsProperties.recWidth = ease(currentTweenFrame,
                         closenessStart, closenessDistance, duration);
                 },
                     
@@ -26,7 +26,7 @@
                         frame: 0,
                         tx: 20,
                         ty: 20,
-                        radius: 0,
+                        recWidth: 0,
                         ease: KeyframeTweener.linear
                     },
                         
@@ -34,7 +34,7 @@
                         frame: 20,
                         tx: 100,
                         ty: 50,
-                        radius: 10,
+                        recWidth: 10,
                         ease: KeyframeTweener.quadEaseInOut
                     },
                         
@@ -43,14 +43,14 @@
                         frame: 300,
                         tx: 80,
                         ty: 500,
-                        radius: 300,
+                        recWidth: 300,
                         
                     }
                 ]
             },
             
             {
-            draw: spriteLibrary.drawMiniCircles,
+            draw: spriteLibrary.drawingRecs,
                 keyframes: [
                     {
                         frame: 50,
@@ -81,13 +81,19 @@
             }
         ];
  
- // Finally, we initialize the engine.  Mainly, it needs
- // to know the rendering context to use.  And the animations
- // to display, of course.
- KeyframeTweener.initialize({
-                            renderingContext: canvas.getContext("2d"),
-                            width: canvas.width,
-                            height: canvas.height,
-                            sprites: sprites
-                            });
+    // Finally, we initialize the engine.  Mainly, it needs
+    // to know the rendering context to use.  And the animations
+    // to display, of course.
+    KeyframeTweener.initialize({
+        renderingContext: canvas.getContext("2d"),
+        width: canvas.width,
+        height: canvas.height,
+        sprites: sprites,
+        background: function (renderingContext) {
+            renderingContext.save();
+            renderingContext.fillStyle = "black";
+            renderingContext.fillRect(0,0, canvas.width, canvas.height);
+            renderingContext.restore();
+        }
+    });
  }());
