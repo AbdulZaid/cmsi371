@@ -15,8 +15,14 @@
                 draw: spriteLibrary.drawQuadCurves,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
                     var closenessStart = startKeyframe.closeness || 6,
-                        closenessDistance = (endKeyframe.closeness || 6) - closenessStart;
+                        closenessDistance = (endKeyframe.closeness || 6) - closenessStart,
+                   
+                        lineWidthStart = startKeyframe.widthOfLine || 2,
+                        lineWidthEnd = (endKeyframe.widthOfLine || 2) - lineWidthStart;
 
+                   spriteLibrary.curves.widthOfLine = ease(currentTweenFrame,
+                        lineWidthStart, lineWidthEnd, duration);
+                   
                     spriteLibrary.curves.closeness = ease(currentTweenFrame,
                         closenessStart, closenessDistance, duration);
                 },
@@ -24,58 +30,45 @@
                 keyframes: [
                     {
                         frame: 0,
-                        tx: 20,
-                        ty: 20,
-                        closeness: 10,
-                        ease: KeyframeTweener.inElasticBig
+                        tx: 200,
+                        ty: 200,
+                        closeness: -50,
+                        widthOfLine: 2,
+                        ease: KeyframeTweener.quadEaseInAndOut
                     },
 
-                    {
-                        frame: 60,
-                        tx: 100,
-                        ty: 50,
-                        closeness: 0,
-                        ease: KeyframeTweener.inElasticBig
-                    },
-
-                    // The last keyframe does not need an easing function.
                     {
                         frame: 200,
-                        tx: 80,
-                        ty: 500,
-                        closeness: 40
-                    }
-                ]
-            },
-
-            {
-                draw: spriteLibrary.drawQuadCurves,
-                keyframes: [
-                    {
-                        frame: 50,
-                        tx: 300,
-                        ty: 600,
-                        sx: 0.5,
-                        sy: 0.5,
+                        tx: 200,
+                        ty: 200,
+                        closeness: 0,
+                        widthOfLine: 1,
                         ease: KeyframeTweener.inElasticBig
                     },
 
                     {
-                        frame: 100,
-                        tx: 300,
-                        ty: 0,
-                        sx: 3,
-                        sy: 0.25,
-                        ease: KeyframeTweener.inElasticBig
+                        frame: 400,
+                        tx: 200,
+                        ty: 200,
+                        widthOfLine: 2,
+                        closeness: -40,
+                        ease: KeyframeTweener.outInCubic
                     },
-
+                            
                     {
-                        frame: 150,
-                        tx: 300,
-                        ty: 600,
-                        sx: 0.5,
-                        sy: 0.5
-                    }
+                        frame: 600,
+                        tx: 200,
+                        ty: 200,
+                        widthOfLine: 1,
+                        closeness: 30,
+                    },
+                            
+                    {
+                        frame: 800,
+                        tx: 200,
+                        ty: 200,
+                        closeness: -10,
+                    },
                 ]
             }
         ];

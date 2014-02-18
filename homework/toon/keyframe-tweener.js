@@ -31,6 +31,12 @@ var KeyframeTweener = {
         var tc = ts * t;
         return b + c * (56 * tc * ts + -105 * ts * ts + 60 * tc + -10 * ts);
     },
+    
+    outInCubic: function (t, b, c, d) {
+        var ts = (t /= d ) * t;
+        var tc = ts * t;
+        return b + c * ( 4 * tc + -6 * ts + 3 * t);
+    },
 
     // The big one: animation initialization.  The settings parameter
     // is expected to be a JavaScript object with the following
