@@ -15,7 +15,7 @@
                 draw: spriteLibrary.drawMiniCircles,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
                     var radiusStart = startKeyframe.radius || 20,
-                   radiusDistance = (endKeyframe.radius || 20) - radiusStart;
+                        radiusDistance = (endKeyframe.radius || 20) - radiusStart;
                    
                     spriteLibrary.circles.radius = ease(currentTweenFrame,
                         radiusStart, radiusDistance, duration);

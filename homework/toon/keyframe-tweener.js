@@ -26,22 +26,22 @@ var KeyframeTweener = {
                 (-distance / 2) * ((percentComplete - 1) * (percentComplete - 3) - 1) + start;
     },
     
-    inElasticBig: function (t, b, c, d) {
-        var ts = (t /= d) * t;
-        var tc = ts * t;
-        return b + c * (56 * tc * ts + -105 * ts * ts + 60 * tc + -10 * ts);
+    inElasticBig: function (currentTime, start, distance, duration) {
+        var percentComplete = (currentTime /= duration) * currentTime;
+        var timeDistance = percentComplete * currentTime;
+        return start + distance * (56 * timeDistance * percentComplete + -105 * percentComplete * percentComplete + 60 * timeDistance + -10 * percentComplete);
     },
     
-    outElasticBig: function (t, b, c, d) {
-        var ts = (t /= d) * t;
-        var tc = ts * t;
-        return b + c * (56 * tc * ts + -175 * ts * ts + 200 * tc + -100 * ts + 20 * t);
+    outElasticBig: function (currentTime, start, distance, duration) {
+        var percentComplete = (currentTime /= duration) * currentTime;
+        var timeDistance = percentComplete * currentTime;
+        return start + distance * (56 * timeDistance * percentComplete + -175 * percentComplete * percentComplete + 200 * timeDistance + -100 * percentComplete + 20 * currentTime);
     },
     
-    outInCubic: function (t, b, c, d) {
-        var ts = (t /= d ) * t;
-        var tc = ts * t;
-        return b + c * ( 4 * tc + -6 * ts + 3 * t);
+    outInCubic: function (currentTime, start, distance, duration) {
+        var percentComplete = (currentTime /= duration) * currentTime;
+        var timeDistance = percentComplete * currentTime;
+        return start + distance * ( 4 * timeDistance + -6 * percentComplete + 3 * currentTime);
     },
 
     // The big one: animation initialization.  The settings parameter

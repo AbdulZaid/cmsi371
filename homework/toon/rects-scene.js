@@ -14,6 +14,7 @@
             {
                 draw: spriteLibrary.drawingRecs,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
+                   //this callback function deals with the width and the height of the rect.
                     var rectHeightStart = startKeyframe.recHeight || 100,
                         rectHeightEnd = (endKeyframe.recHeight || 100) - rectHeightStart,
                    
@@ -72,6 +73,8 @@
     // Finally, we initialize the engine.  Mainly, it needs
     // to know the rendering context to use.  And the animations
     // to display, of course.
+    // Also, setting a background function to be calledd in order to provide a custom background
+    // for the scene.
     KeyframeTweener.initialize({
         renderingContext: canvas.getContext("2d"),
         width: canvas.width,
