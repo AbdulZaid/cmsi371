@@ -31,7 +31,7 @@
                     {
                         frame: 0,
                         tx: 200,
-                        ty: 200,
+                        ty: 0,
                         closeness: -50,
                         numberOfStrings: 2,
                         ease: KeyframeTweener.quadEaseInAndOut
@@ -39,8 +39,8 @@
 
                     {
                         frame: 200,
-                        tx: 200,
-                        ty: 200,
+                        tx: 400,
+                        ty: 350,
                         numberOfStrings: -8,
                         closeness: 0,
                         ease: KeyframeTweener.inElasticBig
@@ -57,8 +57,8 @@
                             
                     {
                         frame: 600,
-                        tx: 200,
-                        ty: 200,
+                        tx: 800,
+                        ty: -200,
                         numberOfStrings: -8,
                         closeness: 30,
                     },
@@ -91,7 +91,7 @@
                
                 keyframes: [
                     {
-                        frame: 0,
+                        frame: 800,
                         tx: 10,
                         ty: 10,
                         recHeight: 100,
@@ -99,7 +99,7 @@
                     },
 
                     {
-                        frame: 100,
+                        frame: 900,
                         tx: 200,
                         ty: -100,
                         recHeight: 200,
@@ -107,7 +107,7 @@
                     },
 
                     {
-                        frame: 300,
+                        frame: 1100,
                         tx: 500,
                         ty: 100,
                         recHeight: -300,
@@ -115,7 +115,7 @@
                     },
 
                     {
-                        frame: 800,
+                        frame: 1600,
                         tx: 300,
                         ty: 0,
                         recWidth: 280,
@@ -142,7 +142,7 @@
 
                 keyframes: [
                     {
-                        frame: 0,
+                        frame: 800,
                         tx: 300,
                         ty: 400,
                         radius: 30,
@@ -150,7 +150,7 @@
                     },
 
                     {
-                        frame: 100,
+                        frame: 900,
                         tx: 850,
                         ty: 400,
                         radius: 50,
@@ -158,14 +158,14 @@
                     },
 
                     {
-                        frame: 400,
+                        frame: 1200,
                         tx: 200,
                         ty: 400,
-                        radius: 300,
+                        radius: 65,
                         ease: KeyframeTweener.outInCubic
                     },
                     {
-                        frame: 600,
+                        frame: 1400,
                         tx: 300,
                         ty: 0,
                         sx: 3,
@@ -186,7 +186,7 @@
         sprites: sprites,
         background: function (renderingContext) {
             renderingContext.save();
-            renderingContext.fillStyle = "white";
+            renderingContext.fillStyle = "black";
             renderingContext.fillRect(0,0, canvas.width, canvas.height);
             renderingContext.restore();
         }
