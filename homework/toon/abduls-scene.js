@@ -87,9 +87,9 @@
                           rectWidthStart, rectWidthEnd, duration);
 
                     spriteLibrary.rectsProperties.recHeight = ease(currentTweenFrame,rectHeightStart, rectHeightEnd, duration);
-               },
+                },
                
-               keyframes: [
+                keyframes: [
                     {
                         frame: 0,
                         tx: 10,
@@ -128,7 +128,52 @@
                         ty: 200,
                     },
                 ]
-            }
+            },
+                   
+            {
+                draw: spriteLibrary.drawMiniCircles,
+                callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
+                    var radiusStart = startKeyframe.radius || 20,
+                        radiusDistance = (endKeyframe.radius || 20) - radiusStart;
+
+                    spriteLibrary.circles.radius = ease(currentTweenFrame,
+                        radiusStart, radiusDistance, duration);
+                },
+
+                keyframes: [
+                    {
+                        frame: 0,
+                        tx: 300,
+                        ty: 400,
+                        radius: 30,
+                        ease: KeyframeTweener.inElasticBig
+                    },
+
+                    {
+                        frame: 100,
+                        tx: 850,
+                        ty: 400,
+                        radius: 50,
+                        ease: KeyframeTweener.outElasticBig
+                    },
+
+                    {
+                        frame: 400,
+                        tx: 200,
+                        ty: 400,
+                        radius: 300,
+                        ease: KeyframeTweener.outInCubic
+                    },
+                    {
+                        frame: 600,
+                        tx: 300,
+                        ty: 0,
+                        sx: 3,
+                        sy: 0.8,
+                    },
+
+                ]
+            },
         ];
     
     // Finally, we initialize the engine.  Mainly, it needs
