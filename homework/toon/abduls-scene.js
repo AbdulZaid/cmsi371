@@ -30,44 +30,44 @@
                 keyframes: [
                     {
                         frame: 0,
-                        tx: 200,
-                        ty: 0,
-                        closeness: -50,
-                        numberOfStrings: 2,
+                        tx: -200,
+                        ty: 200,
+                        //closeness: -50,
+                        numberOfStrings: 200,
                         ease: KeyframeTweener.quadEaseInAndOut
                     },
 
                     {
                         frame: 200,
-                        tx: 400,
-                        ty: 350,
-                        numberOfStrings: -8,
-                        closeness: 0,
+                        tx: -420,
+                        ty: 10,
+                        //closeness: 0,
+                        numberOfStrings: 2,
                         ease: KeyframeTweener.inElasticBig
                     },
 
                     {
                         frame: 400,
-                        tx: 200,
+                        tx: -400,
                         ty: 200,
-                        numberOfStrings: 5,
-                        closeness: -40,
+                        numberOfStrings: 19,
+                        closeness: 0,
                         ease: KeyframeTweener.outInCubic
                     },
                             
                     {
                         frame: 600,
-                        tx: 800,
-                        ty: -200,
-                        numberOfStrings: -8,
-                        closeness: 30,
+                        tx: 0,
+                        ty: 20,
+                        numberOfStrings: 10,
+                        closeness: 20,
                     },
                             
                     {
                         frame: 800,
-                        tx: 200,
+                        tx: -200,
                         ty: 200,
-                        numberOfStrings: 0,
+                        numberOfStrings: -4,
                         closeness: -10,
                     },
                 ]
