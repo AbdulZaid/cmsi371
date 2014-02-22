@@ -32,8 +32,7 @@
                         frame: 0,
                         tx: -200,
                         ty: 200,
-                        //closeness: -50,
-                        numberOfStrings: 200,
+                        numberOfStrings: 19,
                         ease: KeyframeTweener.quadEaseInAndOut
                     },
 
@@ -41,7 +40,6 @@
                         frame: 200,
                         tx: -420,
                         ty: 10,
-                        //closeness: 0,
                         numberOfStrings: 2,
                         ease: KeyframeTweener.inElasticBig
                     },
@@ -92,7 +90,7 @@
                 keyframes: [
                     {
                         frame: 800,
-                        tx: 10,
+                        tx: 20,
                         ty: 10,
                         recHeight: 100,
                         ease: KeyframeTweener.outInCubic
