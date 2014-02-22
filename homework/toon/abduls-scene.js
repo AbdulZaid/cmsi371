@@ -14,6 +14,7 @@
             {
                 draw: spriteLibrary.drawQuadCurves,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
+                   //this callback function deals with the closeness and width of lines in the quadCurves.
                     var closenessStart = startKeyframe.closeness || 6,
                         closenessDistance = (endKeyframe.closeness || 6) - closenessStart,
                    
@@ -22,7 +23,7 @@
 
                    spriteLibrary.curves.widthOfLine = ease(currentTweenFrame,
                         stringsStart, stringsEnd, duration);
-                   
+
                    spriteLibrary.curves.closeness = ease(currentTweenFrame,
                         closenessStart, closenessDistance, duration);
                 },
@@ -33,6 +34,7 @@
                         tx: -200,
                         ty: 200,
                         numberOfStrings: 19,
+                        sx: 1,
                         ease: KeyframeTweener.quadEaseInAndOut
                     },
 
@@ -50,6 +52,7 @@
                         ty: 200,
                         numberOfStrings: 19,
                         closeness: 0,
+                        sy: 0.08,
                         ease: KeyframeTweener.outInCubic
                     },
                             
@@ -63,6 +66,7 @@
                             
                     {
                         frame: 800,
+                        sy: 0.3,
                         tx: -200,
                         ty: 200,
                         numberOfStrings: -4,
@@ -90,7 +94,7 @@
                 keyframes: [
                     {
                         frame: 800,
-                        tx: 20,
+                        tx: 10,
                         ty: 10,
                         recHeight: 100,
                         ease: KeyframeTweener.outInCubic
@@ -117,6 +121,8 @@
                         tx: 300,
                         ty: 0,
                         recWidth: 280,
+                        sx: 0.5,
+                        sy: 0.3,
                         ease: KeyframeTweener.quadEaseInAndOut
                     },
 
@@ -131,6 +137,7 @@
             {
                 draw: spriteLibrary.drawMiniCircles,
                 callback: function (ease, startKeyframe, endKeyframe, currentTweenFrame, duration) {
+                   //this callback function deals with the radius of the circle.
                     var radiusStart = startKeyframe.radius || 20,
                         radiusDistance = (endKeyframe.radius || 20) - radiusStart;
 
@@ -159,7 +166,7 @@
                         frame: 1200,
                         tx: 200,
                         ty: 400,
-                        radius: 65,
+                        radius: 150,
                         ease: KeyframeTweener.outInCubic
                     },
                     {

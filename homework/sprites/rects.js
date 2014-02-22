@@ -7,11 +7,12 @@
     var rectsProperties = {
             widthOfLine: 3,
             color: {green:"green", red:"red", blue:"blue", yellow:"yellow"},
-            cords: {x:300, y:400}, // JD: Watch your capitalization!
+            cords: {x:300, y:400},
             recWidth: 150,
             recHeight: 100,
             numOfRects: 300,
-            lineJoin: {round: "round", bevel:"bevel", miter: "miter"}
+            lineJoin: {round: "round", bevel:"bevel", miter: "miter"},
+            rectStyle:"red"
         },
 
         //wrapping up the drawing methods and properties into one function.
@@ -19,12 +20,12 @@
             renderingContext.beginPath();
             renderingContext.lineWidth = rectsProperties.widthOfLine;
             renderingContext.strokeStyle = rectsProperties.color.blue;
+            renderingContext.fillStyle = rectsProperties.rectStyle;
             renderingContext.rect(rectsProperties.cords.x, rectsProperties.cords.y, rectsProperties.recWidth,rectsProperties.recHeight);
+            renderingContext.fill();      //Display the work.
             renderingContext.stroke();
         },
 
-        // JD: Same note here about how to structure this code for
-        //     reusability with the keyframe animation library.
         drawingRecs = function (renderingContext) {
             //calling the function and chaning its scale and translate.
             for(var x =100; x <= 300; x += rectsProperties.numOfRects) {
@@ -33,7 +34,7 @@
                 renderingContext.scale(1, 0.9);
                 renderingContext.translate(10,10);
                 drawRects(renderingContext);
-
+                
             }
         },
  
