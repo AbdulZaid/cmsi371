@@ -25,7 +25,7 @@
 
     // Draw the top of the cube.
     renderingContext.beginPath();
-    renderingContext.fillStyle = "rgb(140, 140, 140)";
+    renderingContext.fillStyle = gradient;
     renderingContext.moveTo(300, 300);
     renderingContext.lineTo(335, 265);
     renderingContext.lineTo(435, 265);
@@ -40,7 +40,7 @@
 
     // Draw the right side of the cube.
     renderingContext.beginPath();
-    renderingContext.fillStyle = "rgb(79, 79, 79)";
+    renderingContext.fillStyle = gradient;
     renderingContext.moveTo(435, 265);
     renderingContext.lineTo(435, 355);
     renderingContext.lineTo(400, 400);
@@ -64,4 +64,15 @@
             0, 0
         );
     });
+ 
+    $("#apply-filter-rbgColors").click(function () {
+        renderingContext.putImageData(
+            Nanoshop.applyFilter(
+            renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                Nanoshop.rbgColors),
+                0,
+                0
+        );
+    });
+ 
 }());

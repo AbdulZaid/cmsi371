@@ -10,7 +10,7 @@
     Primitives.fillRect(renderingContext, 5, 5, 200, 100);
     Primitives.fillRect(renderingContext, 210, 5, 200, 100, [0, 100, 255]);
     Primitives.fillRect(renderingContext, 415, 5, 200, 100,
-            [120, 0, 0], [0, 255, 0]);
+            [120, 0, 0], [0, 80, 0]);
     Primitives.fillRect(renderingContext, 620, 5, 200, 100,
             [0, 0, 200], [0, 255, 0], [190, 140, 0]);
     Primitives.fillRect(renderingContext, 825, 5, 200, 100,

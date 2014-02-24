@@ -26,5 +26,10 @@ var Nanoshop = {
         }
 
         return imageData;
+    },
+    
+    rbgColors: function (r, g, b, a) {
+        return [b, r, g, a];
     }
+    
 };
