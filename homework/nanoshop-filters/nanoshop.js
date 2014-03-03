@@ -28,8 +28,17 @@ var Nanoshop = {
         return imageData;
     },
     
+	darkner: function (r, g, b, a) {
+        return [r / 2, g / 2, b / 2, a];
+    },
+    
     rbgColors: function (r, g, b, a) {
         return [b, r, g, a];
+        },
+    
+    makeLighter: function (r, g, b, a) {
+        return [b * 2, r * 2, g * 2, a * 2];
     }
+    
     
 };

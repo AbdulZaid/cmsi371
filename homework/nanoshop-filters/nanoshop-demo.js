@@ -55,24 +55,19 @@
         // Filter time.
         renderingContext.putImageData(
             Nanoshop.applyFilter(
-                renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                // This is a basic "darkener."
-                function (r, g, b, a) {
-                    return [r / 2, g / 2, b / 2, a];
-                }
-            ),
-            0, 0
-        );
+                renderingContext.getImageData(0, 0, canvas.width, canvas.height), Nanoshop.darkner),0, 0);
     });
  
     $("#apply-filter-rbgColors").click(function () {
         renderingContext.putImageData(
-            Nanoshop.applyFilter(
-            renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                Nanoshop.rbgColors),
-                0,
-                0
-        );
+        	Nanoshop.applyFilter(
+            	renderingContext.getImageData(0, 0, canvas.width, canvas.height), Nanoshop.rbgColors), 0, 0);
     });
+ 
+	$("#apply-filter-makeLighter").click(function () {
+		renderingContext.putImageData(
+			Nanoshop.applyFilter(
+				renderingContext.getImageData(0, 0, canvas.width, canvas.height), Nanoshop.makeLighter), 0, 0);
+	});
  
 }());
