@@ -34,7 +34,7 @@ var Nanoshop = {
     
     rbgColors: function (r, g, b, a) {
         return [b, r, g, a];
-        },
+    },
     
     makeLighter: function (r, g, b, a) {
         return [b * 2, r * 2, g * 2, a * 2];
