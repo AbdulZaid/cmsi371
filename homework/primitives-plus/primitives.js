@@ -240,6 +240,9 @@ var Primitives = {
 
     // The final, optimized Bresenham algorithm: here, we presave
     // most values, and adjust them to compare only to zero.
+    // A dash argument of 5, for example, would draw
+    // 5 pixels first, then skip a pixel, then another 5,
+    // then skip, etc. (like this: — — — —)
     lineBresenham: function (context, x1, y1, x2, y2, dash, color) {
         var x = x1,
             y = y1,
