@@ -36,6 +36,53 @@ var NanoshopNeighborhood = {
 
         return [ rTotal / 9, gTotal / 9, bTotal / 9, aTotal / 9 ];
     },
+    
+    /*
+     * A function that fades the image until it disappears
+    */
+    fader: function (rgbaNeighborhood) {
+        var rTotal = 0,
+        	gTotal = 0,
+        	bTotal = 0,
+        	aTotal = 0,
+        	i;
+        
+        for (i = 0; i < 9; i += 1) {
+            rTotal = rgbaNeighborhood[i].r;
+            gTotal = rgbaNeighborhood[i].g;
+            bTotal = rgbaNeighborhood[i].b;
+            aTotal = rgbaNeighborhood[i].a;
+
+            rTotal = Math.random() * rTotal;
+            gTotal = Math.random() * gTotal;
+            bTotal = Math.random() * bTotal;
+            aTotal = Math.random() * aTotal;
+        }
+        //from red to fade
+        return [rTotal * 2, gTotal, bTotal * 2, aTotal ];
+    },
+    
+    /*
+     * A function that changes the pixels of the image to the color Cyan.
+     */
+    colorCyan: function (rgbaNeighborhood) {
+        var rTotal = 0,
+        	gTotal = 0,
+        	bTotal = 0,
+        	aTotal = 0,
+        	i;
+        
+		for(i =0; i < 9; i +=1)  {
+            rTotal += rgbaNeighborhood[i].r * 0.23;
+            gTotal += rgbaNeighborhood[i].g * 0.23 + i;
+            bTotal += rgbaNeighborhood[i].b + i;
+            aTotal += rgbaNeighborhood[i].a + i;
+
+        }
+        
+        return [rTotal/9, gTotal/2, bTotal/2, aTotal / 9];
+
+    },
 
     /*
      * Applies the given filter to the given ImageData object,

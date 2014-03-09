@@ -93,8 +93,8 @@
             0, 0
         );
     });
+ 
     $("#apply-averager-button").click(function () {
-        // Filter time.
         renderingContext.putImageData(
             NanoshopNeighborhood.applyFilter(
                 renderingContext,
@@ -104,24 +104,24 @@
             0, 0
         );
     });
- 	$("#apply-averager-button").click(function () {
-        // Filter time.
+ 
+ 	$("#apply-fader-button").click(function () {
         renderingContext.putImageData(
             NanoshopNeighborhood.applyFilter(
                 renderingContext,
                 renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                NanoshopNeighborhood.averager
+                NanoshopNeighborhood.fader
             ),
             0, 0
         );
     });
- 	$("#apply-averager-button").click(function () {
-        // Filter time.
+ 
+ 	$("#apply-colorCyan-button").click(function () {
         renderingContext.putImageData(
             NanoshopNeighborhood.applyFilter(
                 renderingContext,
                 renderingContext.getImageData(0, 0, canvas.width, canvas.height),
-                NanoshopNeighborhood.averager
+                NanoshopNeighborhood.colorCyan
             ),
         	0, 0
         );
