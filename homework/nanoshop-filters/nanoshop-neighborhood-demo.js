@@ -41,7 +41,7 @@
     // Adapted from original code by Tyler Nichols.
     gradient = renderingContext.createRadialGradient(120, 120, 15, 120, 120, 75);
     gradient.addColorStop(0, "rgb(255, 102, 102)");
-    gradient.addColorStop(1, "red");
+    gradient.addColorStop(1, "brown");
 
     // Draw the sphere with a radial gradient.
     renderingContext.beginPath();
@@ -89,9 +89,42 @@
                 renderingContext,
                 renderingContext.getImageData(0, 0, canvas.width, canvas.height),
                 NanoshopNeighborhood.darkener
-                //NanoshopNeighborhood.averager // Convenience comment for easy switching.
             ),
             0, 0
         );
     });
+    $("#apply-averager-button").click(function () {
+        // Filter time.
+        renderingContext.putImageData(
+            NanoshopNeighborhood.applyFilter(
+                renderingContext,
+                renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                NanoshopNeighborhood.averager 
+            ),
+            0, 0
+        );
+    });
+ 	$("#apply-averager-button").click(function () {
+        // Filter time.
+        renderingContext.putImageData(
+            NanoshopNeighborhood.applyFilter(
+                renderingContext,
+                renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                NanoshopNeighborhood.averager
+            ),
+            0, 0
+        );
+    });
+ 	$("#apply-averager-button").click(function () {
+        // Filter time.
+        renderingContext.putImageData(
+            NanoshopNeighborhood.applyFilter(
+                renderingContext,
+                renderingContext.getImageData(0, 0, canvas.width, canvas.height),
+                NanoshopNeighborhood.averager
+            ),
+        	0, 0
+        );
+    });
+ 
 }());

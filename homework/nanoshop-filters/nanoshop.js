@@ -37,7 +37,7 @@ var Nanoshop = {
     },
     
     makeLighter: function (r, g, b, a) {
-        return [b * 2, r * 2, g * 2, a * 2];
+        return [r * 2, g * 2, b * 2, a * 2];
     }
     
     
