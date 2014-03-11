@@ -293,6 +293,7 @@ var Primitives = {
         this.setPixel(context, xc - y, yc - x, color[0], color[1], color[2]);
     },
 
+    
     // First, the most naive possible implementation: circle by trigonometry.
     circleTrig: function (context, xc, yc, r, color) {
         var theta = 1 / r,
@@ -311,7 +312,7 @@ var Primitives = {
             y = x * s + y * c;
         }
     },
-
+    
     // Now DDA.
     circleDDA: function (context, xc, yc, r, color) {
         var epsilon = 1 / r,
