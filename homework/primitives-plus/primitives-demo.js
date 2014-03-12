@@ -22,20 +22,13 @@
     Primitives.lineBresenham(renderingContext, 415, 210, 614, 110, 10);
     Primitives.lineBresenham(renderingContext, 620, 210, 819, 110, 15);
     Primitives.lineBresenham(renderingContext, 825, 210, 1024, 110, 30);
- 
- // A few circles.
-//    Primitives.circleTrig(renderingContext, 105, 315, 100,[128, 0, 128]);
-//    Primitives.circleDDA(renderingContext, 310, 315, 100, [80, 0, 80]);
-//    Primitives.circleBres1(renderingContext, 515, 315, 100, [255, 30, 150]);
-//    Primitives.circleBres2(renderingContext, 720, 315, 100, [50, 0, 50]);
-//    Primitives.circleBres3(renderingContext, 925, 315, 100, [155, 0, 0]);
- 
+  
      // A few circles.
-     Primitives.circleTrig(renderingContext, 105, 315, 100, [0, 255, 0], [128, 0, 128]);
-     Primitives.circleDDA(renderingContext, 310, 315, 100, [80, 0, 80], [0, 200, 150]);
-     Primitives.circleBres1(renderingContext, 515, 315, 100, [255, 30, 150], [200, 255, 0]);
-     Primitives.circleBres2(renderingContext, 720, 315, 100, [50, 0, 50], [155, 0, 0]);
-     Primitives.circleBres3(renderingContext, 925, 315, 100, [10, 10, 10], [200, 200, 200]);
+     Primitives.circleTrig(renderingContext, 105, 315, 100, [0, 255, 170], [128, 255, 128]);
+     Primitives.circleDDA(renderingContext, 310, 315, 100, [80, 100, 250], [0, 50, 200]);
+     Primitives.circleBres1(renderingContext, 515, 315, 100, [255, 30, 150], [190, 140, 0]);
+     Primitives.circleBres2(renderingContext, 720, 315, 100, [200, 150, 150], [155, 180, 40]);
+     Primitives.circleBres3(renderingContext, 925, 315, 100, [190, 140, 0], [60, 0, 300]);
 
     // And finally...polygon fills!
     renderingContext.save();
