@@ -292,39 +292,45 @@ var Primitives = {
 //        this.setPixel(context, xc - y, yc + x, color[0], color[1], color[2]);
 //        this.setPixel(context, xc - y, yc - x, color[0], color[1], color[2]);
 //    },
-        color = color || [0, 0, 200];
-        color2 = color2 || [0, 0, 200];
+        var color = color || [0, 0, 200],
+        	color2 = color2 || [0, 200, 200];
 
-        var colorBase1 = [0, 0,200],
-        colorBase2 = [0,0,200],
-        colorTop = [0,200,0],
-        diameter = 180,
-        colorChange = [(color[0] - colorTop[0]) / diameter,
-                       (color[1] - colorTop[1]) / diameter,
-                       (color[2] - colorTop[2]) / diameter,
-                       (color2[0] - colorTop[0]) / diameter,
-                       (color2[1] - colorTop[1]) / diameter,
-                       (color2[2] - colorTop[2]) / diameter];
+        var colorBase1 = [150, 50,200],
+        	colorBase2 = [150,50,200],
+        	colorTop = [20,200,100],
+        	diameter = 220,
+        	colorChange = [(color[0] - colorTop[0]) / diameter,
+            	           (color[1] - colorTop[1]) / diameter,
+                	       (color[2] - colorTop[2]) / diameter,
+                    	   (color2[0] - colorTop[0]) / diameter,
+                           (color2[1] - colorTop[1]) / diameter,
+            	           (color2[2] - colorTop[2]) / diameter];
         
         x = Math.round(x);
         y = Math.round(y);
         
-        for (i = (yc+y); i >( yc-y ); i -= 1) {
+        for (i = (yc+y); i > (yc-y); i -= 1) {
             this.setPixel(context, xc-x, i, colorBase1[0], colorBase1[1], colorBase1[2]);
             this.setPixel(context, xc+x, i, colorBase1[0], colorBase1[1], colorBase1[2]);
             colorBase1[0] -= colorChange[0];
             colorBase1[1] -= colorChange[1];
             colorBase1[2] -= colorChange[2];
+            colorBase1[0] -= colorChange[3];
+            colorBase1[1] -= colorChange[4];
+            colorBase1[2] -= colorChange[5];
         }
         
-        for (i = (yc+x); i >( yc-x ); i -= 1) {
+        for (i = (yc+x); i > (yc-x); i -= 1) {
             this.setPixel(context, xc-y, i, colorBase2[0], colorBase2[1], colorBase2[2]);
             this.setPixel(context, xc+y, i, colorBase2[0], colorBase2[1], colorBase2[2]);
             colorBase2[0] -= colorChange[0];
             colorBase2[1] -= colorChange[1];
             colorBase2[2] -= colorChange[2];
+            colorBase2[0] -= colorChange[3];
+            colorBase2[1] -= colorChange[4];
+            colorBase2[2] -= colorChange[5];
+
         }
-        
     },
     
     // First, the most naive possible implementation: circle by trigonometry.
