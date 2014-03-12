@@ -281,7 +281,7 @@ var Primitives = {
      * permutations of that eighth's coordinates.  So we define a helper
      * function that all of the circle implementations will use...
      */
-    plotCirclePoints: function (context, xc, yc, x, y, color) {
+    plotCirclePoints: function (context, xc, yc, x, y, color, color2) {
 //        color = color || [0, 0, 0];
 //        this.setPixel(context, xc + x, yc + y, color[0], color[1], color[2]);
 //        this.setPixel(context, xc + x, yc - y, color[0], color[1], color[2]);
@@ -293,14 +293,37 @@ var Primitives = {
 //        this.setPixel(context, xc - y, yc - x, color[0], color[1], color[2]);
 //    },
         color = color || [0, 0, 200];
-        var colorBase1 = [0,0,200],
+        color2 = color2 || [0, 0, 200];
+
+        var colorBase1 = [0, 0,200],
         colorBase2 = [0,0,200],
         colorTop = [0,200,0],
         diameter = 180,
         colorChange = [(color[0] - colorTop[0]) / diameter,
                        (color[1] - colorTop[1]) / diameter,
-                       (color[2] - colorTop[2]) / diameter];
-
+                       (color[2] - colorTop[2]) / diameter,
+                       (color2[0] - colorTop[0]) / diameter,
+                       (color2[1] - colorTop[1]) / diameter,
+                       (color2[2] - colorTop[2]) / diameter];
+        
+        x = Math.round(x);
+        y = Math.round(y);
+        
+        for (i = (yc+y); i >( yc-y ); i -= 1) {
+            this.setPixel(context, xc-x, i, colorBase1[0], colorBase1[1], colorBase1[2]);
+            this.setPixel(context, xc+x, i, colorBase1[0], colorBase1[1], colorBase1[2]);
+            colorBase1[0] -= colorChange[0];
+            colorBase1[1] -= colorChange[1];
+            colorBase1[2] -= colorChange[2];
+        }
+        
+        for (i = (yc+x); i >( yc-x ); i -= 1) {
+            this.setPixel(context, xc-y, i, colorBase2[0], colorBase2[1], colorBase2[2]);
+            this.setPixel(context, xc+y, i, colorBase2[0], colorBase2[1], colorBase2[2]);
+            colorBase2[0] -= colorChange[0];
+            colorBase2[1] -= colorChange[1];
+            colorBase2[2] -= colorChange[2];
+        }
         
     },
     
