@@ -282,17 +282,27 @@ var Primitives = {
      * function that all of the circle implementations will use...
      */
     plotCirclePoints: function (context, xc, yc, x, y, color) {
-        color = color || [0, 0, 0];
-        this.setPixel(context, xc + x, yc + y, color[0], color[1], color[2]);
-        this.setPixel(context, xc + x, yc - y, color[0], color[1], color[2]);
-        this.setPixel(context, xc + y, yc + x, color[0], color[1], color[2]);
-        this.setPixel(context, xc + y, yc - x, color[0], color[1], color[2]);
-        this.setPixel(context, xc - x, yc + y, color[0], color[1], color[2]);
-        this.setPixel(context, xc - x, yc - y, color[0], color[1], color[2]);
-        this.setPixel(context, xc - y, yc + x, color[0], color[1], color[2]);
-        this.setPixel(context, xc - y, yc - x, color[0], color[1], color[2]);
-    },
+//        color = color || [0, 0, 0];
+//        this.setPixel(context, xc + x, yc + y, color[0], color[1], color[2]);
+//        this.setPixel(context, xc + x, yc - y, color[0], color[1], color[2]);
+//        this.setPixel(context, xc + y, yc + x, color[0], color[1], color[2]);
+//        this.setPixel(context, xc + y, yc - x, color[0], color[1], color[2]);
+//        this.setPixel(context, xc - x, yc + y, color[0], color[1], color[2]);
+//        this.setPixel(context, xc - x, yc - y, color[0], color[1], color[2]);
+//        this.setPixel(context, xc - y, yc + x, color[0], color[1], color[2]);
+//        this.setPixel(context, xc - y, yc - x, color[0], color[1], color[2]);
+//    },
+        color = color || [0, 0, 200];
+        var colorBase1 = [0,0,200],
+        colorBase2 = [0,0,200],
+        colorTop = [0,200,0],
+        diameter = 180,
+        colorChange = [(color[0] - colorTop[0]) / diameter,
+                       (color[1] - colorTop[1]) / diameter,
+                       (color[2] - colorTop[2]) / diameter];
 
+        
+    },
     
     // First, the most naive possible implementation: circle by trigonometry.
     circleTrig: function (context, xc, yc, r, color) {
