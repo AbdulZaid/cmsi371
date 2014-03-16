@@ -46,7 +46,9 @@ var NanoshopNeighborhood = {
         	bTotal = 0,
         	aTotal = 0,
         	i;
-        
+
+        // JD: Note that the end result of this loop is based completely
+        //     on the last pixel.
         for (i = 0; i < 9; i += 1) {
             rTotal = rgbaNeighborhood[i].r;
             gTotal = rgbaNeighborhood[i].g;

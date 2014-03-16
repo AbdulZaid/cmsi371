@@ -251,10 +251,12 @@ var Primitives = {
             k1 = dy << 1, // dy divided by 2.
             err = k1 - dx,
             k2 = (dy - dx) << 1, // dy - dx divided by 2.
-        	dashes = dash;
+        	dashes = dash; // JD: Not the best variable name.  I mean, what does
+                           //     the plural form really indicate here?
+
         color = color || [0, 0, 0];
         while (true) {
-            if(dashes > 0) {
+            if(dashes > 0) { // JD: Alternatively, "if (dashes) {..."
             	this.setPixel(context, x, y, color[0], color[1], color[2]);
             	dashes --;
             } else if (dashes === 0) {
@@ -285,10 +287,20 @@ var Primitives = {
         var color = color || [0, 0, 200],
         	color2 = color2 || [0, 200, 200];
 
+        // JD: Aaaaaand here's why the colors are off.  You are accepting color and
+        //     color2 parameters *but you aren't drawing with them*.  Instead, you
+        //     are using the hardcoded colors below.
         var colorBase1 = [150, 50,200],
         	colorBase2 = [150,50,200],
         	colorTop = [60,150,30],
-        	diameter = 190,
+        	diameter = 190, // JD: Watch out!  This hardcoded value can't be right!
+
+            // JD: You are using the color parameters here but just here, to
+            //     determine a color's rate of change---*but not the color
+            //     itself*.  I don't see why you ended up using those hardcoded
+            //     colors anyway...it seems that if you just stick with color
+            //     and color2, you'll get the right gradients here.  (at least
+            //     based on the colors that are passed into this function)
         	colorChange = [(color[0] - colorTop[0]) / diameter,
             	           (color[1] - colorTop[1]) / diameter,
                 	       (color[2] - colorTop[2]) / diameter,
