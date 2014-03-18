@@ -4,6 +4,59 @@
  * converting these into "raw" coordinate arrays.
  */
 var Shapes = {
+        /*
+         * Returns the vertices and indices for a sphere.
+         */
+    sphere: function () {
+        var radius = 0.5,
+            theta,
+            sinTheta,
+            cosTheta,
+            phi,
+            latitudeBelts = 40,
+            longitudeBelts = 40,
+            vertices = [],
+            indices = [],
+            top,
+            bottom,
+            x,
+            y,
+            z,
+            i,
+            j,
+            k,
+            l,
+            sphereValues = {};
+        
+        for (i = 0; i < latitudeBelts + 1; i += 1) {
+            theta = (i * Math.PI) / latitudeBelts;
+            sinTheta = Math.sin(theta);
+            cosTheta = Math.cos(theta);
+            
+            for (j = 0; j < longitudeBelts + 1; j += 1) {
+                phi = (j * 2 * Math.PI) / longitudeBelts;
+                x = radius * Math.cos(phi) * sinTheta;
+                y = radius * cosTheta;
+                z = radius * Math.sin(phi) * sinTheta;
+                //pushes to the vertices the measured x, y, and z.
+                vertices.push([x, y, z]);
+            }
+        }
+        
+        for (i = 0; i < latitudeBelts + 1; i += 1) {
+            for (j = 0; j < longitudeBelts + 1; j += 1) {
+                top = (i * (longitudeBelts + 1)) + j;
+                bottom = top + longitudeBelts + 1;
+                //pushes to the indices array.
+                indices.push([top, bottom, top + 1]);
+                indices.push([bottom, bottom + 1, top + 1]);
+            }
+        }
+        
+        sphereValues.vertices = vertices;
+        sphereValues.indices = indices;
+        return sphereValues;
+    },
     /*
      * Returns the vertices for a small icosahedron.
      */
