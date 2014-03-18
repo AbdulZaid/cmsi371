@@ -63,16 +63,16 @@ var Shapes = {
             indices: [
                 [0, 1, 3], // right side triangles.
                 [2, 0, 3],
-//                [7, 2, 3], // top triangles.
-//                [6, 7, 2],
+                [7, 2, 3], // top triangles.
+                [6, 7, 2],
                 [4, 0, 2], //back side trinagles.
                 [6, 4, 2],
                 [5, 1, 7], //front side triangles.
                 [1, 3, 7],
                 [4, 5, 7], // left side triangles.
                 [6, 4, 7],
-//                [4, 5, 0],
-//                [5, 1, 0]
+                [4, 5, 0],
+                [5, 1, 0]
             ]
         };
     },
