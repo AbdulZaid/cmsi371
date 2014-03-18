@@ -142,11 +142,11 @@
 //            mode: gl.LINES
 //        },
                      
-//        {
-//            color: { r: 1.0, g: 0.0, b: 0.3 },
-//            vertices: Shapes.toRawLineArray(Shapes.sphere()),
-//            mode: gl.LINES
-//        },
+        {
+            color: { r: 1.0, g: 0.0, b: 0.3 },
+            vertices: Shapes.toRawLineArray(Shapes.sphere()),
+            mode: gl.LINES
+        },
                      
         {
             color: { r: 0.0, g: 0.0, b: 0.3 },

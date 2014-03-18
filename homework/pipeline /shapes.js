@@ -8,8 +8,8 @@ var Shapes = {
      * Returns the vertices for a cube.
      */
     cube: function () {
-        var X = 0.5,
-            Y = 0.5,
+        var X = 0.3,
+            Y = 0.36,
             Z = 0.5;
             
         return {
