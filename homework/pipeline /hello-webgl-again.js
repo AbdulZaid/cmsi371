@@ -152,6 +152,12 @@
             color: { r: 0.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawTriangleArray(Shapes.cube()),
             mode: gl.TRIANGLES
+        },
+        
+        {
+            color: { r: 0.0, g: 1.0, b: 0.0 },
+            vertices: Shapes.toRawTriangleArray(Shapes.field()),
+            mode: gl.TRIANGLES
         }
     ];
 
