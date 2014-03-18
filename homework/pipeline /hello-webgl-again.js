@@ -150,8 +150,8 @@
                      
         {
             color: { r: 0.0, g: 0.0, b: 0.3 },
-            vertices: Shapes.toRawLineArray(Shapes.cube()),
-            mode: gl.LINES
+            vertices: Shapes.toRawTriangleArray(Shapes.cube()),
+            mode: gl.TRIANGLES
         }
     ];
 
