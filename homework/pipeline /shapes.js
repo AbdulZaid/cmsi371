@@ -4,6 +4,40 @@
  * converting these into "raw" coordinate arrays.
  */
 var Shapes = {
+	
+	field: function () {
+        var X = 0.95,
+          Y = 0.45,
+          Z = -0.05;
+
+        return {
+          vertices: [
+              [X, Y, Z],
+              [X, -Y, Z],
+              [-X, -Y, Z],
+              [-X, Y, Z],
+              [X, Y, -Z],
+              [X, -Y, -Z],
+              [-X, -Y, -Z],
+              [-X, Y, -Z]
+          ],
+
+          indices: [
+              [ 0, 1, 3 ], 
+              [ 3, 2, 1 ],
+              [ 0, 1, 5 ], // Sides
+              [ 5, 4, 0 ],
+              [ 3, 2, 6 ],
+              [ 6, 7, 3 ],
+              [ 0, 3, 4 ], // Top
+              [ 3, 4, 7 ],
+              [ 1, 2, 5 ], // Bottom
+              [ 2, 5, 6 ],
+              [ 4, 5, 6 ], // Back
+              [ 4, 6, 7 ]
+          ]
+        };
+    },
     /*
      * Returns the vertices for a cube.
      */
