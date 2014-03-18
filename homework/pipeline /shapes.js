@@ -4,7 +4,9 @@
  * converting these into "raw" coordinate arrays.
  */
 var Shapes = {
-	
+    /*
+     * Returns the vertices for a soccer field.
+     */
 	field: function () {
         var X = 0.45,
           	Y = 0.95,
@@ -39,7 +41,7 @@ var Shapes = {
         };
     },
     /*
-     * Returns the vertices for a cube.
+     * Returns the vertices for a cube. Later will be a soocer goal.
      */
     cube: function () {
         var X = 0.3,
@@ -75,7 +77,7 @@ var Shapes = {
         };
     },
         /*
-         * Returns the vertices and indices for a sphere.
+         * Returns the vertices and indices for a sphere. Later will be the ball to be scored.
          */
     sphere: function () {
         var radius = 0.5,
