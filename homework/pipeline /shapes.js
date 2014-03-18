@@ -4,6 +4,23 @@
  * converting these into "raw" coordinate arrays.
  */
 var Shapes = {
+    /*
+     * Returns the vertices for a cube.
+     */
+    cube: function () {
+        var X = 0.5,
+            Y = 0.5,
+            Z = 0.5;
+            
+        return {
+            vertices: [
+
+            ],
+                
+            indices: [
+            ]
+        };
+    },
         /*
          * Returns the vertices and indices for a sphere.
          */
