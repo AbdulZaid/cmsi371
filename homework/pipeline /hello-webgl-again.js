@@ -231,20 +231,20 @@
     /*
      * Displays an individual object.
      */
-    drawObject = function (object) {
+    drawObject = function (objectsToDraw) {
  
     	for (i = 0; i < objectsToDraw.length; i += 1) {
             // Set the varying colors.
-            gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].colorBuffer);
             gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
             // Set the varying vertex coordinates.
-            gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
-            gl.drawArrays(object.mode, 0, object.vertices.length / 3);
+            gl.drawArrays(objectsToDraw[i].mode, 0, objectsToDraw[i].vertices.length / 3);
      
             if (objectsToDraw[i].leafs) {
-                drawObjects(objectsToDraw[i].leafs);
+                drawObject(objectsToDraw[i].leafs);
             }
 		}
     };
@@ -260,9 +260,7 @@
         gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(getRotationMatrix(currentRotation, 0, 1, 0)));
 
         // Display the objects.
-        for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
-            drawObject(objectsToDraw[i]);
-        }
+        drawObject(objectsToDraw);
 
         // All done.
         gl.flush();
