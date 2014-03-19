@@ -76,9 +76,10 @@ var Shapes = {
             ]
         };
     },
-        /*
-         * Returns the vertices and indices for a sphere. Later will be the ball to be scored.
-         */
+    
+    /*
+     * Returns the vertices and indices for a sphere. Later will be the ball to be scored.
+     */
     sphere: function () {
         var radius = 0.5,
             theta,

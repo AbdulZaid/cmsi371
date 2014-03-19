@@ -154,14 +154,22 @@
         {
             color: { r: 0.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawTriangleArray(Shapes.cube()),
-            mode: gl.TRIANGLES
-        },
-        
-        {
-            color: { r: 0.0, g: 1.0, b: 0.0 },
-            vertices: Shapes.toRawTriangleArray(Shapes.field()),
-            mode: gl.TRIANGLES
+            mode: gl.TRIANGLES,
+            //put it in here to test out the function.
+            leafs: [
+                {
+                    color: { r: 0.0, g: 1.0, b: 0.0 },
+                    vertices: Shapes.toRawTriangleArray(Shapes.field()),
+                    mode: gl.TRIANGLES
+                }
+            ]
+
         }
+//        {
+//            color: { r: 0.0, g: 1.0, b: 0.0 },
+//            vertices: Shapes.toRawTriangleArray(Shapes.field()),
+//            mode: gl.TRIANGLES
+//        }
     ];
 
     // Pass the vertices to WebGL.
@@ -266,11 +274,11 @@
         gl.flush();
     };
 
-    // Draw the initial scene.
-    drawScene();
- 
     // Send the vertices to WebGL.
     VerticiesPasser(objectsToDraw);
+
+    // Draw the initial scene.
+    drawScene();
  
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {
