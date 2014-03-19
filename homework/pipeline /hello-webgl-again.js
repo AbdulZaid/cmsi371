@@ -14,7 +14,10 @@
 
         // The shader program to use.
         shaderProgram,
-
+ 
+		// A function that passes all of the object's vertices to WebGL.
+        VerticiesPasser,
+ 
         // Utility variable indicating whether some fatal has occurred.
         abort = false,
 
@@ -182,6 +185,10 @@
             }
             objectsToDraw[i].colorBuffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].colors);
+ 
+            if (objectsToDraw[i].leafs && (objectsToDraw[i].leafs.length !== 0)) {
+            	VerticiesPasser(objectsToDraw[i].leafs);
+            }
         }
  	},
  
@@ -225,14 +232,21 @@
      * Displays an individual object.
      */
     drawObject = function (object) {
-        // Set the varying colors.
-        gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
-        gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
+ 
+    	for (i = 0; i < objectsToDraw.length; i += 1) {
+            // Set the varying colors.
+            gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
+            gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
-        // Set the varying vertex coordinates.
-        gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
-        gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
-        gl.drawArrays(object.mode, 0, object.vertices.length / 3);
+            // Set the varying vertex coordinates.
+            gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
+            gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
+            gl.drawArrays(object.mode, 0, object.vertices.length / 3);
+     
+            if (objectsToDraw[i].leafs) {
+                drawObjects(objectsToDraw[i].leafs);
+            }
+		}
     };
 
     /*
@@ -256,7 +270,10 @@
 
     // Draw the initial scene.
     drawScene();
-
+ 
+    // Send the vertices to WebGL.
+    VerticiesPasser(objectsToDraw);
+ 
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {
         if (currentInterval) {
