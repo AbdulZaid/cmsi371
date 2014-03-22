@@ -251,16 +251,15 @@ var Primitives = {
             k1 = dy << 1, // dy divided by 2.
             err = k1 - dx,
             k2 = (dy - dx) << 1, // dy - dx divided by 2.
-        	dashes = dash; // JD: Not the best variable name.  I mean, what does
-                           //     the plural form really indicate here?
+        	lineBreaks = dash; 
 
         color = color || [0, 0, 0];
         while (true) {
-            if(dashes > 0) { // JD: Alternatively, "if (dashes) {..."
+            if(lineBreaks) { 
             	this.setPixel(context, x, y, color[0], color[1], color[2]);
-            	dashes --;
-            } else if (dashes === 0) {
-                dashes = dash;
+            	lineBreaks --;
+            } else if (lineBreaks === 0) {
+                lineBreaks = dash;
             }
         	
             if (x === x2) {
