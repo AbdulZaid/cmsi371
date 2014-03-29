@@ -16,8 +16,6 @@
     Primitives.fillRect(renderingContext, 825, 5, 200, 100,
             [255, 0, 0], [255, 255, 0], [0, 200, 0], [0, 0, 100]);
 
-    // JD: Nice range of demos here.
-
     // Some line segments, with making all the lines dashed.
     Primitives.lineBresenham(renderingContext, 5, 210, 204, 110, 1);
     Primitives.lineBresenham(renderingContext, 210, 210, 409, 110, 5);
@@ -26,7 +24,6 @@
     Primitives.lineBresenham(renderingContext, 825, 210, 1024, 110, 30);
   
     // A few circles.
-    // JD: Uhhhhhhh---these colors don't correspond with what shows up onscreen.
     Primitives.circleTrig(renderingContext, 105, 315, 100, [0, 255, 0], [128, 0, 128]);
     Primitives.circleDDA(renderingContext, 310, 315, 100, [80, 0, 80], [0, 200, 150]);
     Primitives.circleBres1(renderingContext, 515, 315, 100, [255, 30, 150], [200, 255, 0]);

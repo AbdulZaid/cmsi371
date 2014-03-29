@@ -282,58 +282,54 @@ var Primitives = {
      * permutations of that eighth's coordinates.  So we define a helper
      * function that all of the circle implementations will use...
      */
-    plotCirclePoints: function (context, xc, yc, x, y, color, color2) {
-        var color = color || [0, 0, 200],
-        	color2 = color2 || [0, 200, 200];
+    plotCirclePoints: function (context, xc, yc, x, y, r, color1, color2) {
+        color1 = color1 || [0, 0, 0];
+        color2 = color2 || [0, 0, 0];
+        var diameter = (2 * r),
+            redDifference = (color2[0] - color1[0]) / diameter ,
+            greenDifference = (color2[1] - color1[1]) / diameter,
+            blueDifference = (color2[2] - color1[2]) / diameter,
+            colorChange,
+            shiftOne = Math.ceil(yc + y) - (yc - r),
+            shiftTwo = Math.ceil(yc - y) - (yc - r),
+            shiftThree = Math.ceil(yc + x) - (yc - r),
+            shiftFour = Math.ceil(yc - x) - (yc - r),
+            i = x,
+            j = y,
 
-        // JD: Aaaaaand here's why the colors are off.  You are accepting color and
-        //     color2 parameters *but you aren't drawing with them*.  Instead, you
-        //     are using the hardcoded colors below.
-        var colorBase1 = [150, 50,200],
-        	colorBase2 = [150,50,200],
-        	colorTop = [60,150,30],
-        	diameter = 190, // JD: Watch out!  This hardcoded value can't be right!
+            colorChange = [color1[0] + redDifference * shiftOne,
+                           color1[1] + greenDifference * shiftOne,
+                           color1[2] + blueDifference * shiftOne,
+                           color1[0] + redDifference * shiftTwo, 
+                           color1[1] + greenDifference * shiftTwo,
+                           color1[2] + blueDifference * shiftTwo,
+                           color1[0] + redDifference * shiftThree,
+                           color1[1] + greenDifference * shiftThree,
+                           color1[2] + blueDifference * shiftThree,
+                           color1[0] + redDifference * shiftFour,
+                           color1[1] + greenDifference * shiftFour,
+                           color1[2] + blueDifference * shiftFour];
 
-            // JD: You are using the color parameters here but just here, to
-            //     determine a color's rate of change---*but not the color
-            //     itself*.  I don't see why you ended up using those hardcoded
-            //     colors anyway...it seems that if you just stick with color
-            //     and color2, you'll get the right gradients here.  (at least
-            //     based on the colors that are passed into this function)
-        	colorChange = [(color[0] - colorTop[0]) / diameter,
-            	           (color[1] - colorTop[1]) / diameter,
-                	       (color[2] - colorTop[2]) / diameter,
-                    	   (color2[0] - colorTop[0]) / diameter,
-                           (color2[1] - colorTop[1]) / diameter,
-            	           (color2[2] - colorTop[2]) / diameter];
-        
-        x = Math.round(x);
-        y = Math.round(y);
-        
-        for (i = (yc+y); i > (yc-y); i -= 1) {
-            this.setPixel(context, xc-x, i, colorBase1[0], colorBase1[1], colorBase1[2]);
-            this.setPixel(context, xc+x, i, colorBase1[0], colorBase1[1], colorBase1[2]);
-            colorBase1[0] -= colorChange[0];
-            colorBase1[1] -= colorChange[1];
-            colorBase1[2] -= colorChange[2];
-            colorBase1[0] -= colorChange[3];
-            colorBase1[1] -= colorChange[4];
-            colorBase1[2] -= colorChange[5];
-        }
-        
-        for (i = (yc+x); i > (yc-x); i -= 1) {
-            this.setPixel(context, xc-y, i, colorBase2[0], colorBase2[1], colorBase2[2]);
-            this.setPixel(context, xc+y, i, colorBase2[0], colorBase2[1], colorBase2[2]);
-            colorBase2[0] -= colorChange[0];
-            colorBase2[1] -= colorChange[1];
-            colorBase2[2] -= colorChange[2];
-            colorBase2[0] -= colorChange[3];
-            colorBase2[1] -= colorChange[4];
-            colorBase2[2] -= colorChange[5];
+        while (i >= 0) { 
+            this.setPixel(context, Math.ceil(xc + i), Math.ceil(yc + y), colorChange[0], colorChange[1], colorChange[2]);
+            this.setPixel(context, Math.ceil(xc - i), Math.ceil(yc + y), colorChange[0], colorChange[1], colorChange[2]);
+            this.setPixel(context, Math.ceil(xc + i), Math.ceil(yc - y), colorChange[3], colorChange[4], colorChange[5]);
+            this.setPixel(context, Math.ceil(xc - i), Math.ceil(yc - y), colorChange[3], colorChange[4], colorChange[5]);
 
+            while (j >= 0) {
+                this.setPixel(context, Math.ceil(xc + j), Math.ceil(yc + i), colorChange[6], colorChange[7], colorChange[8]);
+                this.setPixel(context, Math.ceil(xc - j), Math.ceil(yc + i), colorChange[6], colorChange[7], colorChange[8]);
+                this.setPixel(context, Math.ceil(xc + j), Math.ceil(yc - i), colorChange[9], colorChange[10], colorChange[11]);
+                this.setPixel(context, Math.ceil(xc - j), Math.ceil(yc - i), colorChange[9], colorChange[10], colorChange[11]);
+
+                j -=1;
+            }
+
+            i -= 1;
         }
     },
-    
+
+
     // First, the most naive possible implementation: circle by trigonometry.
     circleTrig: function (context, xc, yc, r, color, color2) {
         var theta = 1 / r,
@@ -347,7 +343,7 @@ var Primitives = {
             y = 0;
 
         while (x >= y) {
-            this.plotCirclePoints(context, xc, yc, x, y, color, color2);
+            this.plotCirclePoints(context, xc, yc, x, y, r, color, color2);
             x = x * c - y * s;
             y = x * s + y * c;
         }
@@ -360,7 +356,7 @@ var Primitives = {
             y = 0;
 
         while (x >= y) {
-            this.plotCirclePoints(context, xc, yc, x, y, color, color2);
+            this.plotCirclePoints(context, xc, yc, x, y, r, color, color2);
             x = x - (epsilon * y);
             y = y + (epsilon * x);
         }
@@ -373,7 +369,7 @@ var Primitives = {
             y = r;
 
         while (x < y) {
-            this.plotCirclePoints(context, xc, yc, x, y, color, color2);
+            this.plotCirclePoints(context, xc, yc, x, y, r, color, color2);
             if (p < 0) {
                 p = p + 4 * x + 6;
             } else {
@@ -383,7 +379,7 @@ var Primitives = {
             x += 1;
         }
         if (x === y) {
-            this.plotCirclePoints(context, xc, yc, x, y, color, color2);
+            this.plotCirclePoints(context, xc, yc, x, y, r, color, color2);
         }
     },
 
@@ -396,7 +392,7 @@ var Primitives = {
             v = e - r;
 
         while (x <= y) {
-            this.plotCirclePoints(context, xc, yc, x, y, color, color2);
+            this.plotCirclePoints(context, xc, yc, x, y, r, color, color2);
             if (e < 0) {
                 x += 1;
                 u += 2;
@@ -419,7 +415,7 @@ var Primitives = {
             e = 0;
 
         while (y <= x) {
-            this.plotCirclePoints(context, xc, yc, x, y, color, color2);
+            this.plotCirclePoints(context, xc, yc, x, y, r, color, color2);
             y += 1;
             e += (2 * y - 1);
             if (e > x) {
