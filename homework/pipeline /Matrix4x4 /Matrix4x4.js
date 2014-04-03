@@ -1,164 +1,83 @@
-/*
- * This JavaScript file defines a Vector object and associated functions.
- * The object itself is returned as the result of a function, allowing us
- * to encapsulate its code and module variables.
- *
- * This module's approach is non-destructive: methods always return new
- * Vector objects, and never modify the operands.  This is a design choice.
- *
- * This module is designed for vectors of any number of dimensions.  The
- * implementations are generalized but not optimal for certain sizes of
- * vectors.  Specific Vector2D and Vector3D implementations can be much
- * more compact, while sacrificing generality.
- */
+
 var Matrix4x4 = (function () {
     // Define the constructor.
     var matrix4x4 = function () {
-        this.elements = [].slice.call(arguments);
-    },
-    
-        // A private method for checking dimensions,
-        // throwing an exception when different.
-        checkDimensions = function (v1, v2) {
-            if (v1.dimensions() !== v2.dimensions()) {
-                throw "Vectors have different dimensions";
+        this.elements = arguments.length ?
+            [].slice.call(arguments) :
+            //simple 16 elemet matrix.
+            [1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 1];
+    };    
+
+    // A function for checking dimensions,
+    // throwing an exception when different.
+    var checkDimensions = function (matrix1, matrix2) {
+        if (matrix1.dimensions() !== matrix2.dimensions()) {
+            throw "The two matrices have different dimensions";
+        }
+    };
+
+    // Returns the element specified by the user.
+    matrix4x4.prototype.elementAt = function (index) {
+        if (index < 0 || index > 15) {
+            throw "Index out of bounds";
+        }
+        return this.elements[index];
+    };
+
+    // Returns the row specified by the user.
+    matrix4x4.prototype.rowAt = function (index) {
+        if (index < 0 || index > 3) {
+            throw "Index out of bounds";
+        }
+
+        return [this.elements[0 + (index * 4)],
+                this.elements[1 + (index * 4)],
+                this.elements[2 + (index * 4)],
+                this.elements[3 + (index * 4)]];
+    };
+
+    // Returns the column specified by the user.
+    matrix4x4.prototype.columnAt = function (index) {
+        if (index < 0 || index > 3) {
+            throw "Index out of bounds";
+        }
+
+        return [this.elements[index],
+                this.elements[index + 4],
+                this.elements[index + 8],
+                this.elements[index + 12]];
+    };
+
+    // Matrix multiplication. Checks if the dimensions of both matricies are the same.
+    matrix4x4.prototype.multiply = function (m) {
+        var result = new Matrix4x4(),
+            total,
+            rows = 4,
+            columns = 4;
+
+        // Dimensionality check.
+        checkDimensions(this, m);
+
+        for (var i = 0; i < rows; i ++) {
+            for (var j = 0; j < columns; j ++) {
+                total = 0;
+                for (var k = 0; k < rows; k ++) {
+                    total += this.elementAt((i * 4) + k) * m.elementAt((k * 4) + j); 
+                }
+                result.elements[(i * 4) + j] = total;
             }
-        };
-
-
+        }
+        
+        return result;
+    };
 
 
     // Basic methods.
     matrix4x4.prototype.dimensions = function () {
         return this.elements.length;
-    };
-
-    matrix4x4.prototype.x = function () {
-        return this.elements[0];
-    };
-
-    matrix4x4.prototype.y = function () {
-        return this.elements[1];
-    };
-
-    matrix4x4.prototype.z = function () {
-        return this.elements[2];
-    };
-
-    matrix4x4.prototype.w = function () {
-        return this.elements[3];
-    };
-
-    // Addition and subtraction.
-    matrix4x4.prototype.add = function (v) {
-        var result = new Matrix4x4(),
-            i,
-            max;
-
-        // Dimensionality check.
-        checkDimensions(this, v);
-
-        for (i = 0, max = this.dimensions(); i < max; i += 1) {
-            result.elements[i] = this.elements[i] + v.elements[i];
-        }
-
-        return result;
-    };
-
-    matrix4x4.prototype.subtract = function (v) {
-        var result = new Matrix4x4(),
-            i,
-            max;
-
-        // Dimensionality check.
-        checkDimensions(this, v);
-
-        for (i = 0, max = this.dimensions(); i < max; i += 1) {
-            result.elements[i] = this.elements[i] - v.elements[i];
-        }
-
-        return result;
-    };
-
-    // Scalar multiplication and division.
-    matrix4x4.prototype.multiply = function (s) {
-        var result = new Matrix4x4(),
-            i,
-            max;
-
-        for (i = 0, max = this.dimensions(); i < max; i += 1) {
-            result.elements[i] = this.elements[i] * s;
-        }
-
-        return result;
-    };
-
-    matrix4x4.prototype.divide = function (s) {
-        var result = new Matrix4x4(),
-            i,
-            max;
-
-        for (i = 0, max = this.dimensions(); i < max; i += 1) {
-            result.elements[i] = this.elements[i] / s;
-        }
-
-        return result;
-    };
-
-    // Dot product.
-    matrix4x4.prototype.dot = function (v) {
-        var result = 0,
-            i,
-            max;
-
-        // Dimensionality check.
-        checkDimensions(this, v);
-
-        for (i = 0, max = this.dimensions(); i < max; i += 1) {
-            result += this.elements[i] * v.elements[i];
-        }
-
-        return result;
-    };
-
-    // Cross product.
-    matrix4x4.prototype.cross = function (v) {
-        // This method is for 3D vectors only.
-        if (this.dimensions() !== 3 || v.dimensions() !== 3) {
-            throw "Cross product is for 3D vectors only.";
-        }
-
-        // With 3D vectors, we can just return the result directly.
-        return new Matrix4x4(
-            (this.y() * v.z()) - (this.z() * v.y()),
-            (this.z() * v.x()) - (this.x() * v.z()),
-            (this.x() * v.y()) - (this.y() * v.x())
-        );
-    };
-
-    // Magnitude and unit vector.
-    matrix4x4.prototype.magnitude = function () {
-        // Make use of the dot product.
-        return Math.sqrt(this.dot(this));
-    };
-
-    matrix4x4.prototype.unit = function () {
-        // At this point, we can leverage our more "primitive" methods.
-        return this.divide(this.magnitude());
-    };
-
-    // Projection.
-    matrix4x4.prototype.projection = function (v) {
-        var unitv;
-
-        // Dimensionality check.
-        checkDimensions(this, v);
-
-        // Plug and chug :)
-        // The projection of u onto v is u dot the unit vector of v
-        // times the unit vector of v.
-        unitv = v.unit();
-        return unitv.multiply(this.dot(unitv));
     };
 
     return matrix4x4;
