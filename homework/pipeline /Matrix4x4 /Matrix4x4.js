@@ -11,9 +11,9 @@
  * vectors.  Specific Vector2D and Vector3D implementations can be much
  * more compact, while sacrificing generality.
  */
-var Vector = (function () {
+var Matrix4x4 = (function () {
     // Define the constructor.
-    var vector = function () {
+    var matrix4x4 = function () {
         this.elements = [].slice.call(arguments);
     },
     
@@ -25,30 +25,33 @@ var Vector = (function () {
             }
         };
 
+
+
+
     // Basic methods.
-    vector.prototype.dimensions = function () {
+    matrix4x4.prototype.dimensions = function () {
         return this.elements.length;
     };
 
-    vector.prototype.x = function () {
+    matrix4x4.prototype.x = function () {
         return this.elements[0];
     };
 
-    vector.prototype.y = function () {
+    matrix4x4.prototype.y = function () {
         return this.elements[1];
     };
 
-    vector.prototype.z = function () {
+    matrix4x4.prototype.z = function () {
         return this.elements[2];
     };
 
-    vector.prototype.w = function () {
+    matrix4x4.prototype.w = function () {
         return this.elements[3];
     };
 
     // Addition and subtraction.
-    vector.prototype.add = function (v) {
-        var result = new Vector(),
+    matrix4x4.prototype.add = function (v) {
+        var result = new Matrix4x4(),
             i,
             max;
 
@@ -62,8 +65,8 @@ var Vector = (function () {
         return result;
     };
 
-    vector.prototype.subtract = function (v) {
-        var result = new Vector(),
+    matrix4x4.prototype.subtract = function (v) {
+        var result = new Matrix4x4(),
             i,
             max;
 
@@ -78,8 +81,8 @@ var Vector = (function () {
     };
 
     // Scalar multiplication and division.
-    vector.prototype.multiply = function (s) {
-        var result = new Vector(),
+    matrix4x4.prototype.multiply = function (s) {
+        var result = new Matrix4x4(),
             i,
             max;
 
@@ -90,8 +93,8 @@ var Vector = (function () {
         return result;
     };
 
-    vector.prototype.divide = function (s) {
-        var result = new Vector(),
+    matrix4x4.prototype.divide = function (s) {
+        var result = new Matrix4x4(),
             i,
             max;
 
@@ -103,7 +106,7 @@ var Vector = (function () {
     };
 
     // Dot product.
-    vector.prototype.dot = function (v) {
+    matrix4x4.prototype.dot = function (v) {
         var result = 0,
             i,
             max;
@@ -119,14 +122,14 @@ var Vector = (function () {
     };
 
     // Cross product.
-    vector.prototype.cross = function (v) {
+    matrix4x4.prototype.cross = function (v) {
         // This method is for 3D vectors only.
         if (this.dimensions() !== 3 || v.dimensions() !== 3) {
             throw "Cross product is for 3D vectors only.";
         }
 
         // With 3D vectors, we can just return the result directly.
-        return new Vector(
+        return new Matrix4x4(
             (this.y() * v.z()) - (this.z() * v.y()),
             (this.z() * v.x()) - (this.x() * v.z()),
             (this.x() * v.y()) - (this.y() * v.x())
@@ -134,18 +137,18 @@ var Vector = (function () {
     };
 
     // Magnitude and unit vector.
-    vector.prototype.magnitude = function () {
+    matrix4x4.prototype.magnitude = function () {
         // Make use of the dot product.
         return Math.sqrt(this.dot(this));
     };
 
-    vector.prototype.unit = function () {
+    matrix4x4.prototype.unit = function () {
         // At this point, we can leverage our more "primitive" methods.
         return this.divide(this.magnitude());
     };
 
     // Projection.
-    vector.prototype.projection = function (v) {
+    matrix4x4.prototype.projection = function (v) {
         var unitv;
 
         // Dimensionality check.
@@ -158,5 +161,5 @@ var Vector = (function () {
         return unitv.multiply(this.dot(unitv));
     };
 
-    return vector;
+    return matrix4x4;
 })();

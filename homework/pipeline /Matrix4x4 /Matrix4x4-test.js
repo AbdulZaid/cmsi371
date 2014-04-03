@@ -5,7 +5,7 @@ $(function () {
 
     // This suite checks instantiation basics.
     test("Creation and Data Access", function () {
-        var v = new Vector(5, 6, 3);
+        var v = new Matrix4x4(5, 6, 3);
 
         equal(v.dimensions(), 3, "Vector size");
         equal(v.elements[0], 5, "First element by index");
@@ -15,7 +15,7 @@ $(function () {
         equal(v.y(), 6, "Second element by coordinate");
         equal(v.z(), 3, "Third element by coordinate");
 
-        v = new Vector(300, 200);
+        v = new Matrix4x4(300, 200);
 
         equal(v.dimensions(), 2, "Vector size");
         equal(v.elements[0], 300, "First element by index");
@@ -23,7 +23,7 @@ $(function () {
         equal(v.x(), 300, "First element by coordinate");
         equal(v.y(), 200, "Second element by coordinate");
 
-        v = new Vector(3, 2, 1, 2);
+        v = new Matrix4x4(3, 2, 1, 2);
 
         equal(v.dimensions(), 4, "Vector size");
         equal(v.elements[0], 3, "First element by index");
@@ -35,21 +35,21 @@ $(function () {
         equal(v.z(), 1, "Third element by coordinate");
         equal(v.w(), 2, "Fourth element by coordinate");
 
-        v = new Vector();
+        v = new Matrix4x4();
         equal(v.dimensions(), 0, "Empty vector (boundary case)");
     });
 
     test("Addition and Subtraction", function () {
-        var v1 = new Vector(4, 5),
-            v2 = new Vector(-10, 4),
+        var v1 = new Matrix4x4(4, 5),
+            v2 = new Matrix4x4(-10, 4),
             vresult = v1.add(v2);
 
         equal(vresult.dimensions(), 2, "Vector sum size check");
         equal(vresult.x(), -6, "Vector sum first element");
         equal(vresult.y(), 9, "Vector sum second element");
 
-        v1 = new Vector(0, -2, 3, 5);
-        v2 = new Vector(-2, 1, 0, 7);
+        v1 = new Matrix4x4(0, -2, 3, 5);
+        v2 = new Matrix4x4(-2, 1, 0, 7);
         vresult = v1.subtract(v2);
         equal(vresult.dimensions(), 4, "Vector difference size check");
         equal(vresult.x(), 2, "Vector difference first element");
@@ -58,8 +58,8 @@ $(function () {
         equal(vresult.w(), -2, "Vector difference fourth element");
 
         // Check for errors.
-        v1 = new Vector(5, 8, 10, 2);
-        v2 = new Vector(1, 2, 2);
+        v1 = new Matrix4x4(5, 8, 10, 2);
+        v2 = new Matrix4x4(1, 2, 2);
 
         // We can actually check for a *specific* exception, but
         // we won't go that far for now.
@@ -72,7 +72,7 @@ $(function () {
     });
 
     test("Scalar Multiplication and Division", function () {
-        var v = new Vector(8, 2, 3),
+        var v = new Matrix4x4(8, 2, 3),
             vresult = v.multiply(2);
 
         equal(vresult.x(), 16, "Vector scalar multiplication first element");
@@ -87,29 +87,29 @@ $(function () {
     });
 
     test("Dot Product", function () {
-        var v1 = new Vector(-5, -2),
-            v2 = new Vector(-3, 4);
+        var v1 = new Matrix4x4(-5, -2),
+            v2 = new Matrix4x4(-3, 4);
 
         equal(v1.dot(v2), 7, "2D dot product");
 
         // Try for a perpendicular.
-        v1 = new Vector(Math.sqrt(2) / 2, Math.sqrt(2) / 2);
-        v2 = new Vector(-Math.sqrt(2) / 2, Math.sqrt(2) / 2);
+        v1 = new Matrix4x4(Math.sqrt(2) / 2, Math.sqrt(2) / 2);
+        v2 = new Matrix4x4(-Math.sqrt(2) / 2, Math.sqrt(2) / 2);
         equal(v1.dot(v2), 0, "Perpendicular 2D dot product");
 
         // Try 3D.
-        v1 = new Vector(3, 2, 5);
-        v2 = new Vector(4, -1, 3);
+        v1 = new Matrix4x4(3, 2, 5);
+        v2 = new Matrix4x4(4, -1, 3);
         equal(v1.dot(v2), 25, "3D dot product");
 
         // And 4D.
-        v1 = new Vector(2, 2, 4, 8);
-        v2 = new Vector(-1, 7, 0, 20);
+        v1 = new Matrix4x4(2, 2, 4, 8);
+        v2 = new Matrix4x4(-1, 7, 0, 20);
         equal(v1.dot(v2), 172, "4D dot product");
 
         // Check for errors.
-        v1 = new Vector(4, 2);
-        v2 = new Vector(3, 9, 1);
+        v1 = new Matrix4x4(4, 2);
+        v2 = new Matrix4x4(3, 9, 1);
 
         // We can actually check for a *specific* exception, but
         // we won't go that far for now.
@@ -122,8 +122,8 @@ $(function () {
     });
 
     test("Cross Product", function () {
-        var v1 = new Vector(3, 4),
-            v2 = new Vector(1, 2),
+        var v1 = new Matrix4x4(3, 4),
+            v2 = new Matrix4x4(1, 2),
             vresult;
 
         // The cross product is restricted to 3D, so we start
@@ -137,8 +137,8 @@ $(function () {
 
         // Yeah, this is a bit of a trivial case.  But it at least
         // establishes the right-handedness of a cross-product.
-        v1 = new Vector(1, 0, 0);
-        v2 = new Vector(0, 1, 0);
+        v1 = new Matrix4x4(1, 0, 0);
+        v2 = new Matrix4x4(0, 1, 0);
         vresult = v1.cross(v2);
 
         equal(vresult.x(), 0, "Cross product first element");
@@ -155,23 +155,23 @@ $(function () {
     });
 
     test("Magnitude and Unit Vectors", function () {
-        var v = new Vector(3, 4);
+        var v = new Matrix4x4(3, 4);
 
         // The classic example.
         equal(v.magnitude(), 5, "2D magnitude check");
 
         // Kind of a cheat, but still tests the third dimension.
-        v = new Vector(5, 0, 12);
+        v = new Matrix4x4(5, 0, 12);
         equal(v.magnitude(), 13, "3D magnitude check");
 
         // Now for unit vectors.
-        v = (new Vector(3, 4)).unit();
+        v = (new Matrix4x4(3, 4)).unit();
 
         equal(v.magnitude(), 1, "2D unit vector check");
         equal(v.x(), 3 / 5, "2D unit vector first element");
         equal(v.y(), 4 / 5, "2D unit vector second element");
 
-        v = (new Vector(0, -7, 24)).unit();
+        v = (new Matrix4x4(0, -7, 24)).unit();
 
         equal(v.magnitude(), 1, "3D unit vector check");
         equal(v.x(), 0, "3D unit vector first element");
@@ -180,8 +180,8 @@ $(function () {
     });
 
     test("Projection", function () {
-        var v = new Vector(3, 3, 0),
-            vresult = v.projection(new Vector(5, 0, 0));
+        var v = new Matrix4x4(3, 3, 0),
+            vresult = v.projection(new Matrix4x4(5, 0, 0));
 
         equal(vresult.magnitude(), 3, "3D vector projection magnitude check");
         equal(vresult.x(), 3, "3D vector projection first element");
@@ -192,7 +192,7 @@ $(function () {
         // number of dimensions.
         throws(
             function () {
-                (new Vector(5, 2)).projection(new Vector(9, 8, 1));
+                (new Matrix4x4(5, 2)).projection(new Matrix4x4(9, 8, 1));
             },
             "Ensure that projection applies only to vectors with the same number of dimensions"
         );
