@@ -169,13 +169,13 @@ var Matrix4x4 = (function () {
 
         // 4x4 Matrix in row major order.
         return new Matrix4x4(
-            1.0 / width,
+            2.0 / width,
             0.0,
             0.0,
             -(right + left) / width,
 
             0.0,
-            1.0 / height,
+            2.0 / height,
             0.0,
             -(top + bottom) / height,
 
@@ -188,6 +188,35 @@ var Matrix4x4 = (function () {
             0.0,
             0.0,
             1.0
+        );
+    };
+
+    matrix4x4.getFrustumMatrix = function (left, right, bottom, top, zNear, zFar) {
+        var width = right - left,
+            height = top - bottom,
+            depth = zFar - zNear;
+
+        // 4x4 Matrix in row major order.
+        return new Matrix4x4(
+            2.0 * zNear / width,
+            0.0,
+            (right + left) / width,
+            0.0,
+
+            0.0,
+            2.0 * zNear / height,
+            (top + bottom) / height,
+            0.0,
+
+            0.0,
+            0.0,
+            -(zFar + zNear) / depth,
+            -2.0 * zFar * zNear / depth,
+
+            0.0,
+            0.0,
+            -1.0,
+            0.0
         );
     };
 

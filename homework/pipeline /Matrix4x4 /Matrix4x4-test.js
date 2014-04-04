@@ -5,54 +5,54 @@ $(function () {
 
     // This suite checks instantiation basics.
     test("Creation and Data Access", function () {
-        var matrix1 = new Matrix4x4();
-            deepEqual(matrix1.elements,
+        var matrix = new Matrix4x4();
+            deepEqual(matrix.elements,
                 [1, 0, 0, 0,
                  0, 1, 0, 0,
                  0, 0, 1, 0,
                  0, 0, 0, 1],
                 "Default matrix constructor");
 
-        m = new Matrix4x4(0, 1, 2, 3,
+        matrix = new Matrix4x4(0, 1, 2, 3,
                       90, 24, 67, 32,
                       123, 5, Math.PI, 6,
                       3.2, 4, 0, 7);
 
-        deepEqual(m.elements,
+        deepEqual(matrix.elements,
             [0, 1, 2, 3,
              90, 24, 67, 32,
              123, 5, Math.PI, 6,
              3.2, 4, 0, 7],
             "Matrix constructor with passed values");
 
-        m = new Matrix4x4(2, 2, 2, 2,
+        matrix = new Matrix4x4(2, 2, 2, 2,
                       3, 3, 3, 30,
                       81, 39, 140, 141,
                       122, 132, 143, 152);
 
-        deepEqual(m.rowAt(0),
+        deepEqual(matrix.rowAt(0),
             [2, 2, 2, 2],
             "Testing matrix at raw one is successful");
-        deepEqual(m.rowAt(1),
+        deepEqual(matrix.rowAt(1),
             [3, 3, 3, 30],
             "Testing matrix at raw two is successful");
-        deepEqual(m.rowAt(2),
+        deepEqual(matrix.rowAt(2),
             [81, 39, 140, 141],
             "Testing matrix at raw three is successful");
-        deepEqual(m.rowAt(3),
+        deepEqual(matrix.rowAt(3),
             [122, 132, 143, 152],
             "Testing matrix at raw four is successful");
 
-        deepEqual(m.columnAt(0),
+        deepEqual(matrix.columnAt(0),
             [2, 3, 81, 122],
             "Testing matrix at column one is successful");
-        deepEqual(m.columnAt(1),
+        deepEqual(matrix.columnAt(1),
             [2, 3, 39, 132],
             "Testing matrix at column two is successful");
-        deepEqual(m.columnAt(2),
+        deepEqual(matrix.columnAt(2),
             [2, 3, 140, 143],
             "Testing matrix at column three is successful");
-        deepEqual(m.columnAt(3),
+        deepEqual(matrix.columnAt(3),
             [2, 30, 141, 152],
             "Testing matrix at column four is successful");
     });
@@ -101,8 +101,8 @@ $(function () {
     
 
     test("Translation, of Matrices", function () {
-        var m = Matrix4x4.getTranslationMatrix(5, 9, 10);
-        deepEqual(m.elements,
+        var matrix = Matrix4x4.getTranslationMatrix(5, 9, 10);
+        deepEqual(matrix.elements,
             [1, 0, 0, 5,
              0, 1, 0, 9,
              0, 0, 1, 10,
@@ -111,39 +111,39 @@ $(function () {
     });
 
     test("Scaling, of Matrices", function () {
-        m = Matrix4x4.getScaleMatrix(2, 5, 21);
-        deepEqual(m.elements,
+        matrix = Matrix4x4.getScaleMatrix(2, 5, 21);
+        deepEqual(matrix.elements,
             [2, 0, 0, 0,
              0, 5, 0, 0,
              0, 0, 21, 0,
              0, 0, 0, 1],
             "Scale matrix success");
 
-        m = new Matrix4x4(0, 1, 2, 3,
+        matrix = new Matrix4x4(0, 1, 2, 3,
                       4, 5, 6, 7,
                       8, 9, 10, 11,
                       12, 13, 14, 15);
     });
 
     test("Rotation, of Matrices", function () {
-        m = Matrix4x4.getRotationMatrix(30, 0, 0, 1);
-        deepEqual(m.elements,
+        matrix = Matrix4x4.getRotationMatrix(30, 0, 0, 1);
+        deepEqual(matrix.elements,
             [Math.cos(Math.PI / 6), -Math.sin(Math.PI / 6), 0, 0,
              Math.sin(Math.PI / 6), Math.cos(Math.PI / 6), 0, 0,
              0, 0, 1, 0,
              0, 0, 0, 1],
             "Rotation of the matrix by 30 degrees about the z-axis");
 
-        m = Matrix4x4.getRotationMatrix(270, 0, 1, 0);
-        deepEqual(m.elements,
+        matrix = Matrix4x4.getRotationMatrix(270, 0, 1, 0);
+        deepEqual(matrix.elements,
             [Math.cos(3 * (Math.PI / 2)), 0, Math.sin(3 * (Math.PI / 2)), 0,
              0, 1, 0, 0,
              -Math.sin(3 * (Math.PI / 2)), 0, Math.cos(3 * (Math.PI / 2)), 0,
              0, 0, 0, 1],
             "Rotation of the matrix by 270 degrees about the y-axis");
 
-        m = Matrix4x4.getRotationMatrix(50, 1, 0, 0);
-        deepEqual(m.elements,
+        matrix = Matrix4x4.getRotationMatrix(50, 1, 0, 0);
+        deepEqual(matrix.elements,
             [1, 0, 0, 0,
              0, Math.cos(50 * Math.PI / 180), -Math.sin(50 * Math.PI / 180), 0,
              0, Math.sin(50 * Math.PI / 180), Math.cos(50 * Math.PI / 180), 0,
@@ -151,4 +151,29 @@ $(function () {
             "Rotation of the matrix by 50 degrees about the x-axis");
     });
 
+    test("Ortho Matrix4x4 Projection", function () {
+        var matrix = Matrix4x4.getOrthoMatrix(-4, 4, -2, 2, -10, 10),
+            width = 4 + 4,
+            height = 2 + 2,
+            depth = 10 + 10;
+        deepEqual(matrix.elements,
+            [2 / width, 0, 0, 0,
+             0, 2 / height, 0, 0,
+             0, 0, -2 / depth, 0,
+             0, 0, 0, 1],
+            "Matrix orthogonal projection");
+    });
+
+    test("Frustum Matrix4x4 Projection", function () {
+        var matrix = Matrix4x4.getFrustumMatrix(0, 1, 0, 1, 0, 1);
+        width = 1;
+        height = 1;
+        depth = 1;
+        deepEqual(matrix.elements,
+            [0, 0, 1, 0,
+             0, 0, 1, 0,
+             0, 0, -1, 0,
+             0, 0, -1, 0],
+            "Matrix frustum projection");
+    });
 });
