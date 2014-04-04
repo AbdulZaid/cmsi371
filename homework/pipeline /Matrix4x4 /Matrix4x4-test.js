@@ -183,7 +183,7 @@ $(function () {
                                2, 2, 2, 2,
                                120, 130, 140, 150);
 
-            matrixConversion = matrix.Conversion();
+            matrixConversion = matrix.conversion();
 
         deepEqual(matrixConversion,
             [1, 4, 2, 120,

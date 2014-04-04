@@ -32,6 +32,9 @@
         <!-- Shapes is a library that generates "canned" shapes. -->
         <script src="shapes.js"></script>
 
+        <!-- Matrix4x4 is a matrix library that has many matrix function. -->
+        <script src="Matrix4x4/Matrix4x4.js"></script>
+
         <!-- Set up shaders: we've placed the source in script elements for
             simplicity.  Shaders are ideally kept in separate files for easier
             maintenance, but in that situation, additional code and security
@@ -49,6 +52,8 @@
             attribute vec3 vertexColor;
             varying vec4 finalVertexColor;
             uniform mat4 rotationMatrix;
+            //uniform mat4 projectionMatrix;
+            //uniform mat4 transformMatrix;
 
             void main(void) {
                 gl_Position = rotationMatrix * vec4(vertexPosition, 1.0);
