@@ -18,7 +18,12 @@ var Matrix4x4 = (function () {
             throw "The two matrices have different dimensions";
         }
     };
-        
+    
+    // Basic methods.
+    matrix4x4.prototype.dimensions = function () {
+        return this.elements.length;
+    };
+
     matrix4x4.getRotationMatrix = function (angle, x, y, z) {
         // In production code, this function should be associated
         // with a matrix object with associated functions.
@@ -78,7 +83,7 @@ var Matrix4x4 = (function () {
             1.0
         ];
     };
-    
+
     // Returns the element specified by the user.
     matrix4x4.prototype.elementAt = function (index) {
         if (index < 0 || index > 15) {
@@ -133,12 +138,25 @@ var Matrix4x4 = (function () {
         
         return result;
     };
-
-
-    // Basic methods.
-    matrix4x4.prototype.dimensions = function () {
-        return this.elements.length;
+    
+    matrix4x4.getTranslationMatrix = function (tx, ty, tz) {
+        return new Matrix4x4(
+            1, 0, 0, tx,
+            0, 1, 0, ty,
+            0, 0, 1, tz,
+            0, 0, 0, 1
+        );
     };
+
+    matrix4x4.getScaleMatrix = function (sx, sy, sz) {
+        return new Matrix4x4(
+            sx, 0, 0, 0,
+            0, sy, 0, 0,
+            0, 0, sz, 0,
+            0, 0, 0, 1
+        );
+    };
+
 
     return matrix4x4;
 })();
