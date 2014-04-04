@@ -14,9 +14,9 @@ $(function () {
                 "Default matrix constructor");
 
         m = new Matrix4x4(0, 1, 2, 3,
-                    90, 24, 67, 32,
-                    123, 5, Math.PI, 6,
-                    3.2, 4, 0, 7);
+                      90, 24, 67, 32,
+                      123, 5, Math.PI, 6,
+                      3.2, 4, 0, 7);
 
         deepEqual(m.elements,
             [0, 1, 2, 3,
@@ -26,9 +26,9 @@ $(function () {
             "Matrix constructor with passed values");
 
         m = new Matrix4x4(2, 2, 2, 2,
-                    3, 3, 3, 30,
-                    81, 39, 140, 141,
-                    122, 132, 143, 152);
+                      3, 3, 3, 30,
+                      81, 39, 140, 141,
+                      122, 132, 143, 152);
 
         deepEqual(m.rowAt(0),
             [2, 2, 2, 2],
@@ -71,7 +71,7 @@ $(function () {
 
             multiplicationResult = matrix1.multiply(matrix2);
 
-        equal(multiplicationResult.dimensions(), 16, "Matrix multiply size check");
+        equal(multiplicationResult.dimensions(), 16, "Matrix size check");
         deepEqual(multiplicationResult.elements,
             [56, 62, 68, 74,
              152, 174, 196, 218,
@@ -98,4 +98,57 @@ $(function () {
              915, 4310, 2745, 8620],
             "4x4 matrix multiplication second test");
     });
+    
+
+    test("Translation, of Matrices", function () {
+        var m = Matrix4x4.getTranslationMatrix(5, 9, 10);
+        deepEqual(m.elements,
+            [1, 0, 0, 5,
+             0, 1, 0, 9,
+             0, 0, 1, 10,
+             0, 0, 0, 1],
+            "Translation matrix success");
+    });
+
+    test("Scaling, of Matrices", function () {
+        m = Matrix4x4.getScaleMatrix(2, 5, 21);
+        deepEqual(m.elements,
+            [2, 0, 0, 0,
+             0, 5, 0, 0,
+             0, 0, 21, 0,
+             0, 0, 0, 1],
+            "Scale matrix success");
+
+        m = new Matrix4x4(0, 1, 2, 3,
+                      4, 5, 6, 7,
+                      8, 9, 10, 11,
+                      12, 13, 14, 15);
+    });
+
+    test("Rotation, of Matrices", function () {
+        m = Matrix4x4.getRotationMatrix(30, 0, 0, 1);
+        deepEqual(m.elements,
+            [Math.cos(Math.PI / 6), -Math.sin(Math.PI / 6), 0, 0,
+             Math.sin(Math.PI / 6),  Math.cos(Math.PI / 6), 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 1],
+            "Rotation of the matrix by 30 degrees about the z-axis");
+
+        m = Matrix4x4.getRotationMatrix(270, 0, 1, 0);
+        deepEqual(m.elements,
+            [Math.cos(3 * (Math.PI / 2)), 0, Math.sin(3 * (Math.PI / 2)), 0,
+             0, 1, 0, 0,
+             -Math.sin(3 * (Math.PI / 2)), 0, Math.cos(3 * (Math.PI / 2)), 0,
+             0, 0, 0, 1],
+            "Rotation of the matrix by 270 degrees about the y-axis");
+
+        m = Matrix4x4.getRotationMatrix(50, 1, 0, 0);
+        deepEqual(m.elements,
+            [1, 0, 0, 0,
+             0, Math.cos(50 * Math.PI / 180), -Math.sin(50 * Math.PI / 180), 0,
+             0, Math.sin(50 * Math.PI / 180),  Math.cos(50 * Math.PI / 180), 0,
+             0, 0, 0, 1],
+            "Rotation of the matrix by 87 degrees about the x-axis");
+    });
+
 });

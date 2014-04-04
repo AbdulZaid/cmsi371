@@ -60,28 +60,33 @@ var Matrix4x4 = (function () {
         ys = y * s;
         zs = z * s;
 
-        // GL expects its matrices in column major order.
-        return [
+        // Matrix4x4 in row major order.
+        return new Matrix4x4(
             (x2 * oneMinusC) + c,
-            (xy * oneMinusC) + zs,
-            (xz * oneMinusC) - ys,
-            0.0,
-
-            (xy * oneMinusC) - zs,
-            (y2 * oneMinusC) + c,
-            (yz * oneMinusC) + xs,
-            0.0,
-
+            (xy * oneMinusC) - zs, 
             (xz * oneMinusC) + ys,
+            0.0,
+
+            (xy * oneMinusC) + zs,
+            (y2 * oneMinusC) + c,
             (yz * oneMinusC) - xs,
+            0.0,
+
+            (xz * oneMinusC) - ys,
+            (yz * oneMinusC) + xs,
             (z2 * oneMinusC) + c,
             0.0,
-
-            0.0,
-            0.0,
-            0.0,
+                
+            0.0,                   
+            0.0,                   
+            0.0, 
             1.0
-        ];
+        );
+    };
+    
+    // Returns the array of elements in the matrix.
+    matrix4x4.prototype.elements = function () {
+        return this.elements;
     };
 
     // Returns the element specified by the user.
@@ -138,7 +143,7 @@ var Matrix4x4 = (function () {
         
         return result;
     };
-    
+
     matrix4x4.getTranslationMatrix = function (tx, ty, tz) {
         return new Matrix4x4(
             1, 0, 0, tx,
