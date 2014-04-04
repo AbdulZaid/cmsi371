@@ -120,9 +120,9 @@ $(function () {
             "Scale matrix success");
 
         matrix = new Matrix4x4(0, 1, 2, 3,
-                      4, 5, 6, 7,
-                      8, 9, 10, 11,
-                      12, 13, 14, 15);
+                           4, 5, 6, 7,
+                           8, 9, 10, 11,
+                           12, 13, 14, 15);
     });
 
     test("Rotation, of Matrices", function () {
@@ -175,5 +175,21 @@ $(function () {
              0, 0, -1, 0,
              0, 0, -1, 0],
             "Matrix frustum projection");
+    });
+
+    test("Matrix Conversion and Convenience functions", function () {
+        var matrix = new Matrix4x4(1, 1, 1, 1,
+                               4, 5, 6, 7,
+                               2, 2, 2, 2,
+                               120, 130, 140, 150);
+
+            matrixConversion = matrix.Conversion();
+
+        deepEqual(matrixConversion,
+            [1, 4, 2, 120,
+             1, 5, 2, 130,
+             1, 6, 2, 140,
+             1, 7, 2, 150] ,
+            "Matrix conversion");
     });
 });

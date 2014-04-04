@@ -220,5 +220,14 @@ var Matrix4x4 = (function () {
         );
     };
 
+    //Conversion/convenience functions to prepare the matrix data for 
+    //direct consumption by WebGL and GLSL 
+    matrix4x4.prototype.Conversion = function () {
+        return this.columnAt(0).concat(
+               this.columnAt(1).concat(
+               this.columnAt(2).concat(
+               this.columnAt(3))));
+    };
+
     return matrix4x4;
 })();
