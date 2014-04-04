@@ -89,7 +89,7 @@ var Matrix4x4 = (function () {
         return this.elements;
     };
 
-    // Returns the element specified by the user.
+    // Returns the element specified.
     matrix4x4.prototype.elementAt = function (index) {
         if (index < 0 || index > 15) {
             throw "Index out of bounds";
@@ -97,7 +97,7 @@ var Matrix4x4 = (function () {
         return this.elements[index];
     };
 
-    // Returns the row specified by the user.
+    // Returns the row specified.
     matrix4x4.prototype.rowAt = function (index) {
         if (index < 0 || index > 3) {
             throw "Index out of bounds";
@@ -109,7 +109,7 @@ var Matrix4x4 = (function () {
                 this.elements[3 + (index * 4)]];
     };
 
-    // Returns the column specified by the user.
+    // Returns the column specified.
     matrix4x4.prototype.columnAt = function (index) {
         if (index < 0 || index > 3) {
             throw "Index out of bounds";
@@ -128,7 +128,7 @@ var Matrix4x4 = (function () {
             rows = 4,
             columns = 4;
 
-        // Dimensionality check.
+        // Check the dimensions.
         checkDimensions(this, m);
 
         for (var i = 0; i < rows; i ++) {
@@ -162,6 +162,34 @@ var Matrix4x4 = (function () {
         );
     };
 
+    matrix4x4.getOrthoMatrix = function (left, right, bottom, top, zNear, zFar) {
+        var width = right - left,
+            height = top - bottom,
+            depth = zFar - zNear;
+
+        // 4x4 Matrix in row major order.
+        return new Matrix4x4(
+            1.0 / width,
+            0.0,
+            0.0,
+            -(right + left) / width,
+
+            0.0,
+            1.0 / height,
+            0.0,
+            -(top + bottom) / height,
+
+            0.0,
+            0.0,
+            -2.0 / depth,
+            -(zFar + zNear) / depth,
+
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        );
+    };
 
     return matrix4x4;
 })();

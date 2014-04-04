@@ -129,7 +129,7 @@ $(function () {
         m = Matrix4x4.getRotationMatrix(30, 0, 0, 1);
         deepEqual(m.elements,
             [Math.cos(Math.PI / 6), -Math.sin(Math.PI / 6), 0, 0,
-             Math.sin(Math.PI / 6),  Math.cos(Math.PI / 6), 0, 0,
+             Math.sin(Math.PI / 6), Math.cos(Math.PI / 6), 0, 0,
              0, 0, 1, 0,
              0, 0, 0, 1],
             "Rotation of the matrix by 30 degrees about the z-axis");
@@ -146,9 +146,9 @@ $(function () {
         deepEqual(m.elements,
             [1, 0, 0, 0,
              0, Math.cos(50 * Math.PI / 180), -Math.sin(50 * Math.PI / 180), 0,
-             0, Math.sin(50 * Math.PI / 180),  Math.cos(50 * Math.PI / 180), 0,
+             0, Math.sin(50 * Math.PI / 180), Math.cos(50 * Math.PI / 180), 0,
              0, 0, 0, 1],
-            "Rotation of the matrix by 87 degrees about the x-axis");
+            "Rotation of the matrix by 50 degrees about the x-axis");
     });
 
 });
