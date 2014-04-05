@@ -26,6 +26,8 @@
         currentInterval,
         projectionMatrix,
         rotationMatrix,
+        scaleMatrix,
+        translateMatrix,
         vertexPosition,
         vertexColor,
 
@@ -236,7 +238,8 @@
     gl.enableVertexAttribArray(vertexColor);
     projectionMatrix = gl.getUniformLocation(shaderProgram, "projectionMatrix");
     rotationMatrix = gl.getUniformLocation(shaderProgram, "rotationMatrix");
-
+    scaleMatrix = gl.getUniformLocation(shaderProgram, "scaleMatrix");
+    translateMatrix = gl.getUniformLocation(shaderProgram, "translateMatrix");
     /*
      * Displays an individual object.
      */
@@ -258,9 +261,21 @@
 		}
     };
 
-    // //Initialize the projection matrix.
+    //Initialize the projection matrix.
     gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.getOrthoMatrix(-2, 2, 2, -2, -2, 2).conversion()
+        )
+    );
+
+    //Initialize the scale matrix.
+    gl.uniformMatrix4fv(scaleMatrix, gl.FALSE, new Float32Array(
+        Matrix4x4.getScaleMatrix(2, 0.6, 2).conversion()
+        )
+    );
+    
+    //Initialize the scale matrix.
+    gl.uniformMatrix4fv(translateMatrix, gl.FALSE, new Float32Array(
+        Matrix4x4.getTranslationMatrix(0.2, 0.2, 0.5).conversion()
         )
     );
 
