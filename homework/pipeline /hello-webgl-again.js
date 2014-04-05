@@ -237,14 +237,6 @@
     projectionMatrix = gl.getUniformLocation(shaderProgram, "projectionMatrix");
     rotationMatrix = gl.getUniformLocation(shaderProgram, "rotationMatrix");
 
-  
-    //Initialize the projection matrix.
-    gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(
-        Matrix4x4.getOrthoMatrix(-2, 2, 2, -2, -2, 2)
-        )
-    );
-
-
     /*
      * Displays an individual object.
      */
@@ -266,6 +258,12 @@
 		}
     };
 
+    // //Initialize the projection matrix.
+    gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(
+        Matrix4x4.getOrthoMatrix(-2, 2, 2, -2, -2, 2).conversion()
+        )
+    );
+
     /*
      * Displays the scene.
      */
@@ -274,7 +272,7 @@
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // Set up the rotation matrix.
-        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(getRotationMatrix(currentRotation, 0, 1, 0)));
+        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(Matrix4x4.getRotationMatrix(currentRotation, 11, 1, 1).conversion()));
 
         // Display the objects.
         drawObject(objectsToDraw);
@@ -282,6 +280,8 @@
         // All done.
         gl.flush();
     };
+
+
 
     // Send the vertices to WebGL.
     VerticiesPasser(objectsToDraw);

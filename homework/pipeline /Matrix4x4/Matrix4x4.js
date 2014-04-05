@@ -63,17 +63,17 @@ var Matrix4x4 = (function () {
         // Matrix4x4 in row major order.
         return new Matrix4x4(
             (x2 * oneMinusC) + c,
-            (xy * oneMinusC) + zs,
-            (xz * oneMinusC) - ys,
-            0.0,
-
             (xy * oneMinusC) - zs,
-            (y2 * oneMinusC) + c,
-            (yz * oneMinusC) + xs,
+            (xz * oneMinusC) + ys,
             0.0,
 
-            (xz * oneMinusC) + ys,
+            (xy * oneMinusC) + zs,
+            (y2 * oneMinusC) + c,
             (yz * oneMinusC) - xs,
+            0.0,
+
+            (xz * oneMinusC) - ys,
+            (yz * oneMinusC) + xs,
             (z2 * oneMinusC) + c,
             0.0,
 
