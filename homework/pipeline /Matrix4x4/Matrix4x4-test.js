@@ -111,7 +111,7 @@ $(function () {
     });
 
     test("Scaling, of Matrices", function () {
-        matrix = Matrix4x4.getScaleMatrix(2, 5, 1);
+        matrix = Matrix4x4.getScaleMatrix(2, 5, 21);
         deepEqual(matrix.elements,
             [2, 0, 0, 0,
              0, 5, 0, 0,
