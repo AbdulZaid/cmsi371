@@ -152,7 +152,7 @@ $(function () {
     });
 
     test("Ortho Matrix4x4 Projection", function () {
-        var matrix = Matrix4x4.getOrthoMatrix(-4, 4, -2, 2, -10, 10),
+        var matrix = Matrix4x4.getOrthoMatrix(-4, 2, 4, -2, -10, 10),
             width = 4 + 4,
             height = 2 + 2,
             depth = 10 + 10;

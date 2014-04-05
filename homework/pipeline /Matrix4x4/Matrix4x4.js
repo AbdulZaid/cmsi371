@@ -63,23 +63,23 @@ var Matrix4x4 = (function () {
         // Matrix4x4 in row major order.
         return new Matrix4x4(
             (x2 * oneMinusC) + c,
-            (xy * oneMinusC) - zs, 
-            (xz * oneMinusC) + ys,
-            0.0,
-
             (xy * oneMinusC) + zs,
-            (y2 * oneMinusC) + c,
-            (yz * oneMinusC) - xs,
+            (xz * oneMinusC) - ys,
             0.0,
 
-            (xz * oneMinusC) - ys,
+            (xy * oneMinusC) - zs,
+            (y2 * oneMinusC) + c,
             (yz * oneMinusC) + xs,
+            0.0,
+
+            (xz * oneMinusC) + ys,
+            (yz * oneMinusC) - xs,
             (z2 * oneMinusC) + c,
             0.0,
-                
-            0.0,                   
-            0.0,                   
-            0.0, 
+
+            0.0,
+            0.0,
+            0.0,
             1.0
         );
     };
@@ -162,32 +162,32 @@ var Matrix4x4 = (function () {
         );
     };
 
-    matrix4x4.getOrthoMatrix = function (left, right, bottom, top, zNear, zFar) {
+    matrix4x4.getOrthoMatrix = function (left, top, right, bottom, zNear, zFar) {
         var width = right - left,
             height = top - bottom,
             depth = zFar - zNear;
-
-        // 4x4 Matrix in row major order.
+        
+        // 4x4 Matrix.
         return new Matrix4x4(
-            2.0 / width,
-            0.0,
-            0.0,
-            -(right + left) / width,
+            2 / width,
+            0,
+            0,
+            0,
 
-            0.0,
-            2.0 / height,
-            0.0,
-            -(top + bottom) / height,
+            0,
+            2 / height,
+            0,
+            0,
 
-            0.0,
-            0.0,
+            0,
+            0,
             -2.0 / depth,
-            -(zFar + zNear) / depth,
+            0,
 
-            0.0,
-            0.0,
-            0.0,
-            1.0
+            -(right + left) / width,
+            -(top + bottom) / height,
+            -(zFar + zNear) / depth,
+            1
         );
     };
 
