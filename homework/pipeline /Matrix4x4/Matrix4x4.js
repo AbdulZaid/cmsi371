@@ -191,7 +191,7 @@ var Matrix4x4 = (function () {
         );
     };
 
-    matrix4x4.getFrustumMatrix = function (left, right, bottom, top, zNear, zFar) {
+    matrix4x4.getFrustumMatrix = function (left, top, right, bottom, zNear, zFar) {
         var width = right - left,
             height = top - bottom,
             depth = zFar - zNear;

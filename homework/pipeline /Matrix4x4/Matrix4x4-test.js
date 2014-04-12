@@ -165,7 +165,7 @@ $(function () {
     });
 
     test("Frustum Matrix4x4 Projection", function () {
-        var matrix = Matrix4x4.getFrustumMatrix(0, 1, 0, 1, 0, 1);
+        var matrix = Matrix4x4.getFrustumMatrix(0, 1, 1, 0, 0, 1);
         width = 1;
         height = 1;
         depth = 1;
