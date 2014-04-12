@@ -17,7 +17,7 @@
             further functionality can be added to the software stack.
             Click the canvas to see what else is new.</p>
 
-        <canvas id="hello-webgl" width="512" height="512">
+        <canvas id="hello-webgl" width="1024" height="1024">
             Sorry, your web browser does not appear to support
             the <code>canvas</code> element, either.
         </canvas>
@@ -35,6 +35,8 @@
         <!-- Matrix4x4 is a matrix library that has many matrix function. -->
         <script src="matrix4x4/matrix4x4.js"></script>
 
+        <!-- added the vector file -->
+        <script src="vector/vector.js"></script>
         <!-- Set up shaders: we've placed the source in script elements for
             simplicity.  Shaders are ideally kept in separate files for easier
             maintenance, but in that situation, additional code and security
@@ -55,9 +57,10 @@
             uniform mat4 projectionMatrix;
             uniform mat4 scaleMatrix;
             uniform mat4 translateMatrix;
+            uniform mat4 cameraMatrix;
 
             void main(void) {
-                gl_Position =  translateMatrix * scaleMatrix * projectionMatrix * rotationMatrix * vec4(vertexPosition, 1.0);
+                gl_Position =  projectionMatrix * cameraMatrix * translateMatrix * scaleMatrix * rotationMatrix * vec4(vertexPosition, 1.0);
                 finalVertexColor = vec4(vertexColor, 1.0);
             }
         </script>

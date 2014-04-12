@@ -26,6 +26,7 @@
         currentInterval,
         projectionMatrix,
         rotationMatrix,
+        cameraMatrix,
         scaleMatrix,
         translateMatrix,
         vertexPosition,
@@ -172,6 +173,8 @@
     rotationMatrix = gl.getUniformLocation(shaderProgram, "rotationMatrix");
     scaleMatrix = gl.getUniformLocation(shaderProgram, "scaleMatrix");
     translateMatrix = gl.getUniformLocation(shaderProgram, "translateMatrix");
+    cameraMatrix = gl.getUniformLocation(shaderProgram, "cameraMatrix");
+
     /*
      * Displays an individual object.
      */
@@ -198,18 +201,22 @@
         Matrix4x4.getOrthoMatrix(-2, 2, 2, -2, -2, 2).conversion()
         )
     );
-
     //Initialize the scale matrix.
     gl.uniformMatrix4fv(scaleMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.getScaleMatrix(2, 0.6, 2).conversion()
         )
     );
-    
     //Initialize the scale matrix.
     gl.uniformMatrix4fv(translateMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.getTranslationMatrix(0.2, 0.2, 0.5).conversion()
         )
     );
+        //Initialize the scale matrix.
+    gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, new Float32Array(
+        Matrix4x4.lookAt(0, 1, 1, 0, 0, 0, 0, 1, 0).conversion()
+        )
+    );
+    
 
     /*
      * Displays the scene.
