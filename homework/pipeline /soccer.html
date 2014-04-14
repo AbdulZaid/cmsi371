@@ -68,9 +68,9 @@
                 gl_Position =  projectionMatrix * cameraMatrix * translateMatrix * scaleMatrix * rotationMatrix * vec4(vertexPosition, 1.0);
                 finalVertexColor = vec4(vertexColor, 1.0);
 
-                //fragmentNormal = normalVector;
+                fragmentNormal = normalVector;
 
-                fragmentNormal = (projectionMatrix * vec4(normalVector, 0.0)).xyz;
+                // fragmentNormal = (projectionMatrix * vec4(normalVector, 0.0)).xyz;
 
             }
         </script>

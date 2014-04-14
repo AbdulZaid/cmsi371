@@ -31,6 +31,10 @@
         translateMatrix,
         vertexPosition,
         vertexColor,
+        //drown objects
+        sphere = Shapes.sphere(),
+        cube = Shapes.cube(),
+        field = Shapes.field(),
 
         // Normal Vector.
         normalVector,
@@ -66,54 +70,32 @@
     // Build the objects to display.
     objectsToDraw = [
                      
-//        {
-//            color: { r: 0.0, g: 0.0, b: 1.0 },
-//            vertices: [].concat(
-//                [ -1.0, -1.0, 0.75 ],
-//                [ -1.0, -0.1, -1.0 ],
-//                [ -0.1, -0.1, -1.0 ],
-//                [ -0.1, -1.0, 0.75 ]
-//            ),
-//            mode: gl.LINE_LOOP
-//        },
-
-//        {
-//            color: { r: 0.0, g: 0.5, b: 0.0 },
-//            vertices: Shapes.toRawLineArray(Shapes.icosahedron()),
-//            mode: gl.LINES
-//        },
-                     
         {
             color: { r: 1.0, g: 0.0, b: 0.3 },
-            vertices: Shapes.toRawLineArray(Shapes.sphere()),
+            vertices: Shapes.toRawLineArray(sphere),
             mode: gl.LINES,
-            normals: Shapes.toNormalArray(Shapes.sphere()),
+            normals: Shapes.toNormalArray(sphere),
 
         },
                      
         {
             color: { r: 0.0, g: 0.0, b: 0.3 },
-            vertices: Shapes.toRawTriangleArray(Shapes.cube()),
+            vertices: Shapes.toRawTriangleArray(cube),
             mode: gl.TRIANGLES,
-            normals: Shapes.toNormalArray(Shapes.cube()),
+            normals: Shapes.toNormalArray(cube),
 
             //put it in here to test out the function.
             leafs: [
                 {
                     color: { r: 0.0, g: 1.0, b: 0.0 },
-                    vertices: Shapes.toRawTriangleArray(Shapes.field()),
+                    vertices: Shapes.toRawTriangleArray(field),
                     mode: gl.TRIANGLES,
-                    normals: Shapes.toNormalArray(Shapes.field()),
+                    normals: Shapes.toNormalArray(field),
 
                 }
             ]
 
         }
-//        {
-//            color: { r: 0.0, g: 1.0, b: 0.0 },
-//            vertices: Shapes.toRawTriangleArray(Shapes.field()),
-//            mode: gl.TRIANGLES
-//        }
     ];
 
     // Pass the vertices to WebGL.
@@ -197,24 +179,24 @@
     /*
      * Displays an individual object.
      */
-    drawObject = function (objectsToDraw) {
+    drawObject = function (object) {
  
     	for (i = 0; i < objectsToDraw.length; i += 1) {
             // Set the varying colors.
-            gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].colorBuffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
             gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
             // Set the varying vertex coordinates.
-            gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].buffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
-            gl.drawArrays(objectsToDraw[i].mode, 0, objectsToDraw[i].vertices.length / 3);
+            gl.drawArrays(object.mode, 0, object.vertices.length / 3);
 
             // Set the varying normal vectors.
-            gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].normalBuffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, object.normalBuffer);
             gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);
 
-            if (objectsToDraw[i].leafs) {
-                drawObject(objectsToDraw[i].leafs);
+            if (object[i].leafs) {
+                drawObject(object[i].leafs);
             }
 		}
     };
