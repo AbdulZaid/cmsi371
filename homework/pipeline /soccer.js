@@ -32,6 +32,9 @@
         vertexPosition,
         vertexColor,
 
+        // Normal Vector.
+        normalVector,
+
         // An individual "draw object" function.
         drawObject,
 
@@ -83,19 +86,25 @@
         {
             color: { r: 1.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawLineArray(Shapes.sphere()),
-            mode: gl.LINES
+            mode: gl.LINES,
+            normals: Shapes.toNormalArray(Shapes.sphere()),
+
         },
                      
         {
             color: { r: 0.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawTriangleArray(Shapes.cube()),
             mode: gl.TRIANGLES,
+            normals: Shapes.toNormalArray(Shapes.cube()),
+
             //put it in here to test out the function.
             leafs: [
                 {
                     color: { r: 0.0, g: 1.0, b: 0.0 },
                     vertices: Shapes.toRawTriangleArray(Shapes.field()),
-                    mode: gl.TRIANGLES
+                    mode: gl.TRIANGLES,
+                    normals: Shapes.toNormalArray(Shapes.field()),
+
                 }
             ]
 
@@ -126,6 +135,13 @@
                     );
                 }
             }
+
+
+            // Normal buffer.
+            objectsToDraw[i].normalBuffer = GLSLUtilities.initVertexBuffer(gl,
+                    objectsToDraw[i].normals);
+
+            //color buffer
             objectsToDraw[i].colorBuffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].colors);
  
@@ -175,6 +191,9 @@
     translateMatrix = gl.getUniformLocation(shaderProgram, "translateMatrix");
     cameraMatrix = gl.getUniformLocation(shaderProgram, "cameraMatrix");
 
+    normalVector = gl.getAttribLocation(shaderProgram, "normalVector");
+    gl.enableVertexAttribArray(normalVector);
+
     /*
      * Displays an individual object.
      */
@@ -189,7 +208,11 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
             gl.drawArrays(objectsToDraw[i].mode, 0, objectsToDraw[i].vertices.length / 3);
-     
+
+            // Set the varying normal vectors.
+            gl.bindBuffer(gl.ARRAY_BUFFER, objectsToDraw[i].normalBuffer);
+            gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);
+
             if (objectsToDraw[i].leafs) {
                 drawObject(objectsToDraw[i].leafs);
             }
@@ -211,12 +234,14 @@
         Matrix4x4.getTranslationMatrix(0.2, 0.2, 0.5).conversion()
         )
     );
-        //Initialize the scale matrix.
+    //Initialize the scale matrix.
     gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.lookAt(0, 1, 1, 0, 0, 0, 0, 1, 0).conversion()
         )
     );
     
+
+
 
     /*
      * Displays the scene.
@@ -259,4 +284,4 @@
         }
     });
 
-}(document.getElementById("hello-webgl")));
+}(document.getElementById("soccer")));

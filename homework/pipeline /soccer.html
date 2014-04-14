@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8"/>
         <title>Hello WebGL (again)</title>
-        <link rel="stylesheet" href="hello-webgl-again.css" />
+        <link rel="stylesheet" href="soccer.css" />
     </head>
     <body>
         <h1>Hello WebGL (again)!</h1>
@@ -17,7 +17,7 @@
             further functionality can be added to the software stack.
             Click the canvas to see what else is new.</p>
 
-        <canvas id="hello-webgl" width="1024" height="1024">
+        <canvas id="soccer" width="1024" height="1024">
             Sorry, your web browser does not appear to support
             the <code>canvas</code> element, either.
         </canvas>
@@ -29,14 +29,15 @@
              is common to many WebGL programs. -->
         <script src="glsl-utilities.js"></script>
 
+        <!-- added the vector file -->
+        <script src="vector/vector.js"></script>
+
         <!-- Shapes is a library that generates "canned" shapes. -->
         <script src="shapes.js"></script>
 
         <!-- Matrix4x4 is a matrix library that has many matrix function. -->
         <script src="matrix4x4/matrix4x4.js"></script>
 
-        <!-- added the vector file -->
-        <script src="vector/vector.js"></script>
         <!-- Set up shaders: we've placed the source in script elements for
             simplicity.  Shaders are ideally kept in separate files for easier
             maintenance, but in that situation, additional code and security
@@ -49,10 +50,14 @@
             #endif
 
             attribute vec3 vertexPosition;
+            attribute vec3 normalVector;
+
 
             // Note this new additional output.
             attribute vec3 vertexColor;
             varying vec4 finalVertexColor;
+            varying vec3 fragmentNormal;
+
             uniform mat4 rotationMatrix;
             uniform mat4 projectionMatrix;
             uniform mat4 scaleMatrix;
@@ -62,6 +67,11 @@
             void main(void) {
                 gl_Position =  projectionMatrix * cameraMatrix * translateMatrix * scaleMatrix * rotationMatrix * vec4(vertexPosition, 1.0);
                 finalVertexColor = vec4(vertexColor, 1.0);
+
+                //fragmentNormal = normalVector;
+
+                fragmentNormal = (projectionMatrix * vec4(normalVector, 0.0)).xyz;
+
             }
         </script>
 
@@ -72,8 +82,11 @@
             #endif
 
             varying vec4 finalVertexColor;
+            varying vec3 fragmentNormal;
 
             void main(void) {
+                vec3 n = normalize(fragmentNormal);
+
                 // We vary the color based on the fragment's z coordinate,
                 // which, at this point, ranges from 0 (near) to 1 (far).
                 // Note the ".rgb" subselector.
@@ -82,6 +95,6 @@
         </script>
 
         <!-- This script sets up the specific scene for this page. -->
-        <script src="hello-webgl-again.js"></script>
+        <script src="soccer.js"></script>
   </body>
 </html>
