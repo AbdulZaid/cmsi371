@@ -24,20 +24,23 @@
         // Important state variables.
         currentRotation = 0.0,
         currentInterval,
-        projectionMatrix,
         rotationMatrix,
         cameraMatrix,
         scaleMatrix,
         translateMatrix,
+        projectionMatrix,
         vertexPosition,
         vertexColor,
-        //drown objects
+
+        //drawn objects
         sphere = Shapes.sphere(),
         cube = Shapes.cube(),
         field = Shapes.field(),
 
-        // Normal Vector.
+        // For emphasis, we separate the variables that involve lighting.
         normalVector,
+        lightPosition,
+        lightDiffuse,
 
         // An individual "draw object" function.
         drawObject,
@@ -49,7 +52,7 @@
         i,
         maxi,
         j,
-        maxj,
+        maxj;
     
     // Grab the WebGL rendering context.
     gl = GLSLUtilities.getGL(canvas);
@@ -72,20 +75,28 @@
                      
         {
             color: { r: 1.0, g: 0.0, b: 0.3 },
-            vertices: Shapes.toRawLineArray(sphere),
+            vertices: Shapes.toRawLineArray(cube),
             mode: gl.LINES,
-            normals: Shapes.toNormalArray(sphere),
+            normals: Shapes.toVertexNormalArray(cube)
 
         },
                      
         {
-            color: { r: 0.0, g: 0.0, b: 0.3 },
+
+            color: { r: 1.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawTriangleArray(cube),
             mode: gl.TRIANGLES,
             normals: Shapes.toNormalArray(cube),
 
-            //put it in here to test out the function.
             leafs: [
+
+                // {
+                //     color: { r: 1.0, g: 0.0, b: 0.3 },
+                //     vertices: Shapes.toRawLineArray(sphere),
+                //     mode: gl.LINES,
+                //     normals: Shapes.toVertexNormalArray(sphere)
+                // },
+
                 {
                     color: { r: 0.0, g: 1.0, b: 0.0 },
                     vertices: Shapes.toRawTriangleArray(field),
@@ -93,6 +104,7 @@
                     normals: Shapes.toNormalArray(field),
 
                 }
+
             ]
 
         }
@@ -119,7 +131,7 @@
             }
 
 
-            // Normal buffer.
+            // // Normal buffer.
             objectsToDraw[i].normalBuffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].normals);
 
@@ -176,23 +188,27 @@
     normalVector = gl.getAttribLocation(shaderProgram, "normalVector");
     gl.enableVertexAttribArray(normalVector);
 
+    // Note the additional variables.
+    lightPosition = gl.getUniformLocation(shaderProgram, "lightPosition");
+    lightDiffuse = gl.getUniformLocation(shaderProgram, "lightDiffuse");
+
     /*
      * Displays an individual object.
      */
     drawObject = function (object) {
  
-    	for (i = 0; i < objectsToDraw.length; i += 1) {
-            // Set the varying colors.
-            gl.bindBuffer(gl.ARRAY_BUFFER, object.colorBuffer);
+    	 for (i = 0; i < object.length; i += 1) {
+           // Set the varying colors.
+            gl.bindBuffer(gl.ARRAY_BUFFER, object[i].colorBuffer);
             gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
             // Set the varying vertex coordinates.
-            gl.bindBuffer(gl.ARRAY_BUFFER, object.buffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, object[i].buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
-            gl.drawArrays(object.mode, 0, object.vertices.length / 3);
+            gl.drawArrays(object[i].mode, 0, object[i].vertices.length / 3);
 
-            // Set the varying normal vectors.
-            gl.bindBuffer(gl.ARRAY_BUFFER, object.normalBuffer);
+            // // Set the varying normal vectors.
+            gl.bindBuffer(gl.ARRAY_BUFFER, object[i].normalBuffer);
             gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);
 
             if (object[i].leafs) {
@@ -211,7 +227,7 @@
         Matrix4x4.getScaleMatrix(2, 0.6, 2).conversion()
         )
     );
-    //Initialize the scale matrix.
+    //Initialize the translate matrix.
     gl.uniformMatrix4fv(translateMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.getTranslationMatrix(0.2, 0.2, 0.5).conversion()
         )
@@ -249,7 +265,11 @@
 
     // Draw the initial scene.
     drawScene();
- 
+
+     // Set up our one light source and color.  Note the uniform3fv function.
+    gl.uniform3fv(lightPosition, [1.0, 1.0, 1.0]);
+    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
+
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {
         if (currentInterval) {
