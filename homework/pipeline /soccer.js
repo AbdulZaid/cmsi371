@@ -73,13 +73,13 @@
     // Build the objects to display.
     objectsToDraw = [
                      
-        {
-            color: { r: 1.0, g: 0.0, b: 0.3 },
-            vertices: Shapes.toRawLineArray(cube),
-            mode: gl.LINES,
-            normals: Shapes.toVertexNormalArray(cube)
+        // {
+        //     color: { r: 1.0, g: 0.0, b: 0.3 },
+        //     vertices: Shapes.toRawLineArray(sphere),
+        //     mode: gl.LINES,
+        //     normals: Shapes.toRawLineArray(sphere)
 
-        },
+        // },
                      
         {
 
@@ -224,7 +224,7 @@
     );
     //Initialize the scale matrix.
     gl.uniformMatrix4fv(scaleMatrix, gl.FALSE, new Float32Array(
-        Matrix4x4.getScaleMatrix(2, 0.6, 2).conversion()
+        Matrix4x4.getScaleMatrix(1, 0.6, 2).conversion()
         )
     );
     //Initialize the translate matrix.
@@ -232,7 +232,7 @@
         Matrix4x4.getTranslationMatrix(0.2, 0.2, 0.5).conversion()
         )
     );
-    //Initialize the scale matrix.
+    //Initialize the camera matrix.
     gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.lookAt(0, 1, 1, 0, 0, 0, 0, 1, 0).conversion()
         )
@@ -266,8 +266,8 @@
     // Draw the initial scene.
     drawScene();
 
-     // Set up our one light source and color.  Note the uniform3fv function.
-    gl.uniform3fv(lightPosition, [1.0, 1.0, 1.0]);
+    // Set up our one light source and color.  Note the uniform3fv function.
+    gl.uniform3fv(lightPosition, [0.0, 0.0, 0.0]);
     gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
 
     // Set up the rotation toggle: clicking on the canvas does it.

@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8"/>
-        <title>Hello WebGL (again)</title>
+        <title>Soccer</title>
         <link rel="stylesheet" href="soccer.css" />
     </head>
     <body>
-        <h1>Hello WebGL (again)!</h1>
+        <h1>Soccer Goal</h1>
 
         <p>You’ll need a WebGL-capable web browser to see anything here;
             instructions can be found in this
@@ -57,17 +57,8 @@
             // We still output color...
             varying vec4 finalVertexColor;
 
-
-            varying vec3 fragmentNormal;
-
-            // The should-now-be-familiar matrices.
-             uniform mat4 projectionMatrix;
-             uniform mat4 modelViewMatrix;
-             uniform mat4 xRotationMatrix;
-             uniform mat4 yRotationMatrix;
-
             uniform mat4 rotationMatrix;
-            //uniform mat4 projectionMatrix;
+            uniform mat4 projectionMatrix;
             uniform mat4 scaleMatrix;
             uniform mat4 translateMatrix;
             uniform mat4 cameraMatrix;
@@ -78,7 +69,7 @@
 
             void main(void) {
                 // First, transform our vertex to its final eye location.
-                vec3 eyePosition = (modelViewMatrix * vec4(vertexPosition, 1.0)).xyz;
+                vec3 eyePosition = (rotationMatrix * vec4(vertexPosition, 1.0)).xyz;
 
                 // Figure out the color of the light that lands on the vertex.
                 vec3 diffuseProduct = vertexColor * lightDiffuse;
@@ -88,23 +79,15 @@
 
                 // We need to transform our normal vector, too.  We don't care about
                 // translation so we pad a 0.0 rather than a 1.0.
-                vec3 n = normalize(modelViewMatrix * vec4(normalVector, 0.0)).xyz;
+                vec3 n = normalize(rotationMatrix * vec4(normalVector, 0.0)).xyz;
 
                 // Calculate the amount of diffuse light that hits the vertex.
                 float kd = max(dot(l, n), 0.0);
                 vec3 finalDiffuse = kd * diffuseProduct;
 
                 // OK, finally assign things.  Note the scale cheat  :-P
-                gl_Position = projectionMatrix * vec4(2.0 * vertexPosition, 1.0);
+                gl_Position = projectionMatrix * cameraMatrix * translateMatrix * rotationMatrix * vec4(2.0 * vertexPosition, 1.0);
                 finalVertexColor = vec4(finalDiffuse.rgb, 1.0);
-
-
-                gl_Position =  projectionMatrix  * cameraMatrix * translateMatrix * scaleMatrix * rotationMatrix * vec4(0.5 * vertexPosition, 1.0);
-                finalVertexColor = vec4(vertexColor, 1.0);
-
-                //fragmentNormal = normalVector;
-
-                //fragmentNormal = (projectionMatrix * vec4(normalVector, 0.0)).xyz;
 
             }
         </script>
@@ -116,16 +99,9 @@
             #endif
 
             varying vec4 finalVertexColor;
-            //varying vec3 fragmentNormal;
-
+            
             void main(void) {
-                //vec3 n = normalize(fragmentNormal);
                 gl_FragColor = vec4(finalVertexColor.rgb, 1.0);
-
-                // We vary the color based on the fragment's z coordinate,
-                // which, at this point, ranges from 0 (near) to 1 (far).
-                // Note the ".rgb" subselector.
-                gl_FragColor = vec4((1.0 - gl_FragCoord.z) * finalVertexColor.rgb, 1.0);
             }
         </script>
 
