@@ -40,6 +40,7 @@
         // For emphasis, we separate the variables that involve lighting.
         normalVector,
         lightPosition,
+        lightPosition2,
         lightDiffuse,
 
         // An individual "draw object" function.
@@ -190,6 +191,7 @@
 
     // Note the additional variables.
     lightPosition = gl.getUniformLocation(shaderProgram, "lightPosition");
+    lightPosition2 = gl.getUniformLocation(shaderProgram, "lightPosition2");
     lightDiffuse = gl.getUniformLocation(shaderProgram, "lightDiffuse");
 
     /*
@@ -267,8 +269,9 @@
     drawScene();
 
     // Set up our one light source and color.  Note the uniform3fv function.
-    gl.uniform3fv(lightPosition, [0.0, 0.0, 0.0]);
-    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
+    gl.uniform3fv(lightPosition, [1.0, 1.0, -1.0]);
+    gl.uniform3fv(lightPosition2, [0.0, 0.0, 0.0]);
+    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 0.0]);
 
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {
