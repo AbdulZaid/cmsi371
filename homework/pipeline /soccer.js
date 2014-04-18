@@ -33,7 +33,7 @@
         vertexColor,
 
         //drawn objects
-        sphere = Shapes.sphere(),
+        sphere = Shapes.sphere(0.7, 30, 30),
         cube = Shapes.cube(),
         field = Shapes.field(),
 
@@ -91,19 +91,18 @@
 
             leafs: [
 
-                // {
-                //     color: { r: 1.0, g: 0.0, b: 0.3 },
-                //     vertices: Shapes.toRawLineArray(sphere),
-                //     mode: gl.LINES,
-                //     normals: Shapes.toVertexNormalArray(sphere)
-                // },
+                {
+                    color: { r: 1.0, g: 0.0, b: 0.3 },
+                    vertices: Shapes.toRawLineArray(sphere),
+                    mode: gl.LINES,
+                    normals: Shapes.toRawLineArray(sphere)
+                },
 
                 {
                     color: { r: 0.0, g: 1.0, b: 0.0 },
                     vertices: Shapes.toRawTriangleArray(field),
                     mode: gl.TRIANGLES,
                     normals: Shapes.toNormalArray(field),
-
                 }
 
             ]
@@ -131,15 +130,14 @@
                 }
             }
 
-
-            // // Normal buffer.
-            objectsToDraw[i].normalBuffer = GLSLUtilities.initVertexBuffer(gl,
-                    objectsToDraw[i].normals);
-
             //color buffer
             objectsToDraw[i].colorBuffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].colors);
  
+             // Normal buffer.
+            objectsToDraw[i].normalBuffer = GLSLUtilities.initVertexBuffer(gl,
+                     objectsToDraw[i].normals);
+
             if (objectsToDraw[i].leafs && (objectsToDraw[i].leafs.length !== 0)) {
             	VerticiesPasser(objectsToDraw[i].leafs);
             }
@@ -200,7 +198,11 @@
     drawObject = function (object) {
  
     	 for (i = 0; i < object.length; i += 1) {
-           // Set the varying colors.
+            // Set the varying normal vectors.
+            gl.bindBuffer(gl.ARRAY_BUFFER, object[i].normalBuffer);
+            gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);
+
+            // Set the varying colors.
             gl.bindBuffer(gl.ARRAY_BUFFER, object[i].colorBuffer);
             gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 0, 0);
 
@@ -208,10 +210,6 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, object[i].buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
             gl.drawArrays(object[i].mode, 0, object[i].vertices.length / 3);
-
-            // // Set the varying normal vectors.
-            gl.bindBuffer(gl.ARRAY_BUFFER, object[i].normalBuffer);
-            gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);
 
             if (object[i].leafs) {
                 drawObject(object[i].leafs);
