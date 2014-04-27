@@ -142,7 +142,7 @@
             	VerticiesPasser(objectsToDraw[i].leafs);
             }
         }
- 	},
+    },
  
     // Initialize the shaders.
     shaderProgram = GLSLUtilities.initSimpleShaderProgram(
@@ -197,7 +197,7 @@
      */
     drawObject = function (object) {
  
-    	 for (i = 0; i < object.length; i += 1) {
+    	for (i = 0; i < object.length; i += 1) {
             // Set the varying normal vectors.
             gl.bindBuffer(gl.ARRAY_BUFFER, object[i].normalBuffer);
             gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);
@@ -214,7 +214,7 @@
             if (object[i].leafs) {
                 drawObject(object[i].leafs);
             }
-		}
+        }
     };
 
     //Initialize the projection matrix.
@@ -263,13 +263,15 @@
     // Send the vertices to WebGL.
     VerticiesPasser(objectsToDraw);
 
-    // Draw the initial scene.
-    drawScene();
-
     // Set up our one light source and color.  Note the uniform3fv function.
     gl.uniform3fv(lightPosition, [1.0, 1.0, -1.0]);
     gl.uniform3fv(lightPosition2, [0.0, 0.0, 0.0]);
     gl.uniform3fv(lightDiffuse, [1.0, 1.0, 0.0]);
+
+    // Draw the initial scene.
+    drawScene();
+
+
 
     // Set up the rotation toggle: clicking on the canvas does it.
     $(canvas).click(function () {

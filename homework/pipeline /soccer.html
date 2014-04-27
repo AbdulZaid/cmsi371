@@ -93,7 +93,7 @@
                 vec3 finalDiffuse = finalKd * diffuseProduct;
 
                 // OK, finally assign things.  Note the scale cheat  :-P
-                gl_Position = projectionMatrix *  translateMatrix * rotationMatrix * vec4(1.0 * vertexPosition, 1.0);
+                gl_Position = projectionMatrix * translateMatrix * rotationMatrix * vec4(1.0 * vertexPosition, 1.0);
                 finalVertexColor = vec4(finalDiffuse.rgb, 1.0);
 
             }
