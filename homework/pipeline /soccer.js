@@ -29,6 +29,7 @@
         scaleMatrix,
         translateMatrix,
         projectionMatrix,
+        instanceMatrix,
         vertexPosition,
         vertexColor,
 
@@ -74,18 +75,21 @@
     // Build the objects to display.
     objectsToDraw = [
                      
-        // {
-        //     color: { r: 1.0, g: 0.0, b: 0.3 },
-        //     vertices: Shapes.toRawLineArray(sphere),
-        //     mode: gl.LINES,
-        //     normals: Shapes.toRawLineArray(sphere)
+        {
+            color: { r: 0.0, g: 1.0, b: 1.0 },
+            dx: -0.5,
+            vertices: Shapes.toRawLineArray(sphere),
+            mode: gl.LINES,
+            normals: Shapes.toRawLineArray(sphere)
 
-        // },
+        },
                      
         {
 
             color: { r: 1.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawTriangleArray(cube),
+            dx: 0.75,
+            theta: 45,
             mode: gl.TRIANGLES,
             normals: Shapes.toNormalArray(cube),
 
@@ -183,6 +187,7 @@
     scaleMatrix = gl.getUniformLocation(shaderProgram, "scaleMatrix");
     translateMatrix = gl.getUniformLocation(shaderProgram, "translateMatrix");
     cameraMatrix = gl.getUniformLocation(shaderProgram, "cameraMatrix");
+    instanceMatrix = gl.getUniformLocation(shaderProgram, "instanceMatrix");
 
     normalVector = gl.getAttribLocation(shaderProgram, "normalVector");
     gl.enableVertexAttribArray(normalVector);
@@ -198,6 +203,19 @@
     drawObject = function (object) {
  
     	for (i = 0; i < object.length; i += 1) {
+            // Build the instance matrix.
+            var instanceTransform = new Matrix4x4(),
+                translation = Matrix4x4.getTranslationMatrix(
+                    object[i].dx || 0,
+                    object[i].dy || 0,
+                    object[i].dz || 0
+                ),
+                rotation = Matrix4x4.getRotationMatrix(object[i].theta || 0, 0, 0, 1);
+
+            instanceTransform = instanceTransform.multiply(translation).multiply(rotation);
+
+            gl.uniformMatrix4fv(instanceMatrix, gl.FALSE, new Float32Array(instanceTransform.conversion()));
+
             // Set the varying normal vectors.
             gl.bindBuffer(gl.ARRAY_BUFFER, object[i].normalBuffer);
             gl.vertexAttribPointer(normalVector, 3, gl.FLOAT, false, 0, 0);

@@ -62,6 +62,7 @@
             uniform mat4 scaleMatrix;
             uniform mat4 translateMatrix;
             uniform mat4 cameraMatrix;
+            uniform mat4 instanceMatrix;
 
             // ...but we need light to calculate them.
             uniform vec3 lightPosition;
@@ -93,7 +94,7 @@
                 vec3 finalDiffuse = finalKd * diffuseProduct;
 
                 // OK, finally assign things.  Note the scale cheat  :-P
-                gl_Position = projectionMatrix * translateMatrix * rotationMatrix * vec4(1.0 * vertexPosition, 1.0);
+                gl_Position = projectionMatrix * translateMatrix * rotationMatrix * instanceMatrix * vec4(1.0 * vertexPosition, 1.0);
                 finalVertexColor = vec4(finalDiffuse.rgb, 1.0);
 
             }
