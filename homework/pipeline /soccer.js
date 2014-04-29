@@ -77,7 +77,7 @@
                      
         {
             color: { r: 0.0, g: 1.0, b: 1.0 },
-            dx: -0.5,
+            dx: 0.75,
             vertices: Shapes.toRawLineArray(sphere),
             mode: gl.LINES,
             normals: Shapes.toRawLineArray(sphere)
@@ -88,8 +88,8 @@
 
             color: { r: 1.0, g: 0.0, b: 0.3 },
             vertices: Shapes.toRawTriangleArray(cube),
-            dx: 0.75,
-            theta: 45,
+            dx: -0.75,
+            theta: 225,
             mode: gl.TRIANGLES,
             normals: Shapes.toNormalArray(cube),
 
@@ -98,6 +98,7 @@
                 {
                     color: { r: 1.0, g: 0.0, b: 0.3 },
                     vertices: Shapes.toRawLineArray(sphere),
+                    dy: -0.5,
                     mode: gl.LINES,
                     normals: Shapes.toRawLineArray(sphere)
                 },
@@ -105,6 +106,7 @@
                 {
                     color: { r: 0.0, g: 1.0, b: 0.0 },
                     vertices: Shapes.toRawTriangleArray(field),
+                    theta: 90,
                     mode: gl.TRIANGLES,
                     normals: Shapes.toNormalArray(field),
                 }
@@ -200,11 +202,11 @@
     /*
      * Displays an individual object.
      */
-    drawObject = function (object) {
+    drawObject = function (object, parentTransform) {
  
     	for (i = 0; i < object.length; i += 1) {
             // Build the instance matrix.
-            var instanceTransform = new Matrix4x4(),
+            var instanceTransform = parentTransform || new Matrix4x4(),
                 translation = Matrix4x4.getTranslationMatrix(
                     object[i].dx || 0,
                     object[i].dy || 0,
@@ -230,7 +232,7 @@
             gl.drawArrays(object[i].mode, 0, object[i].vertices.length / 3);
 
             if (object[i].leafs) {
-                drawObject(object[i].leafs);
+                drawObject(object[i].leafs, instanceTransform);
             }
         }
     };
