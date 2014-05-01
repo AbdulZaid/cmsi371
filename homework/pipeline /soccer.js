@@ -117,7 +117,11 @@
     ];
 
     // Pass the vertices to WebGL.
+    // JD: Note on scoping: this really is just an internal function.  The way you have
+    //     defined it, it is a global variable.  Uncalled for, unnecessary.  Never lose
+    //     sight of the scope of your various declarations.
     VerticiesPasser = function (objectsToDraw) {
+        // JD: *Almost* there, except for that one subtle bug :)
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
             objectsToDraw[i].buffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].vertices);
@@ -203,7 +207,7 @@
      * Displays an individual object.
      */
     drawObject = function (object, parentTransform) {
- 
+        // JD: That subtle "shape group" bug (for 2 or more levels of children) is still lurking...
     	for (i = 0; i < object.length; i += 1) {
             // Build the instance matrix.
             var instanceTransform = parentTransform || new Matrix4x4(),

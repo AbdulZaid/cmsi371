@@ -40,6 +40,11 @@ var Shapes = {
             ]
         };
     },
+
+    // JD: Note how you can combine your field and cube shapes by just having
+    //     a single implementation and using a scale instance transform to
+    //     produce different sizes.
+
     /*
      * Returns the vertices for a cube. Later will be a soocer goal.
      */
@@ -130,6 +135,7 @@ var Shapes = {
         sphereData.indices = indices;
         return sphereData;
     },
+
     /*
      * Returns the vertices for a small icosahedron.
      */
