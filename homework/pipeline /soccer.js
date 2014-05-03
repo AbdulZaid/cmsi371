@@ -75,14 +75,14 @@
     // Build the objects to display.
     objectsToDraw = [
                      
-        {
-            color: { r: 0.0, g: 1.0, b: 1.0 },
-            dx: 0.75,
-            vertices: Shapes.toRawLineArray(sphere),
-            mode: gl.LINES,
-            normals: Shapes.toRawLineArray(sphere)
+        // {
+        //     color: { r: 0.0, g: 1.0, b: 1.0 },
+        //     dx: 0.75,
+        //     vertices: Shapes.toRawLineArray(sphere),
+        //     normals: Shapes.toRawLineArray(sphere),
+        //     mode: gl.LINES
 
-        },
+        // },
                      
         {
 
@@ -90,31 +90,42 @@
             vertices: Shapes.toRawTriangleArray(cube),
             dx: -0.75,
             theta: 225,
-            mode: gl.TRIANGLES,
             normals: Shapes.toNormalArray(cube),
+            mode: gl.TRIANGLES,
 
             leafs: [
 
                 {
-                    color: { r: 1.0, g: 0.0, b: 0.3 },
-                    vertices: Shapes.toRawLineArray(sphere),
+                    color: { r: 1.0, g: 1.0, b: 1.0 },
+                    vertices: Shapes.toRawTriangleArray(sphere),
                     dy: -0.5,
-                    mode: gl.LINES,
-                    normals: Shapes.toRawLineArray(sphere)
+                    normals: Shapes.toRawLineArray(sphere),
+                    mode: gl.TRIANGLES,
+
+                    leafs: [
+                        {
+                            color: { r: 1.0, g: 0.0, b: 0.0 },
+                            vertices: Shapes.toRawTriangleArray(field),
+                            theta: 180,
+                            normals: Shapes.toNormalArray(field),
+                            mode: gl.TRIANGLES,
+                        }
+                    ],
                 },
 
                 {
-                    color: { r: 0.0, g: 1.0, b: 0.0 },
+                    color: { r: 1.0, g: 1.0, b: 1.0 },
                     vertices: Shapes.toRawTriangleArray(field),
+                    dy: 3,
                     theta: 90,
-                    mode: gl.TRIANGLES,
                     normals: Shapes.toNormalArray(field),
+                    mode: gl.TRIANGLES,
                 }
 
             ]
 
         }
-    ];
+    ],
 
     // Pass the vertices to WebGL.
     // JD: Note on scoping: this really is just an internal function.  The way you have
@@ -234,21 +245,27 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, object[i].buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
             gl.drawArrays(object[i].mode, 0, object[i].vertices.length / 3);
+            var current;
 
             if (object[i].leafs) {
-                drawObject(object[i].leafs, instanceTransform);
+                if(object[i].leafs && (object[i].leafs.length !== 0)) {
+                    drawObject(object[i].leafs, instanceTransform);
+                    i--;
+                    
+                }
             }
+            //;;drawObject(this, instanceTransform);
         }
     };
 
     //Initialize the projection matrix.
     gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(
-        Matrix4x4.getOrthoMatrix(-2, 2, 2, -2, -2, 2).conversion()
+        Matrix4x4.getOrthoMatrix(-3, 3, 3, -3, -3, 3).conversion()
         )
     );
     //Initialize the scale matrix.
     gl.uniformMatrix4fv(scaleMatrix, gl.FALSE, new Float32Array(
-        Matrix4x4.getScaleMatrix(1, 0.6, 2).conversion()
+        Matrix4x4.getScaleMatrix(0.9, 0.9, 0.9).conversion()
         )
     );
     //Initialize the translate matrix.
@@ -288,9 +305,8 @@
     VerticiesPasser(objectsToDraw);
 
     // Set up our one light source and color.  Note the uniform3fv function.
-    gl.uniform3fv(lightPosition, [1.0, 1.0, -1.0]);
-    gl.uniform3fv(lightPosition2, [0.0, 0.0, 0.0]);
-    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 0.0]);
+    gl.uniform3fv(lightPosition, [0.0, 0.0, 0.0]);
+    gl.uniform3fv(lightDiffuse, [1.0, 1.0, 1.0]);
 
     // Draw the initial scene.
     drawScene();
