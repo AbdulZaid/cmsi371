@@ -16,7 +16,7 @@
         shaderProgram,
  
 		// A function that passes all of the object's vertices to WebGL.
-        VerticiesPasser,
+        VerticesPasser,
  
         // Utility variable indicating whether some fatal has occurred.
         abort = false,
@@ -128,7 +128,7 @@
     ],
 
     // Pass the vertices to WebGL.
-    VerticiesPasser = function (objectsToDraw) {
+    VerticesPasser = function (objectsToDraw) {
         var i,
         maxi;
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
@@ -158,7 +158,7 @@
                      objectsToDraw[i].normals);
 
             if (objectsToDraw[i].leafs && (objectsToDraw[i].leafs.length !== 0)) {
-            	VerticiesPasser(objectsToDraw[i].leafs);
+            	VerticesPasser(objectsToDraw[i].leafs);
             }
         }
     },
@@ -295,7 +295,7 @@
 
 
     // Send the vertices to WebGL.
-    VerticiesPasser(objectsToDraw);
+    VerticesPasser(objectsToDraw);
 
     // Set up our one light source and color.  Note the uniform3fv function.
     gl.uniform3fv(lightPosition, [0.0, 0.0, 0.0]);
