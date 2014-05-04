@@ -74,15 +74,15 @@
 
     // Build the objects to display.
     objectsToDraw = [
-                     
-        // {
-        //     color: { r: 0.0, g: 1.0, b: 1.0 },
-        //     dx: 0.75,
-        //     vertices: Shapes.toRawLineArray(sphere),
-        //     normals: Shapes.toRawLineArray(sphere),
-        //     mode: gl.LINES
 
-        // },
+        {
+            color: { r: 0.0, g: 1.0, b: 1.0 },
+            dx: 0.75,
+            vertices: Shapes.toRawLineArray(sphere),
+            normals: Shapes.toRawLineArray(sphere),
+            mode: gl.LINES
+
+        },
                      
         {
 
@@ -125,12 +125,12 @@
             ]
 
         }
-    ],
+    ]
 
     // Pass the vertices to WebGL.
     VerticesPasser = function (objectsToDraw) {
         var i,
-        maxi;
+            maxi;
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
             objectsToDraw[i].buffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].vertices);
@@ -161,7 +161,7 @@
             	VerticesPasser(objectsToDraw[i].leafs);
             }
         }
-    },
+    };
  
     // Initialize the shaders.
     shaderProgram = GLSLUtilities.initSimpleShaderProgram(
