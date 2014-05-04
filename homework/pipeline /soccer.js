@@ -115,10 +115,10 @@
 
                 {
                     color: { r: 1.0, g: 1.0, b: 1.0 },
-                    vertices: Shapes.toRawTriangleArray(field),
-                    dy: 3,
-                    theta: 90,
-                    normals: Shapes.toNormalArray(field),
+                    vertices: Shapes.toRawTriangleArray(cube),
+                    theta: 10,
+                    dy: 1.5,
+                    normals: Shapes.toNormalArray(cube),
                     mode: gl.TRIANGLES,
                 }
 
@@ -128,11 +128,9 @@
     ],
 
     // Pass the vertices to WebGL.
-    // JD: Note on scoping: this really is just an internal function.  The way you have
-    //     defined it, it is a global variable.  Uncalled for, unnecessary.  Never lose
-    //     sight of the scope of your various declarations.
     VerticiesPasser = function (objectsToDraw) {
-        // JD: *Almost* there, except for that one subtle bug :)
+        var i,
+        maxi;
         for (i = 0, maxi = objectsToDraw.length; i < maxi; i += 1) {
             objectsToDraw[i].buffer = GLSLUtilities.initVertexBuffer(gl,
                     objectsToDraw[i].vertices);
@@ -218,10 +216,11 @@
      * Displays an individual object.
      */
     drawObject = function (object, parentTransform) {
-        // JD: That subtle "shape group" bug (for 2 or more levels of children) is still lurking...
+        var i,
+            instanceTransform;
     	for (i = 0; i < object.length; i += 1) {
             // Build the instance matrix.
-            var instanceTransform = parentTransform || new Matrix4x4(),
+            instanceTransform = parentTransform || new Matrix4x4(),
                 translation = Matrix4x4.getTranslationMatrix(
                     object[i].dx || 0,
                     object[i].dy || 0,
@@ -245,16 +244,10 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, object[i].buffer);
             gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
             gl.drawArrays(object[i].mode, 0, object[i].vertices.length / 3);
-            var current;
-
-            if (object[i].leafs) {
-                if(object[i].leafs && (object[i].leafs.length !== 0)) {
-                    drawObject(object[i].leafs, instanceTransform);
-                    i--;
-                    
-                }
-            }
-            //;;drawObject(this, instanceTransform);
+            
+            if (object[i].leafs && (object[i].leafs.length !== 0)) {
+                drawObject(object[i].leafs, instanceTransform);
+            }  
         }
     };
 
