@@ -15,7 +15,7 @@
         // The shader program to use.
         shaderProgram,
  
-		// A function that passes all of the object's vertices to WebGL.
+        // A function that passes all of the object's vertices to WebGL.
         VerticesPasser,
  
         // Utility variable indicating whether some fatal has occurred.
@@ -24,6 +24,7 @@
         // Important state variables.
         currentRotation = 0.0,
         currentInterval,
+        goalInterval,
         rotationMatrix,
         cameraMatrix,
         scaleMatrix,
@@ -78,6 +79,9 @@
         {
             color: { r: 0.0, g: 1.0, b: 1.0 },
             dx: 0.75,
+            sx: 0.9,
+            sy: 0.9,
+            sz: 0.9,
             vertices: Shapes.toRawLineArray(sphere),
             normals: Shapes.toRawLineArray(sphere),
             mode: gl.LINES
@@ -226,9 +230,14 @@
                     object[i].dy || 0,
                     object[i].dz || 0
                 ),
-                rotation = Matrix4x4.getRotationMatrix(object[i].theta || 0, 0, 0, 1);
+                rotation = Matrix4x4.getRotationMatrix(object[i].theta || 0, 0, 0, 1),
+                scale = Matrix4x4.getScaleMatrix(
+                    object[i].sx || 0.9,
+                    object[i].sy || 0.9,
+                    object[i].sz || 0.9
+                ),
 
-            instanceTransform = instanceTransform.multiply(translation).multiply(rotation);
+            instanceTransform = instanceTransform.multiply(translation).multiply(scale);
 
             gl.uniformMatrix4fv(instanceMatrix, gl.FALSE, new Float32Array(instanceTransform.conversion()));
 
@@ -320,6 +329,20 @@
                 }
             }, 30);
         }
+        if (goalInterval) {
+            clearInterval(goalInterval);
+            goalInterval = null;
+        } else {
+            goalInterval = setInterval(function () {
+                //for(i = 0; i < 5; i += 1) {
+                    objectsToDraw[0].sx /= 1.02;
+                    objectsToDraw[0].sy /= 1.02;
+                    objectsToDraw[0].sz /= 1.02;
+                    drawScene();
+                //}
+            }, 30);
+        }
     });
+
 
 }(document.getElementById("soccer")));
