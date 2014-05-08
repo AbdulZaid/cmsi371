@@ -22,9 +22,10 @@
         abort = false,
 
         // Important state variables.
-        currentRotation = 0.0,
+        currentRotation = 290.0,
         currentInterval,
         goalInterval,
+        goalInterval2,
         rotationMatrix,
         cameraMatrix,
         scaleMatrix,
@@ -77,58 +78,60 @@
     objectsToDraw = [
 
         {
-            color: { r: 0.0, g: 1.0, b: 1.0 },
-            dx: 0.75,
+            color: { r: 1.0, g: 1.0, b: 1.0 },
+            dx: 0.0,
+            dy: 0.0,
+            dz: 0.0,
             sx: 0.9,
             sy: 0.9,
             sz: 0.9,
-            vertices: Shapes.toRawLineArray(sphere),
+            vertices: Shapes.toRawTriangleArray(sphere),
             normals: Shapes.toRawLineArray(sphere),
-            mode: gl.LINES
+            mode: gl.TRIANGLES
 
         },
                      
-        {
+        // {
 
-            color: { r: 1.0, g: 0.0, b: 0.3 },
-            vertices: Shapes.toRawTriangleArray(cube),
-            dx: -0.75,
-            theta: 225,
-            normals: Shapes.toNormalArray(cube),
-            mode: gl.TRIANGLES,
+        //     color: { r: 1.0, g: 0.0, b: 0.3 },
+        //     vertices: Shapes.toRawTriangleArray(cube),
+        //     dx: -0.75,
+        //     theta: 225,
+        //     normals: Shapes.toNormalArray(cube),
+        //     mode: gl.TRIANGLES,
 
-            leafs: [
+        //     leafs: [
 
-                {
-                    color: { r: 1.0, g: 1.0, b: 1.0 },
-                    vertices: Shapes.toRawTriangleArray(sphere),
-                    dy: -0.5,
-                    normals: Shapes.toRawLineArray(sphere),
-                    mode: gl.TRIANGLES,
+        //         {
+        //             color: { r: 1.0, g: 1.0, b: 1.0 },
+        //             vertices: Shapes.toRawTriangleArray(sphere),
+        //             dy: -0.5,
+        //             normals: Shapes.toRawLineArray(sphere),
+        //             mode: gl.TRIANGLES,
 
-                    leafs: [
-                        {
-                            color: { r: 1.0, g: 0.0, b: 0.0 },
-                            vertices: Shapes.toRawTriangleArray(field),
-                            theta: 180,
-                            normals: Shapes.toNormalArray(field),
-                            mode: gl.TRIANGLES,
-                        }
-                    ],
-                },
+        //             leafs: [
+        //                 {
+        //                     color: { r: 1.0, g: 0.0, b: 0.0 },
+        //                     vertices: Shapes.toRawTriangleArray(field),
+        //                     theta: 180,
+        //                     normals: Shapes.toNormalArray(field),
+        //                     mode: gl.TRIANGLES,
+        //                 }
+        //             ],
+        //         },
 
-                {
-                    color: { r: 1.0, g: 1.0, b: 1.0 },
-                    vertices: Shapes.toRawTriangleArray(cube),
-                    theta: 10,
-                    dy: 1.5,
-                    normals: Shapes.toNormalArray(cube),
-                    mode: gl.TRIANGLES,
-                }
+        //         {
+        //             color: { r: 1.0, g: 1.0, b: 1.0 },
+        //             vertices: Shapes.toRawTriangleArray(cube),
+        //             theta: 10,
+        //             dy: 1.5,
+        //             normals: Shapes.toNormalArray(cube),
+        //             mode: gl.TRIANGLES,
+        //         }
 
-            ]
+        //     ]
 
-        }
+        // }
     ]
 
     // Pass the vertices to WebGL.
@@ -272,7 +275,7 @@
     );
     //Initialize the translate matrix.
     gl.uniformMatrix4fv(translateMatrix, gl.FALSE, new Float32Array(
-        Matrix4x4.getTranslationMatrix(0.2, 0.2, 0.5).conversion()
+        Matrix4x4.getTranslationMatrix(0.0, -1.5, 0.0).conversion()
         )
     );
     //Initialize the camera matrix.
@@ -292,7 +295,7 @@
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // Set up the rotation matrix.
-        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(Matrix4x4.getRotationMatrix(currentRotation, 11, 1, 1).conversion()));
+        gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(Matrix4x4.getRotationMatrix(currentRotation, 1, 1, 1).conversion()));
 
         // Display the objects.
         drawObject(objectsToDraw);
@@ -324,23 +327,47 @@
             currentInterval = setInterval(function () {
                 currentRotation += 1.0;
                 drawScene();
-                if (currentRotation >= 360.0) {
-                    currentRotation -= 360.0;
-                }
-            }, 30);
+                if(currentRotation === 328) {
+                    window.clearInterval(currentInterval)
+                } 
+            }, 3);
         }
+
         if (goalInterval) {
             clearInterval(goalInterval);
             goalInterval = null;
         } else {
             goalInterval = setInterval(function () {
-                //for(i = 0; i < 5; i += 1) {
-                    objectsToDraw[0].sx /= 1.02;
-                    objectsToDraw[0].sy /= 1.02;
-                    objectsToDraw[0].sz /= 1.02;
-                    drawScene();
-                //}
-            }, 30);
+                objectsToDraw[0].dx += -0.180;
+                objectsToDraw[0].dy += 0.12;
+                objectsToDraw[0].dz += 0.09;
+                objectsToDraw[0].sx /= 1.09;
+                objectsToDraw[0].sy /= 1.09;
+                objectsToDraw[0].sz /= 1.09;
+                drawScene();  
+                if(objectsToDraw[0].sx === 0.1907943661352803) {
+                    window.clearInterval(goalInterval)
+                }
+                if(objectsToDraw[0].dy === 2.160000000000001) {
+                    goalInterval = setInterval(function () {
+                        objectsToDraw[0].dx += 0.1;
+                        drawScene();
+                        if(objectsToDraw[0].dx === 2.260000000000002) {
+                            goalInterval2 = setInterval(function () {
+                                objectsToDraw[0].dy += -0.01;
+                                drawScene();
+                                if(objectsToDraw[0].dy === 1.9200000000000044) {
+                                    window.clearInterval(goalInterval2);
+                                    alert("WOW You just hit the left bar and the right bar then scored a goal!!!!" + 
+                                        " JUST WOW, you should go and play for Real Madrid");
+                                    location.reload();
+                                }
+                            }, 10);
+                            window.clearInterval(goalInterval);
+                        }
+                    }, 30);
+                }
+            }, 80);
         }
     });
 
