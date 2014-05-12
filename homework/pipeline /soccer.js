@@ -90,7 +90,12 @@
             mode: gl.TRIANGLES
 
         },
-                     
+
+        // JD: Nice that you figured out the background image, but that shouldn't
+        //     have made you minimize your 3D scenery.  Actually, in its current
+        //     form, the scene barely looks like you are using any 3D functionality
+        //     at all.  The interaction is nice, but not at the price of 3D!
+
         // {
 
         //     color: { r: 1.0, g: 0.0, b: 0.3 },
@@ -240,6 +245,7 @@
                     object[i].sz || 0.9
                 ),
 
+            // JD: Missing rotation.
             instanceTransform = instanceTransform.multiply(translation).multiply(scale);
 
             gl.uniformMatrix4fv(instanceMatrix, gl.FALSE, new Float32Array(instanceTransform.conversion()));
@@ -264,6 +270,11 @@
     };
 
     //Initialize the projection matrix.
+    // JD: Ortho matrix is technically OK, but come on, with the football kicking action,
+    //     going with frustum is clearly way better!  (and at least makes use of a little
+    //     more 3D)
+    //
+    //     Furthermore, your canvas now is 640x419.  This does not match your viewing volume.
     gl.uniformMatrix4fv(projectionMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.getOrthoMatrix(-3, 3, 3, -3, -3, 3).conversion()
         )
@@ -279,6 +290,8 @@
         )
     );
     //Initialize the camera matrix.
+    // JD: Use this in concert with a frustum projection to produce just the right
+    //     kicker's view of the soccer field!
     gl.uniformMatrix4fv(cameraMatrix, gl.FALSE, new Float32Array(
         Matrix4x4.lookAt(0, 1, 1, 0, 0, 0, 0, 1, 0).conversion()
         )
@@ -295,6 +308,8 @@
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // Set up the rotation matrix.
+        // JD: Based on the theme of your scene, you really don't need this matrix
+        //     anymore.  It should go away.
         gl.uniformMatrix4fv(rotationMatrix, gl.FALSE, new Float32Array(Matrix4x4.getRotationMatrix(currentRotation, 1, 1, 1).conversion()));
 
         // Display the objects.
@@ -337,6 +352,14 @@
             clearInterval(goalInterval);
             goalInterval = null;
         } else {
+            // JD: The interaction itself is a nice idea, but the implementation shows a lack
+            //     of understanding of how vectors can help here.  You are showing three nested
+            //     setInterval calls whose only difference is the way that the ball is supposed
+            //     to move.  That's precisely what vectors do for you!  If you model the ball's
+            //     velocity as a vector, then you would need only one setInterval function, which
+            //     at certain checkpoints (the conditions you have) would then change the vector
+            //     of velocity.  The code wouldn't have to change, and you wouldn't need all
+            //     these setIntervals!
             goalInterval = setInterval(function () {
                 objectsToDraw[0].dx += -0.180;
                 objectsToDraw[0].dy += 0.12;

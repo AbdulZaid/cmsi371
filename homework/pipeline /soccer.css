@@ -3,5 +3,7 @@ canvas {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    /* JD: Nice that you figured it out, but don't let it lose you some
+           opportunities to use 3D. */
     background-image: url(goalOne.jpg)
 }
