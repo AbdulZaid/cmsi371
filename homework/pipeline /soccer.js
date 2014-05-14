@@ -364,8 +364,8 @@
                 objectsToDraw[0].dx += -0.180;
                 objectsToDraw[0].dy += 0.12;
                 objectsToDraw[0].dz += 0.09;
-                objectsToDraw[0].sx /= 1.09;
-                objectsToDraw[0].sy /= 1.09;
+                objectsToDraw[0].sx /= 1.09; // JD: Fake perspective here---if you use a frustum
+                objectsToDraw[0].sy /= 1.09; //     viewing volume, you wouldn't need this.
                 objectsToDraw[0].sz /= 1.09;
                 drawScene();  
                 if(objectsToDraw[0].sx === 0.1907943661352803) {
@@ -383,7 +383,7 @@
                                     window.clearInterval(goalInterval2);
                                     alert("WOW You just hit the left bar and the right bar then scored a goal!!!!" + 
                                         " JUST WOW, you should go and play for Real Madrid");
-                                    location.reload();
+                                    location.reload(); // JD: Wha???  Cheap.  You should reset the ball directly.
                                 }
                             }, 10);
                             window.clearInterval(goalInterval);
